@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/itemCardView"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="180dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="8dp"
@@ -42,7 +42,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
-                android:text="ProjectName"
+                android:text="Project Name"
                 android:textColor="@color/lightTextColor"
                 android:textSize="26sp"
                 app:layout_constraintBottom_toTopOf="@+id/deleteProjectButton"
@@ -50,34 +50,34 @@
                 app:layout_constraintStart_toStartOf="@+id/verticleGuideline2"
                 app:layout_constraintTop_toTopOf="@+id/HorizontalGuideline1" />
 
-            <TextView
-                android:id="@+id/projectCostTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="$1,220,000,000.00"
-                android:textAlignment="viewStart"
-                android:textColor="@color/accentColor"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/deleteProjectButton"
-                app:layout_constraintEnd_toStartOf="@+id/deleteProjectButton"
-                app:layout_constraintStart_toStartOf="@+id/verticleGuideline2"
-                app:layout_constraintTop_toTopOf="@+id/deleteProjectButton" />
-
             <Button
                 android:id="@+id/deleteProjectButton"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="enter"
+                android:layout_height="wrap_content"
+                android:text="DELETE"
                 android:textColor="@color/lightTextColor"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 app:backgroundTint="@color/accentColor"
                 app:cornerRadius="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline3"
                 app:layout_constraintEnd_toStartOf="@+id/verticleGuideline4"
                 app:layout_constraintStart_toStartOf="@+id/verticleGuideline3"
+                app:layout_constraintTop_toTopOf="@+id/horizontalGuideline2" />
+
+            <Button
+                android:id="@+id/changeImageButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Change image"
+                android:textColor="@color/lightTextColor"
+                android:textSize="12sp"
+                app:backgroundTint="@color/accentColor"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline3"
+                app:layout_constraintEnd_toStartOf="@+id/deleteProjectButton"
+                app:layout_constraintStart_toStartOf="@+id/verticleGuideline2"
                 app:layout_constraintTop_toTopOf="@+id/horizontalGuideline2" />
 
             <androidx.constraintlayout.widget.Guideline
@@ -113,14 +113,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.45" />
+                app:layout_constraintGuide_percent="0.4" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/verticleGuideline3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.8" />
+                app:layout_constraintGuide_percent="0.76" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/verticleGuideline4"

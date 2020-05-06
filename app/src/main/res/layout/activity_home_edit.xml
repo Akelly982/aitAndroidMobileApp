@@ -6,7 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
 
-    <include layout="@layout/content_home" />
+
+    <include
+        layout="@layout/content_home_edit"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="0dp" />
 
     <ImageView
         android:id="@+id/headerBkgImageView"
@@ -31,49 +35,26 @@
         android:layout_width="0dp"
         android:layout_height="42dp"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
-        android:text="Projects"
+        android:text="Projects Edit"
         android:textColor="@color/lightTextColor"
         android:textSize="32sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/newProjectButton"
-        app:layout_constraintEnd_toStartOf="@+id/newProjectButton"
         app:layout_constraintStart_toEndOf="@+id/returnButton"
-        app:layout_constraintTop_toTopOf="@+id/newProjectButton" />
+        tools:layout_editor_absoluteY="21dp" />
 
     <Button
         android:id="@+id/returnButton"
-        android:layout_width="78dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="72dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="32dp"
         android:layout_marginBottom="32dp"
-        android:text="Ham"
+        android:text="Back"
         android:textColor="@color/lightTextColor"
         app:backgroundTint="@color/accentColor"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/headerBottomGuideline"
         app:layout_constraintEnd_toStartOf="@+id/homeHeaderTitleTextView"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/newProjectButton"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
-        android:background="#00FFFFFF"
-        android:text="+"
-        android:textAlignment="center"
-        android:textColor="@color/lightTextColor"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        app:backgroundTint="@color/accentColor"
-        app:cornerRadius="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/headerBottomGuideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/homeHeaderTitleTextView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
