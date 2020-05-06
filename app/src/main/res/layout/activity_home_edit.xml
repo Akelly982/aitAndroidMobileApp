@@ -39,17 +39,19 @@
         android:textColor="@color/lightTextColor"
         android:textSize="32sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/returnButton"
         tools:layout_editor_absoluteY="21dp" />
 
     <Button
         android:id="@+id/returnButton"
-        android:layout_width="72dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="32dp"
-        android:text="Back"
+        android:text="X"
         android:textColor="@color/lightTextColor"
+        android:textSize="20sp"
         app:backgroundTint="@color/accentColor"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/headerBottomGuideline"
