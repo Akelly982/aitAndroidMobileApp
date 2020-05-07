@@ -4,147 +4,164 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".newProjectActivity">
+    tools:context=".activities.newProjectActivity">
 
-    <ImageView
-        android:id="@+id/headerBkgImageView"
+    <androidx.cardview.widget.CardView
         android:layout_width="0dp"
-        android:layout_height="300dp"
-        android:scaleType="fitXY"
+        android:layout_height="0dp"
+        app:cardBackgroundColor="@color/darkMain"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="2dp"
         app:layout_constraintBottom_toTopOf="@+id/headerBottomGuideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/header_bkg" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/exitButton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:insetLeft="0dp"
+                android:insetTop="0dp"
+                android:insetRight="0dp"
+                android:insetBottom="0dp"
+                android:text="X"
+                android:textColor="@color/lightTextColor"
+                android:textSize="20sp"
+                app:backgroundTint="@color/accentColor"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.2" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.8" />
+
+            <TextView
+                android:id="@+id/headerTitleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Create new project"
+                android:textAlignment="viewStart"
+                android:textColor="@color/lightTextColor"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/headerBottomGuideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.19" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/headerMidGuideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".07" />
-
-    <Button
-        android:id="@+id/exitButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="X"
-        app:layout_constraintBottom_toTopOf="@+id/headerMidGuideline2"
-        app:layout_constraintEnd_toStartOf="@+id/textView2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/headerBkgImageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/headerMidGuideline2" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="269dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="16dp"
-        android:text="Create new project"
-        android:textColor="@color/lightTextColor"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toTopOf="@+id/headerMidGuideline2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/exitButton"
-        app:layout_constraintTop_toTopOf="@+id/headerMidGuideline2"
-        app:layout_constraintVertical_bias="0.348" />
+        app:layout_constraintGuide_end="531dp" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:id="@+id/newProjectCardView"
+        android:layout_width="wrap_content"
+        android:layout_height="450dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         app:cardBackgroundColor="@color/darkMain"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerBkgImageView" >
+        app:layout_constraintTop_toTopOf="@+id/headerBottomGuideline2">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/projectNameTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:text="Project name:"
                 android:textColor="@color/lightTextColor"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/editText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:background="@color/inputFieldWhite"
-                android:ems="10"
-                android:hint="Enter name here..."
-                android:inputType="textPersonName"
-                android:textColor="@color/darkTextColor"
-                app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline10"
+                app:layout_constraintStart_toStartOf="@+id/verticleGuideline9"
+                app:layout_constraintTop_toTopOf="@+id/horizontalGuideline5" />
 
             <TextView
                 android:id="@+id/addImageTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
+                android:layout_marginTop="70dp"
+                android:layout_marginEnd="8dp"
                 android:text="Add image:"
+                android:textAlignment="center"
                 android:textColor="@color/lightTextColor"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline2"
+                app:layout_constraintBottom_toTopOf="@+id/importImgButton"
                 app:layout_constraintEnd_toStartOf="@+id/verticleGuideline"
-                app:layout_constraintHorizontal_bias="0.463"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="@+id/verticleGuideline7"
+                app:layout_constraintTop_toTopOf="@+id/horizontalGuideline" />
 
             <Button
                 android:id="@+id/importImgButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="Import image"
+                android:textColor="@color/lightTextColor"
+                app:backgroundTint="@color/accentColor"
+                app:cornerRadius="10dp"
                 app:layout_constraintEnd_toStartOf="@+id/verticleGuideline"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/horizontalGuideline2" />
+                app:layout_constraintStart_toStartOf="@+id/verticleGuideline7"
+                app:layout_constraintTop_toBottomOf="@+id/addImageTextView" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/imagePreviewImageView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline1"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline8"
                 app:layout_constraintStart_toStartOf="@+id/verticleGuideline"
                 app:layout_constraintTop_toTopOf="@+id/horizontalGuideline"
                 app:srcCompat="@drawable/bkg_default" />
 
             <Button
-                android:id="@+id/createButton"
-                android:layout_width="120dp"
-                android:layout_height="80dp"
+                android:id="@+id/createProjectButton"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
                 android:text="Create"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.501"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/lightTextColor"
+                app:backgroundTint="@color/accentColor"
+                app:cornerRadius="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline4"
+                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline10"
+                app:layout_constraintHorizontal_bias="0.6"
+                app:layout_constraintStart_toStartOf="@+id/verticleGuideline9"
                 app:layout_constraintTop_toTopOf="@+id/horizontalGuideline1" />
 
             <androidx.constraintlayout.widget.Guideline
@@ -155,6 +172,34 @@
                 app:layout_constraintGuide_percent="0.45" />
 
             <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/verticleGuideline9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.3" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/verticleGuideline10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.7" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/verticleGuideline7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.03" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/verticleGuideline8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.97" />
+
+            <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/horizontalGuideline1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -162,18 +207,42 @@
                 app:layout_constraintGuide_percent=".75" />
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/horizontalGuideline2"
+                android:id="@+id/horizontalGuideline4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent=".52" />
+                app:layout_constraintGuide_percent="0.97" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/horizontalGuideline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.03" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/horizontalGuideline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent=".25" />
+                app:layout_constraintGuide_percent="0.25" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                android:layout_width="277dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline"
+                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline8"
+                app:layout_constraintStart_toStartOf="@+id/verticleGuideline7"
+                app:layout_constraintTop_toBottomOf="@+id/projectNameTitleTextView">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/projectNameInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="input project name here.." />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
