@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.aidankelly.projectmanager.R;
+import com.aidankelly.projectmanager.entities.UserProject;
 
 import static com.aidankelly.projectmanager.entities.Constants.NEW_PROJECT_ACTIVITY_CODE;
 
@@ -40,6 +41,7 @@ public class HomeActivity extends AppCompatActivity {
                 // make the options menu
             }
         });
+
 
 
     }
