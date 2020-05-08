@@ -10,14 +10,18 @@ public class UserProject implements Serializable {
     public static final String USER_PROJECT_KEY = "build and developed"; // part of the class
 
     private Integer id;
+    private Integer listPosition;
     private String projectName;
     private Float  totalProjectCost;
     private Bitmap projectImage;
 
     public UserProject() {
+
     }
 
-    public UserProject(String projectName, Float totalProjectCost, Bitmap projectImage) {
+    public UserProject(Integer id, Integer listPosition, String projectName, Float totalProjectCost, Bitmap projectImage) {
+        this.id = id;
+        this.listPosition = listPosition;
         this.projectName = projectName;
         this.totalProjectCost = totalProjectCost;
         this.projectImage = projectImage;
@@ -25,6 +29,14 @@ public class UserProject implements Serializable {
 
     // getters and setters
 
+
+    public Integer getListPosition() {
+        return listPosition;
+    }
+
+    public void setListPosition(Integer listPosition) {
+        this.listPosition = listPosition;
+    }
 
     public Integer getId() {
         return id;
