@@ -15,6 +15,8 @@ public class UserProject implements Serializable {
     private Float  totalProjectCost;
     private Bitmap projectImage;
 
+
+
     public UserProject() {
 
     }
@@ -27,11 +29,14 @@ public class UserProject implements Serializable {
         this.projectImage = projectImage;
     }
 
-    // getters and setters
 
+
+
+    // getters and setters
 
     public Integer getListPosition() {
         return listPosition;
+
     }
 
     public void setListPosition(Integer listPosition) {
