@@ -3,8 +3,10 @@ package com.aidankelly.projectmanager.activities;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,22 +16,28 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.aidankelly.projectmanager.R;
+import com.aidankelly.projectmanager.entities.UserProject;
+import com.aidankelly.projectmanager.services.DataService;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
 
 import static com.aidankelly.projectmanager.entities.Constants.NEW_PROJECT_FETCH_IMAGE_CODE;
 
 public class newProjectActivity extends AppCompatActivity {
 
-    Button exitButton;
-    Button importImageButton;
-    Button createProjectButton;
-    EditText projectNameInputEditText;
-    ImageView imagePreviewImageView;
-    View rootView;
+    private View rootView;
 
-    Uri imageFilePath;
-    Bitmap imageToStore;
+    private Button exitButton;
+    private Button importImageButton;
+    private Button createProjectButton;
+    private EditText projectNameInputEditText;
+    private ImageView imagePreviewImageView;
 
+    public Uri imageFilePath;
+    public Bitmap imageToStore;
+
+    private Context myContext;    // needed for an imageView but not used just their
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +50,6 @@ public class newProjectActivity extends AppCompatActivity {
         imagePreviewImageView = findViewById(R.id.imagePreviewImageView);
         exitButton = findViewById(R.id.exitButton);
         rootView = findViewById(R.id.content);
-
 
 
 
@@ -60,31 +67,103 @@ public class newProjectActivity extends AppCompatActivity {
 
 
 
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goingHome = new Intent();
+                exit(v);
+            }
+        });
+
+        createProjectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createProject(v);
+            }
+        });
+
+    }
+
+            // create the project for import to database
+    private void createProject(View v) {
+
+        UserProject project = new UserProject();
+        DataService Dservice = new DataService();
+
+        String name = projectNameInputEditText.getText().toString();
+
+        // name.trim.isEmpty = deletes empty spaces in front of the string and checks to see if something is still their if not move cursor to component
+        if(name.trim().isEmpty()){
+            Snackbar.make(v, "Name is required", Snackbar.LENGTH_SHORT).show();
+            projectNameInputEditText.getText().clear();
+            projectNameInputEditText.requestFocus();
+            return;
+        }
+
+        // get the projectName
+        project.setProjectName(projectNameInputEditText.getText().toString());
+
+        //get the projectImage
+        project.setProjectImage(imageToStore);
+        //MediaStore.Images.Media.getBitmap(getContentResolver(), imagePreviewImageView);
+
+        ArrayList<Long> foundErrors = new ArrayList<Long>();
+        foundErrors = Dservice.addProject(project);
+        if (foundErrors.get(0) > 0){
+            Snackbar.make(v, "Error in ListPos Increment " + foundErrors.get(0) , Snackbar.LENGTH_SHORT).show();
+        }
+        else if (foundErrors.get(1) == -1){
+            Snackbar.make(v, "Error in database insert " + foundErrors.get(0) , Snackbar.LENGTH_SHORT).show();
+        }
+
+
     }
 
 
-    @Override
+
+
+    private void exit(View v) {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
+
+
+    @Override    // getting img from phone result
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_PROJECT_FETCH_IMAGE_CODE){
             if (resultCode == RESULT_OK){
-                setImageToPreview(data);
-
-                imagePreviewImageView.setImageBitmap(imageToStore);
+                setImageForStorage(data);
+                imagePreviewImageView.setImageBitmap(imageToStore); // set image to preview window
             }
         }
     }
 
-    private void setImageToPreview(Intent data) {
+    private void setImageForStorage(Intent data) {
         try {
-            imageFilePath = data.getData();
-            imageToStore = MediaStore.Images.Media.getBitmap(getContentResolver(), imageFilePath);
+            imageFilePath = data.getData(); // URI
+            imageToStore = MediaStore.Images.Media.getBitmap(getContentResolver(), imageFilePath); // get bitmap from image and stores it in imageToStore
         }
         catch (Exception e){
             Snackbar.make(rootView, e.toString() , Snackbar.LENGTH_LONG).show();   // send a small alert msg using the exception
         }
     }
+
+
+
+     // code for getting image from drawable not sure if i will use it or need it.....
+//    private Bitmap findADefaultImage() {
+//        //ImageView myImageView = new ImageView(myContext));      //  myContext declared above but unused  (image View wants one)
+//        //myImageView.setImageResource(R.drawable.project_default_image);
+//        //BitmapDrawable drawable = (BitmapDrawable) myImageView.getDrawable();
+//        BitmapDrawable drawable = ((BitmapDrawable) myContext.getDrawable(R.drawable.project_default_image));   // works with sdk update to 21   // myContext declared above to access context
+//        Bitmap myNewBitmap = drawable.getBitmap();
+//        return myNewBitmap;
+//    }
+
+
+
 }
 
 

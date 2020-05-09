@@ -7,6 +7,7 @@
     tools:context=".activities.newProjectActivity">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:cardBackgroundColor="@color/darkMain"
@@ -98,6 +99,21 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline"
+                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline8"
+                app:layout_constraintStart_toStartOf="@+id/verticleGuideline7"
+                app:layout_constraintTop_toBottomOf="@+id/projectNameTitleTextView">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/projectNameInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="hint" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/projectNameTitleTextView"
@@ -226,23 +242,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.25" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout"
-                android:layout_width="277dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="4dp"
-                app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline"
-                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline8"
-                app:layout_constraintStart_toStartOf="@+id/verticleGuideline7"
-                app:layout_constraintTop_toBottomOf="@+id/projectNameTitleTextView">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/projectNameInputEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="input project name here.." />
-            </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

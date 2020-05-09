@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.aidankelly.projectmanager.R;
 import com.aidankelly.projectmanager.entities.UserProject;
+import com.aidankelly.projectmanager.services.DataService;
 
 import static com.aidankelly.projectmanager.entities.Constants.NEW_PROJECT_ACTIVITY_CODE;
 
@@ -42,6 +43,9 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        //Load Data from the database
+        DataService Dservice = new DataService();
+        Dservice.init(this);
 
 
     }
