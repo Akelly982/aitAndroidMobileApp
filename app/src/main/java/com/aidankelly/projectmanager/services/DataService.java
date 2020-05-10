@@ -13,6 +13,14 @@ public class DataService {
 
     private  ProjectDatabaseHelper sqlite;
 
+    public void connect(){
+
+    }
+
+    public void disconnect(){
+
+    }
+
 
     public void init(Context context){
         sqlite = sqlite.getInstance(context);
@@ -20,13 +28,14 @@ public class DataService {
 
 
         // sql insert returns long
-    public ArrayList addProject(UserProject myProject){
-        ArrayList foundErrors = new ArrayList<Long>();
+    public void addProject(UserProject myProject, ArrayList<Long> errorList){
+//        ArrayList<Long> foundErrors = new ArrayList<Long>();
+//        foundErrors.add(0,0L);
+//        foundErrors.add(1,0L);
 
         // returns list holding error info  --  index 0 = list increment method    index 1 = database add method
-        foundErrors = sqlite.projectInsert(myProject.getProjectName(),myProject.getProjectImage());
+        sqlite.projectInsert(myProject.getProjectName(),myProject.getProjectImage(), errorList);
 
-        return  foundErrors;
     }
 
     public boolean updateProjectImg(UserProject myProject){

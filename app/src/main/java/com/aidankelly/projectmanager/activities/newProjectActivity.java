@@ -27,6 +27,7 @@ import static com.aidankelly.projectmanager.entities.Constants.NEW_PROJECT_FETCH
 public class newProjectActivity extends AppCompatActivity {
 
     private View rootView;
+    private DataService projectDataService;
 
     private Button exitButton;
     private Button importImageButton;
@@ -51,6 +52,10 @@ public class newProjectActivity extends AppCompatActivity {
         exitButton = findViewById(R.id.exitButton);
         rootView = findViewById(R.id.content);
 
+
+        //Load Data from the database
+        projectDataService = new DataService();
+        projectDataService.init(this);
 
 
         // get the image from the phone
@@ -88,7 +93,7 @@ public class newProjectActivity extends AppCompatActivity {
     private void createProject(View v) {
 
         UserProject project = new UserProject();
-        DataService Dservice = new DataService();
+
 
         String name = projectNameInputEditText.getText().toString();
 
@@ -105,16 +110,24 @@ public class newProjectActivity extends AppCompatActivity {
 
         //get the projectImage
         project.setProjectImage(imageToStore);
-        //MediaStore.Images.Media.getBitmap(getContentResolver(), imagePreviewImageView);
 
+        // create a list to store potential errors
         ArrayList<Long> foundErrors = new ArrayList<Long>();
-        foundErrors = Dservice.addProject(project);
+
+        // insert to db
+        projectDataService.addProject(project, foundErrors);
+
+        // check for errors
         if (foundErrors.get(0) > 0){
             Snackbar.make(v, "Error in ListPos Increment " + foundErrors.get(0) , Snackbar.LENGTH_SHORT).show();
         }
         else if (foundErrors.get(1) == -1){
             Snackbar.make(v, "Error in database insert " + foundErrors.get(0) , Snackbar.LENGTH_SHORT).show();
         }
+        else{
+            Snackbar.make(v, "Project added " + foundErrors.get(0) , Snackbar.LENGTH_SHORT).show();
+        }
+
 
 
     }

@@ -37,13 +37,12 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 
     private Context context;
 
-    private static final String DATABASE_NAME = "myProjects.dp";
-    private static final Integer DATABASE_VERSION = 1;   // change this if you change the database
+    private static final String DATABASE_NAME = "myProjects.db";
+    private static final Integer DATABASE_VERSION = 2;   // change this if you change the database
     private static final String PROJECT_TABLE_NAME = "projects";
 
 
     private ByteArrayOutputStream objectByteArrayOutputStream;    // used to convert image
-    private byte[] imageInByteArray;
     private Image defaultImage;
     private Context myContext;    // needed for an image view but not used just passed
 
@@ -66,7 +65,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     //FROM table
     //ORDER BY column_2 DESC;
     private static final String GET_PROJECT_LIST = "SELECT * FROM " + PROJECT_TABLE_NAME + " ORDER BY " + COL_LIST_POS + " ASC;";
-    private static final String GET_PROJECT_LISTPOSITION = "SELECT " + COL_ID + " " + COL_LIST_POS +" FROM " + PROJECT_TABLE_NAME + ";";
+    private static final String GET_PROJECT_LISTPOSITION = "SELECT " + COL_ID + ", " + COL_LIST_POS +" FROM " + PROJECT_TABLE_NAME + ";";  //needs the id for the update
 
 
     // do not forget you spaces "CREATE TABLE "
@@ -95,8 +94,8 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override   // if table == null
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE_ST);
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL(CREATE_TABLE_ST);
     }
 
     @Override     // runs if version change
@@ -108,8 +107,8 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    public ArrayList projectInsert(String projectName,Bitmap projectImage){
-        ArrayList<Long> foundErrors = new ArrayList<Long>();
+    public void projectInsert(String projectName,Bitmap projectImage, ArrayList<Long> foundErrors){
+//        ArrayList<Long> foundErrors = new ArrayList<Long>();
 
         //List pos will = 1 as Default putting it at top of list
         // update all rows listPos to make room for new listPos prior to running this method
@@ -117,7 +116,6 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 
         // add to database
         foundErrors.add(projectInsertDataBase(projectName,projectImage));
-        return foundErrors;
     }
 
 
@@ -132,12 +130,13 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
                                 // this. because referring to this class
         SQLiteDatabase db = this.getWritableDatabase();
 
+        byte[] imageInByteArray = byteArrayImageConvert(projectImage);  // converts here to byte array
 
         // Like and intent setting up for content transfer
                         //(databaseColumn , data)
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_PROJECT_NAME, projectName);
-        contentValues.put(COL_PROJECT_IMAGE, byteArrayImageConvert(projectImage));  // converts here to byte array
+        contentValues.put(COL_PROJECT_IMAGE, imageInByteArray);
 
         // if -1 error else should be a positive num
         Long result = db.insert(PROJECT_TABLE_NAME,null,contentValues);
@@ -165,13 +164,13 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
                 ContentValues contentValues = new ContentValues();
 
                 Integer currentId = cursor.getInt(0);
-                Integer listPositionIncrement = cursor.getInt(1) + 1;
+                Integer listPosition = cursor.getInt(1);
+                listPosition++;
 
-                contentValues.put(COL_LIST_POS,listPositionIncrement);
+                contentValues.put(COL_LIST_POS,listPosition);
 
                 //set new value to db
                 int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, "ID = ?", new String[]{currentId.toString()});
-                db.close();
                 if (numOfRowsUpdated != 1){  // should only be 1
                     numOfErrors++;
                 }
@@ -180,6 +179,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         }
 
         cursor.close();
+        db.close();
         return numOfErrors;
     };
 
@@ -200,8 +200,16 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
          // convert bitmap to byte array
     private byte[] byteArrayImageConvert(Bitmap currentBitmap) {
         // convert bitmap image
-        currentBitmap.compress(Bitmap.CompressFormat.PNG, 100, objectByteArrayOutputStream);
+
+        // holder for return
+        byte[] imageInByteArray;
+
+        // take current bitmap and compress
+        objectByteArrayOutputStream = new ByteArrayOutputStream();
+        currentBitmap.compress(Bitmap.CompressFormat.JPEG, 100, objectByteArrayOutputStream);
+
         imageInByteArray = objectByteArrayOutputStream.toByteArray();
+
         return imageInByteArray;
     }
 

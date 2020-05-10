@@ -16,6 +16,8 @@ import static com.aidankelly.projectmanager.entities.Constants.NEW_PROJECT_ACTIV
 
 public class HomeActivity extends AppCompatActivity {
 
+    private DataService projectDataService;
+
     Button newProjectButton;
     Button optionsButton;
 
@@ -43,9 +45,10 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
         //Load Data from the database
-        DataService Dservice = new DataService();
-        Dservice.init(this);
+        projectDataService = new DataService();
+        projectDataService.init(this);
 
 
     }
