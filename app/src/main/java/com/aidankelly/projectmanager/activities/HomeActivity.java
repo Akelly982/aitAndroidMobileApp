@@ -49,21 +49,17 @@ public class HomeActivity extends AppCompatActivity {
         editProjectButton = findViewById(R.id.editProjectsButton);
 
 
-        //  ------------  options animation -----------------
-        // so i can still see my buttons in edit hide on load
-        ObjectAnimator animationHideStart = ObjectAnimator.ofFloat(optionsCardView, "translationY", animHideHeight);  //100f refers to num of pixels
-        animationHideStart.setDuration(0);
-        animationHideStart.start();
+        // close options window Animation
+        optionsMenuHide(); // So i can still see my buttons in Activity XML edit, hide on load
+
+
 
 
         optionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // show options window
-                ObjectAnimator animationShow = ObjectAnimator.ofFloat(optionsCardView, "translationY", animShowHeight);  //100f refers to num of pixels
-                animationShow.setDuration(600);
-                animationShow.start();
-
+                optionsMenuShow();
             }
         });
 
@@ -71,13 +67,11 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // close options window
-                ObjectAnimator animationHide = ObjectAnimator.ofFloat(optionsCardView, "translationY", animHideHeight);  //100f refers to num of pixels
-                animationHide.setDuration(600);
-                animationHide.start();
+                optionsMenuHide();
             }
 
         });
-        // ------------- animation end -------------
+
 
 
         newProjectButton.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +123,26 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    private void optionsMenuHide() {
+        ObjectAnimator animationHideStart = ObjectAnimator.ofFloat(optionsCardView, "translationY", animHideHeight);  //100f refers to num of pixels
+        animationHideStart.setDuration(0);
+        animationHideStart.start();
+    }
+
+    private void optionsMenuShow() {
+        ObjectAnimator animationShow = ObjectAnimator.ofFloat(optionsCardView, "translationY", animShowHeight);  //100f refers to num of pixels
+        animationShow.setDuration(600);
+        animationShow.start();
+    }
+
+
+    @Override    // runs when Activity is not visible   (app lifecycle)
+    protected void onStop() {
+        super.onStop();
+        optionsMenuHide();
+
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -145,4 +159,9 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
+
+
+
+
+
 }
