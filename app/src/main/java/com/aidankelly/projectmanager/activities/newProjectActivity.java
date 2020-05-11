@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -29,7 +28,7 @@ public class newProjectActivity extends AppCompatActivity {
     private View rootView;
     private DataService projectDataService;
 
-    private Button exitButton;
+    private Button exitNewProjectButton;
     private Button importImageButton;
     private Button createProjectButton;
     private EditText projectNameInputEditText;
@@ -49,7 +48,7 @@ public class newProjectActivity extends AppCompatActivity {
         createProjectButton = findViewById(R.id.createProjectButton);
         importImageButton = findViewById(R.id.importImgButton);
         imagePreviewImageView = findViewById(R.id.imagePreviewImageView);
-        exitButton = findViewById(R.id.exitButton);
+        exitNewProjectButton = findViewById(R.id.newProjectExitButton);
         rootView = findViewById(R.id.content);
 
 
@@ -72,7 +71,7 @@ public class newProjectActivity extends AppCompatActivity {
 
 
 
-        exitButton.setOnClickListener(new View.OnClickListener() {
+        exitNewProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent goingHome = new Intent();

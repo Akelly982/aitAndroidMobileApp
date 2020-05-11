@@ -7,6 +7,7 @@ import com.aidankelly.projectmanager.database.ProjectDatabaseHelper;
 import com.aidankelly.projectmanager.entities.UserProject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class DataService {
@@ -48,6 +49,11 @@ public class DataService {
 
     public boolean deleteProject(UserProject myProject){
         return sqlite.projectDelete(myProject.getId());
+    }
+
+    public List<UserProject> getProjects(){
+        List<UserProject> myProjects = sqlite.getProjects();
+        return myProjects;
     }
 
 

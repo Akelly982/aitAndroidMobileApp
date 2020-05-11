@@ -9,4 +9,6 @@
     <color name="shadowColor">#121212</color>
     <color name="inputFieldWhite">#D1D1D1</color>
     <color name="darkTextColor">#2D2D2D</color>
+    <color name="bkgColor">#222222</color>
+    <color name="DeleteRed">#B8342A</color>
 </resources>

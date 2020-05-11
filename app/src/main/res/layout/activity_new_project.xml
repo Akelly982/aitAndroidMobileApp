@@ -23,7 +23,7 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/exitButton"
+                android:id="@+id/newProjectExitButton"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="8dp"
@@ -112,7 +112,7 @@
                     android:id="@+id/projectNameInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="hint" />
+                    android:hint="Type name here" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView

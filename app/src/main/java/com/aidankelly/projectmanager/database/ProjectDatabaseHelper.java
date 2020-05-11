@@ -302,6 +302,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
             }
         }
 
+        db.close();
         cursor.close();
         return projects;
     };
