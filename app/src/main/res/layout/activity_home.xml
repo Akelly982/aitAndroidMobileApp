@@ -10,15 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:cardBackgroundColor="@color/bkgColor"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/headerBottomGuideline">
 
         <include
             android:id="@+id/include"
             layout="@layout/content_home" />
-
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -38,12 +39,10 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/homeEditExitButton"
+                android:id="@+id/homeOptionsButton"
                 android:layout_width="80dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
                 android:insetRight="2dp"
@@ -58,7 +57,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/newProjectButton"
+                android:id="@+id/homeNewProjectButton"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="8dp"
@@ -96,7 +95,7 @@
                 app:layout_constraintGuide_percent="0.8" />
 
             <TextView
-                android:id="@+id/headerTitleTextView"
+                android:id="@+id/homeTitleTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -136,7 +135,7 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/closeOptionsWindowButton"
+                android:id="@+id/homeCloseOptionsWindowButton"
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -149,7 +148,7 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
-                android:id="@+id/searchProjectsButton"
+                android:id="@+id/homeSearchProjectsButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -158,12 +157,12 @@
                 android:backgroundTint="@color/lightTextColor"
                 android:text="@android:string/search_go"
                 android:textColor="@color/accentColor"
-                app:layout_constraintBottom_toTopOf="@+id/closeOptionsWindowButton"
+                app:layout_constraintBottom_toTopOf="@+id/homeCloseOptionsWindowButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:id="@+id/editProjectsButton"
+                android:id="@+id/homeEditOveralProjectsButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -172,7 +171,7 @@
                 android:backgroundTint="@color/lightTextColor"
                 android:text="Edit Projects"
                 android:textColor="@color/accentColor"
-                app:layout_constraintBottom_toTopOf="@+id/searchProjectsButton"
+                app:layout_constraintBottom_toTopOf="@+id/homeSearchProjectsButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>

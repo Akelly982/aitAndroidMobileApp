@@ -268,7 +268,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     public boolean projectDelete (Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
         int numOfRowsDeleted = db.delete(PROJECT_TABLE_NAME, "ID = ?", new String[]{id.toString()});
-        return numOfRowsDeleted == 1;
+        return  (numOfRowsDeleted == 1);
     }
 
 

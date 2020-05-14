@@ -10,10 +10,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:cardBackgroundColor="@color/darkMain"
         app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,19 +25,20 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/HidenMinHeightAvatar"
+                android:id="@+id/homeHiddenMinHeightAvatar"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
+                android:layout_marginStart="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/projectImageHomeEditImageView"
+                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <ImageView
-                android:id="@+id/projectImageHomeEditImageView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:id="@+id/homeProjectImageImageView"
+                android:layout_width="166dp"
+                android:layout_height="180dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline3"
@@ -45,40 +48,35 @@
                 app:srcCompat="@drawable/bkg_default" />
 
             <TextView
-                android:id="@+id/projectNameHomeEditTextView"
-                android:layout_width="0dp"
+                android:id="@+id/homeProjectNameTextView"
+                android:layout_width="193dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
                 android:text="ProjectName"
                 android:textColor="@color/lightTextColor"
                 android:textSize="26sp"
-                app:layout_constraintBottom_toTopOf="@+id/deleteProjectButton"
+                app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline2"
                 app:layout_constraintEnd_toStartOf="@+id/verticleGuideline4"
                 app:layout_constraintStart_toStartOf="@+id/verticleGuideline2"
                 app:layout_constraintTop_toTopOf="@+id/HorizontalGuideline1" />
 
             <TextView
-                android:id="@+id/projectCostTextView"
-                android:layout_width="0dp"
+                android:id="@+id/homeProjectCostTextView"
+                android:layout_width="114dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:text="$1,220,000,000.00"
                 android:textAlignment="viewStart"
                 android:textColor="@color/accentColor"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/deleteProjectButton"
-                app:layout_constraintEnd_toStartOf="@+id/deleteProjectButton"
+                app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline3"
+                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline3"
                 app:layout_constraintStart_toStartOf="@+id/verticleGuideline2"
-                app:layout_constraintTop_toTopOf="@+id/deleteProjectButton" />
+                app:layout_constraintTop_toTopOf="@+id/horizontalGuideline2" />
 
             <Button
-                android:id="@+id/deleteProjectButton"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:id="@+id/homeEnterProjectButton"
+                android:layout_width="67dp"
+                android:layout_height="90dp"
                 android:text="enter"
                 android:textColor="@color/lightTextColor"
                 android:textSize="10sp"

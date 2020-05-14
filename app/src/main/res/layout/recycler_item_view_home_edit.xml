@@ -10,10 +10,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:cardBackgroundColor="@color/darkMain"
         app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,7 +25,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/HiddenMinHeightAvatar"
+                android:id="@+id/hiddenMinHeightAvatar"
                 android:layout_width="wrap_content"
                 android:layout_height="220dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -33,7 +35,7 @@
                 tools:srcCompat="@tools:sample/avatars" />
 
             <ImageView
-                android:id="@+id/projectImageHomeEditImageView"
+                android:id="@+id/homeEditProjectImageImageView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:adjustViewBounds="true"
@@ -45,11 +47,10 @@
                 app:srcCompat="@drawable/bkg_default" />
 
             <TextView
-                android:id="@+id/projectNameHomeEditTextView"
+                android:id="@+id/homeEditProjectNameTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginStart="8dp"
                 android:text="Project Name"
                 android:textColor="@color/lightTextColor"
                 android:textSize="26sp"
@@ -59,7 +60,7 @@
                 app:layout_constraintTop_toTopOf="@+id/HorizontalGuideline1" />
 
             <Button
-                android:id="@+id/deleteProjectButton"
+                android:id="@+id/homeEditDeleteProjectButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="DELETE"
@@ -73,7 +74,7 @@
                 app:layout_constraintTop_toTopOf="@+id/horizontalGuideline2" />
 
             <Button
-                android:id="@+id/setTopButton"
+                android:id="@+id/homeEditSetProjectTopButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Set top"
@@ -87,7 +88,7 @@
                 app:layout_constraintTop_toTopOf="@+id/horizontalGuideline6" />
 
             <Button
-                android:id="@+id/changeProjectNameButton"
+                android:id="@+id/homeEditChangeProjectNameButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -99,11 +100,11 @@
                 app:cornerRadius="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline2"
                 app:layout_constraintEnd_toStartOf="@+id/verticleGuideline3"
-                app:layout_constraintStart_toEndOf="@+id/projectImageHomeEditImageView"
+                app:layout_constraintStart_toStartOf="@+id/verticleGuideline2"
                 app:layout_constraintTop_toTopOf="@+id/horizontalGuideline6" />
 
             <Button
-                android:id="@+id/changeImageButton"
+                android:id="@+id/homeEditChangeProjectImageButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -114,7 +115,7 @@
                 app:backgroundTint="@color/accentColor"
                 app:cornerRadius="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline3"
-                app:layout_constraintEnd_toStartOf="@+id/deleteProjectButton"
+                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline3"
                 app:layout_constraintStart_toStartOf="@+id/verticleGuideline2"
                 app:layout_constraintTop_toTopOf="@+id/horizontalGuideline2" />
 

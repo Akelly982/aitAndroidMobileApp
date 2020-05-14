@@ -14,13 +14,15 @@ import android.widget.Button;
 import com.aidankelly.projectmanager.R;
 import com.aidankelly.projectmanager.entities.UserProject;
 import com.aidankelly.projectmanager.recyclerview.HomeRecyclerViewAdapter;
+import com.aidankelly.projectmanager.recyclerview.OnRecyclerViewListener;
 import com.aidankelly.projectmanager.services.DataService;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 import static com.aidankelly.projectmanager.entities.Constants.NEW_PROJECT_ACTIVITY_CODE;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements OnRecyclerViewListener {
 
     private DataService myDataService;
     private List<UserProject> projects;
@@ -30,6 +32,7 @@ public class HomeActivity extends AppCompatActivity {
     private Button closeOptionsWindowButton;
     private Button searchProjectButton;
     private Button editProjectButton;
+    private View rootView;
     private View optionsCardView;
     private float animHideHeight = -570f;   // not sure why these are so different
     private float animShowHeight = 40f;     // may be due to it loses track once off screen (very weird)
@@ -41,16 +44,18 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        newProjectButton = findViewById(R.id.newProjectButton);
-        optionsButton = findViewById(R.id.homeEditExitButton);
-        closeOptionsWindowButton = findViewById(R.id.closeOptionsWindowButton);
+        rootView = findViewById(android.R.id.content).getRootView();
+
+        newProjectButton = findViewById(R.id.homeNewProjectButton);
+        optionsButton = findViewById(R.id.homeOptionsButton);
+        closeOptionsWindowButton = findViewById(R.id.homeCloseOptionsWindowButton);
         optionsCardView = findViewById(R.id.optionsCardView);
-        searchProjectButton = findViewById(R.id.searchProjectsButton);
-        editProjectButton = findViewById(R.id.editProjectsButton);
+        searchProjectButton = findViewById(R.id.homeSearchProjectsButton);
+        editProjectButton = findViewById(R.id.homeEditOveralProjectsButton);
 
 
         // close options window Animation
-        optionsMenuHide(); // So i can still see my buttons in Activity XML edit, hide on load
+        optionsMenuHide(0); // So i can still see my buttons in Activity XML edit, hide on load
 
 
 
@@ -67,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // close options window
-                optionsMenuHide();
+                optionsMenuHide(600);
             }
 
         });
@@ -100,7 +105,7 @@ public class HomeActivity extends AppCompatActivity {
         // get a list of all projects
         projects = myDataService.getProjects();
         //create a RecyclerViewAdapter and pass the data
-        HomeRecyclerViewAdapter adapter = new HomeRecyclerViewAdapter(projects , this);
+        HomeRecyclerViewAdapter adapter = new HomeRecyclerViewAdapter(projects , this, this);
         //set the adapter to the RecyclerView
         HomeRecyclerView.setAdapter(adapter);
 
@@ -123,9 +128,9 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void optionsMenuHide() {
+    private void optionsMenuHide(int duration) {
         ObjectAnimator animationHideStart = ObjectAnimator.ofFloat(optionsCardView, "translationY", animHideHeight);  //100f refers to num of pixels
-        animationHideStart.setDuration(0);
+        animationHideStart.setDuration(duration);
         animationHideStart.start();
     }
 
@@ -139,7 +144,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override    // runs when Activity is not visible   (app lifecycle)
     protected void onStop() {
         super.onStop();
-        optionsMenuHide();
+        optionsMenuHide(0);
 
 
     }
@@ -149,19 +154,19 @@ public class HomeActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == NEW_PROJECT_ACTIVITY_CODE){
             if (resultCode == RESULT_OK){
-                addNewProjectToDatabase(data);
+
             }
         }
     }
 
-    private void addNewProjectToDatabase(Intent data) {
-        // add returned data to persistant data in database
 
 
+
+
+    // if click is pressed
+    @Override
+    public void onProjectItemEnterClick(UserProject project) { // home enter button on activity intent with carried project
+        Snackbar.make(rootView, " project id:  " + project.getProjectName() , Snackbar.LENGTH_SHORT).show();
+        // intent enter project data
     }
-
-
-
-
-
 }

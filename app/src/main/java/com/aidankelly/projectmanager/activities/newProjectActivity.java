@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -43,6 +44,8 @@ public class newProjectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_project);
+
+        myContext = this;
 
         projectNameInputEditText = findViewById(R.id.projectNameInputEditText);
         createProjectButton = findViewById(R.id.createProjectButton);
@@ -108,6 +111,9 @@ public class newProjectActivity extends AppCompatActivity {
         project.setProjectName(projectNameInputEditText.getText().toString());
 
         //get the projectImage
+        if (imageToStore == null){
+            imageToStore = findADefaultImage();
+        }
         project.setProjectImage(imageToStore);
 
         // create a list to store potential errors
@@ -165,14 +171,14 @@ public class newProjectActivity extends AppCompatActivity {
 
 
      // code for getting image from drawable not sure if i will use it or need it.....
-//    private Bitmap findADefaultImage() {
-//        //ImageView myImageView = new ImageView(myContext));      //  myContext declared above but unused  (image View wants one)
-//        //myImageView.setImageResource(R.drawable.project_default_image);
-//        //BitmapDrawable drawable = (BitmapDrawable) myImageView.getDrawable();
-//        BitmapDrawable drawable = ((BitmapDrawable) myContext.getDrawable(R.drawable.project_default_image));   // works with sdk update to 21   // myContext declared above to access context
-//        Bitmap myNewBitmap = drawable.getBitmap();
-//        return myNewBitmap;
-//    }
+    private Bitmap findADefaultImage() {
+        ImageView myImageView = new ImageView(myContext);      //  myContext declared above but unused  (image View wants one)
+        myImageView.setImageResource(R.drawable.project_default_image);
+        BitmapDrawable drawable = (BitmapDrawable) myImageView.getDrawable();
+        //BitmapDrawable drawable = ((BitmapDrawable) myContext.getDrawable(R.drawable.project_default_image));   // works with sdk update to 21   // myContext declared above to access context
+        Bitmap myNewBitmap = drawable.getBitmap();
+        return myNewBitmap;
+    }
 
 
 

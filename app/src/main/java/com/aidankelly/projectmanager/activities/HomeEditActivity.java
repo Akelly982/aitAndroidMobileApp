@@ -11,11 +11,12 @@ import android.widget.Button;
 import com.aidankelly.projectmanager.R;
 import com.aidankelly.projectmanager.entities.UserProject;
 import com.aidankelly.projectmanager.recyclerview.HomeEditRecyclerViewAdapter;
+import com.aidankelly.projectmanager.recyclerview.OnRecyclerViewListener;
 import com.aidankelly.projectmanager.services.DataService;
 
 import java.util.List;
 
-public class HomeEditActivity extends AppCompatActivity {
+public class HomeEditActivity extends AppCompatActivity implements OnRecyclerViewListener {
 
     private DataService myDataService;
     private List<UserProject> projects;
@@ -71,4 +72,8 @@ public class HomeEditActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onProjectItemEnterClick(UserProject project) {
+
+    }
 }

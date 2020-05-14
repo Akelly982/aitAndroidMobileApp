@@ -17,6 +17,7 @@ public class HomeEditRecyclerViewAdapter extends RecyclerView.Adapter<HomeEditVi
 
     private List<UserProject> projects;
     private Context context;
+    //private OnRecyclerViewListener onRecyclerViewListener;
 
 
     public HomeEditRecyclerViewAdapter(List<UserProject> projects, Context context) {
@@ -42,6 +43,8 @@ public class HomeEditRecyclerViewAdapter extends RecyclerView.Adapter<HomeEditVi
     public void onBindViewHolder(@NonNull HomeEditViewHolder holder, int position) {
         UserProject project = projects.get(position);
         holder.updateEditProject(project);
+        holder.updateButtons(project, context);
+        //holder.bind(project, onRecyclerViewListener );
     }
 
     @Override
