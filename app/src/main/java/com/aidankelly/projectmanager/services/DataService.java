@@ -52,5 +52,9 @@ public class DataService {
         return myProjects;
     }
 
+    public UserProject getProject(Integer id){
+        return sqlite.getProject(id);
+    }
+
 
 }

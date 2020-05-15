@@ -47,10 +47,10 @@ public class newProjectActivity extends AppCompatActivity {
 
         myContext = this;
 
-        projectNameInputEditText = findViewById(R.id.projectNameInputEditText);
-        createProjectButton = findViewById(R.id.createProjectButton);
-        importImageButton = findViewById(R.id.importImgButton);
-        imagePreviewImageView = findViewById(R.id.imagePreviewImageView);
+        projectNameInputEditText = findViewById(R.id.newProjectNameInputEditText);
+        createProjectButton = findViewById(R.id.newProjectCreateProjectButton);
+        importImageButton = findViewById(R.id.newProjectImportImgButton);
+        imagePreviewImageView = findViewById(R.id.newProjectImagePreviewImageView);
         exitNewProjectButton = findViewById(R.id.newProjectExitButton);
         rootView = findViewById(R.id.content);
 
@@ -110,7 +110,7 @@ public class newProjectActivity extends AppCompatActivity {
         // get the projectName
         project.setProjectName(projectNameInputEditText.getText().toString());
 
-        //get the projectImage
+        //get the projectImage    // check if user enter one or not
         if (imageToStore == null){
             imageToStore = findADefaultImage();
         }
@@ -118,9 +118,9 @@ public class newProjectActivity extends AppCompatActivity {
 
         // create a list to store potential errors
         ArrayList<Long> foundErrors = new ArrayList<Long>();
-
         // insert to db
         projectDataService.addProject(project, foundErrors);
+
 
         // check for errors
         if (foundErrors.get(0) > 0){
@@ -130,8 +130,12 @@ public class newProjectActivity extends AppCompatActivity {
             Snackbar.make(v, "Error in database insert " + foundErrors.get(0) , Snackbar.LENGTH_SHORT).show();
         }
         else{
-            Snackbar.make(v, "Project added " + foundErrors.get(0) , Snackbar.LENGTH_SHORT).show();
+            Intent goingBackHome = new Intent();
+            goingBackHome.putExtra(UserProject.USER_PROJECT_KEY, project);
+            setResult(RESULT_OK,goingBackHome);
+            finish();
         }
+
 
 
 

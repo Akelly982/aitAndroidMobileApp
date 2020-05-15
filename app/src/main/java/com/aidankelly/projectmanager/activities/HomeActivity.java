@@ -26,6 +26,7 @@ public class HomeActivity extends AppCompatActivity implements OnRecyclerViewLis
 
     private DataService myDataService;
     private List<UserProject> projects;
+    private HomeRecyclerViewAdapter adapter;
 
     private Button newProjectButton;
     private Button optionsButton;
@@ -83,7 +84,7 @@ public class HomeActivity extends AppCompatActivity implements OnRecyclerViewLis
             @Override
             public void onClick(View v) {
                 Intent goToNewProjectActivity = new Intent(HomeActivity.this, newProjectActivity.class);
-                startActivity(goToNewProjectActivity);
+                startActivityForResult(goToNewProjectActivity,NEW_PROJECT_ACTIVITY_CODE);
             }
         });
 
@@ -105,7 +106,7 @@ public class HomeActivity extends AppCompatActivity implements OnRecyclerViewLis
         // get a list of all projects
         projects = myDataService.getProjects();
         //create a RecyclerViewAdapter and pass the data
-        HomeRecyclerViewAdapter adapter = new HomeRecyclerViewAdapter(projects , this, this);
+        adapter = new HomeRecyclerViewAdapter(projects , this, this);
         //set the adapter to the RecyclerView
         HomeRecyclerView.setAdapter(adapter);
 
@@ -149,18 +150,22 @@ public class HomeActivity extends AppCompatActivity implements OnRecyclerViewLis
 
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == NEW_PROJECT_ACTIVITY_CODE){
             if (resultCode == RESULT_OK){
-
+                addNewProjectToRV(data);
             }
         }
     }
 
-
-
+    private void addNewProjectToRV(Intent data) {
+        UserProject project = (UserProject) data.getSerializableExtra(UserProject.USER_PROJECT_KEY);
+        adapter.addItem(project);
+    }
 
 
     // if click is pressed

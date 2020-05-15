@@ -57,7 +57,7 @@
                 app:layout_constraintGuide_percent="0.8" />
 
             <TextView
-                android:id="@+id/headerEditTitleTextView"
+                android:id="@+id/newProjectTitleTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -106,17 +106,17 @@
                 app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline"
                 app:layout_constraintEnd_toStartOf="@+id/verticleGuideline8"
                 app:layout_constraintStart_toStartOf="@+id/verticleGuideline7"
-                app:layout_constraintTop_toBottomOf="@+id/projectNameTitleTextView">
+                app:layout_constraintTop_toBottomOf="@+id/newProjectNameTitleTextView">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/projectNameInputEditText"
+                    android:id="@+id/newProjectNameInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Type name here" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/projectNameTitleTextView"
+                android:id="@+id/newProjectNameTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Project name:"
@@ -127,7 +127,7 @@
                 app:layout_constraintTop_toTopOf="@+id/horizontalGuideline5" />
 
             <TextView
-                android:id="@+id/addImageTextView"
+                android:id="@+id/newProjectAddImageTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="70dp"
@@ -136,13 +136,13 @@
                 android:textAlignment="center"
                 android:textColor="@color/lightTextColor"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/importImgButton"
+                app:layout_constraintBottom_toTopOf="@+id/newProjectImportImgButton"
                 app:layout_constraintEnd_toStartOf="@+id/verticleGuideline"
                 app:layout_constraintStart_toStartOf="@+id/verticleGuideline7"
                 app:layout_constraintTop_toTopOf="@+id/horizontalGuideline" />
 
             <Button
-                android:id="@+id/importImgButton"
+                android:id="@+id/newProjectImportImgButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -153,10 +153,10 @@
                 app:cornerRadius="10dp"
                 app:layout_constraintEnd_toStartOf="@+id/verticleGuideline"
                 app:layout_constraintStart_toStartOf="@+id/verticleGuideline7"
-                app:layout_constraintTop_toBottomOf="@+id/addImageTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/newProjectAddImageTextView" />
 
             <ImageView
-                android:id="@+id/imagePreviewImageView"
+                android:id="@+id/newProjectImagePreviewImageView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline1"
@@ -166,7 +166,7 @@
                 app:srcCompat="@drawable/bkg_default" />
 
             <Button
-                android:id="@+id/createProjectButton"
+                android:id="@+id/newProjectCreateProjectButton"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="8dp"

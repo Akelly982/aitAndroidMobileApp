@@ -54,4 +54,9 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeViewHolder
     public int getItemCount() {
         return projects.size();
     }
+
+    public void addItem(UserProject project) {
+        projects.add(1,project);
+        notifyItemInserted(getItemCount());
+    }
 }

@@ -66,7 +66,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     //ORDER BY column_2 DESC;
     private static final String GET_PROJECT_LIST = "SELECT * FROM " + PROJECT_TABLE_NAME + " ORDER BY " + COL_LIST_POS + " ASC;";
     private static final String GET_PROJECT_LISTPOSITION = "SELECT " + COL_ID + ", " + COL_LIST_POS +" FROM " + PROJECT_TABLE_NAME + ";";  //needs the id for the update
-
+    private static final String GET_PROJECT = "SELECT * FROM " + PROJECT_TABLE_NAME +  " WHERE " + COL_ID + " = ?";
 
     // do not forget you spaces "CREATE TABLE "
     private static final String CREATE_TABLE_ST = "CREATE TABLE " +  PROJECT_TABLE_NAME + "(" +
@@ -308,6 +308,35 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     };
 
 
+
+
+    public UserProject getProject(Integer id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        UserProject project = null;
+
+        Cursor cursor = db.rawQuery(GET_PROJECT, new String[]{id.toString()});
+
+        if (cursor.getCount() > 0){
+            while(cursor.moveToNext()){
+
+                Integer listPosition = cursor.getInt(1) ;
+                String projectName = cursor.getString(2);
+                Float totalProjectCost = cursor.getFloat(3);
+                byte[] imageBytes = cursor.getBlob(4);
+
+                //convert bytes back to bitmap
+                Bitmap projectImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
+
+                project = new UserProject(id,listPosition,projectName,totalProjectCost, projectImage);
+
+            }
+        }
+
+        cursor.close();
+        db.close();
+        return project;
+    }
 
 
 
