@@ -11,4 +11,5 @@
     <color name="darkTextColor">#2D2D2D</color>
     <color name="bkgColor">#222222</color>
     <color name="DeleteRed">#B8342A</color>
+    <color name="transperentBkg">#00FFFFFF</color>
 </resources>

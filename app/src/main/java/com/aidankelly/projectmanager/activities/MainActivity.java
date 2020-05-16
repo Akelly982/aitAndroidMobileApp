@@ -1,4 +1,4 @@
-package com.aidankelly.projectmanager;
+package com.aidankelly.projectmanager.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,12 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
-import com.aidankelly.projectmanager.activities.HomeActivity;
-import com.aidankelly.projectmanager.entities.Constants;
-
-import static com.aidankelly.projectmanager.entities.Constants.HOME_ACTIVITY_CODE;
+import com.aidankelly.projectmanager.R;
 
 public class MainActivity extends AppCompatActivity {
 

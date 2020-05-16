@@ -10,7 +10,7 @@
         android:id="@+id/projectRVCardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
@@ -30,9 +30,10 @@
                 android:id="@+id/projectRVItemDescriptionTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="project Descirptve text must adapt for additional text"
+                android:text="project Descriptive text"
                 android:textAlignment="textStart"
                 android:textColor="@color/lightTextColor"
                 android:textSize="18sp"
@@ -46,7 +47,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="$ 25,650.96"
+                android:text="$25650"
                 android:textColor="@color/accentColor"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@+id/projectRVItemDescriptionTextView"
@@ -74,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.04" />
+                app:layout_constraintGuide_end="321dp" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline6"
@@ -108,5 +109,26 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/projectDeleteItemButton"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/accentColor"
+        android:elevation="2dp"
+        android:text="X"
+        android:textColor="@color/lightTextColor"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/projectRVCardView"
+        app:layout_constraintEnd_toStartOf="@+id/guideline14"
+        app:layout_constraintStart_toStartOf="@+id/guideline14"
+        app:layout_constraintTop_toTopOf="@+id/projectRVCardView" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="25dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
