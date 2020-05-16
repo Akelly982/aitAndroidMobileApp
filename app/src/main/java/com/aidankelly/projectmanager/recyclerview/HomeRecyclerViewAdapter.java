@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.aidankelly.projectmanager.R;
 import com.aidankelly.projectmanager.entities.UserProject;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -18,13 +17,13 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeViewHolder
 
     private List<UserProject> projects;
     private Context context;
-    private OnRecyclerViewListener onRecyclerViewListener;
+    private OnHomeRVListener onHomeRVListener;
 
         // constructor            // it is usual convention to call them the same name
-    public HomeRecyclerViewAdapter(List<UserProject> projects, Context context, OnRecyclerViewListener onRecyclerViewListener) {
+    public HomeRecyclerViewAdapter(List<UserProject> projects, Context context, OnHomeRVListener onHomeRVListener) {
         this.projects = projects;
         this.context = context;
-        this.onRecyclerViewListener = onRecyclerViewListener;
+        this.onHomeRVListener = onHomeRVListener;
     }
 
     @NonNull
@@ -46,7 +45,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeViewHolder
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
         UserProject project = projects.get(position);
         holder.updateProject(project);  // uses updateProject from ViewHolder class
-        holder.BindUpdateProjectButtons(project, onRecyclerViewListener);
+        holder.BindUpdateProjectButtons(project, onHomeRVListener);
 
     }
 

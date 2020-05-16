@@ -14,7 +14,7 @@ import android.widget.Button;
 import com.aidankelly.projectmanager.R;
 import com.aidankelly.projectmanager.entities.UserProject;
 import com.aidankelly.projectmanager.recyclerview.HomeRecyclerViewAdapter;
-import com.aidankelly.projectmanager.recyclerview.OnRecyclerViewListener;
+import com.aidankelly.projectmanager.recyclerview.OnHomeRVListener;
 import com.aidankelly.projectmanager.services.DataService;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -22,7 +22,7 @@ import java.util.List;
 
 import static com.aidankelly.projectmanager.entities.Constants.NEW_PROJECT_ACTIVITY_CODE;
 
-public class HomeActivity extends AppCompatActivity implements OnRecyclerViewListener {
+public class HomeActivity extends AppCompatActivity implements OnHomeRVListener {
 
     private DataService myDataService;
     private List<UserProject> projects;
@@ -170,7 +170,7 @@ public class HomeActivity extends AppCompatActivity implements OnRecyclerViewLis
 
     // if click is pressed
     @Override
-    public void onProjectItemEnterClick(UserProject project) { // home enter button on activity intent with carried project
+    public void onProjectEnterClick(UserProject project) { // home enter button on activity intent with carried project
         Snackbar.make(rootView, " project id:  " + project.getProjectName() , Snackbar.LENGTH_SHORT).show();
         // intent enter project data
     }

@@ -48,18 +48,11 @@ public class HomeEditViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void updateButtons(final UserProject project, final Context context){
+    public void bindUpdateButtons(final UserProject project, final OnHomeEditRVListener onHomeEditRVListener){
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dataService.init(context);
-                boolean result = dataService.deleteProject(project);
-                if (result){
-                    Snackbar.make(v, " project deleted:  ", Snackbar.LENGTH_SHORT).show();
-                }
-                else{
-                    Snackbar.make(v, " delete error  ", Snackbar.LENGTH_SHORT).show();
-                }
+                onHomeEditRVListener.onProjectDeleteClick(project);
             }
         });
     }
