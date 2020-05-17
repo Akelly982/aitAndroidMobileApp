@@ -172,7 +172,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
                 //set new value to db
                 int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, "ID = ?", new String[]{currentId.toString()});
                 if (numOfRowsUpdated != 1){  // should only be 1
-                    numOfErrors++;
+                    numOfErrors++;  // if not 1 their was an error.
                 }
 
             }
@@ -238,31 +238,44 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 
         // Update needs ID to work basic stuff
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_ID, id);
         contentValues.put(COL_PROJECT_NAME, projectName);
 
         int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, "ID = ?", new String[]{id.toString()});
         db.close();
-        return numOfRowsUpdated == 1;
+        return (numOfRowsUpdated == 1);
     }
 
          // only update project image
     public boolean projectUpdateImage (Integer id, Bitmap projectImage){
         SQLiteDatabase db = this.getWritableDatabase();
 
+        byte[] imageInByteArray = byteArrayImageConvert(projectImage);  // converts here to byte array
+
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_ID, id);
-        contentValues.put(COL_PROJECT_IMAGE, byteArrayImageConvert(projectImage));
+        //contentValues.put(COL_ID, id);
+        contentValues.put(COL_PROJECT_IMAGE, imageInByteArray);
 
         int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, "ID = ?", new String[]{id.toString()});
         db.close();
-        return numOfRowsUpdated == 1;
+        return (numOfRowsUpdated == 1);
     }
 
-        // TODO implement list arrangement for Projects
-        // update list pos  --  keep in mind <other projects list pos> <the list reads ASC due to  >
-    public boolean projectUpdateListPosition(){
-        return false;
+
+        // update list pos  --  keep in mind <other projects list pos> <the list reads ASC>
+    public Long projectUpdateListPositionToFirst(Integer id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_LIST_POS, 1); // set new list position to first
+
+        int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, "ID = ?", new String[]{id.toString()});
+        db.close();
+        if (numOfRowsUpdated == 1){
+            return 1L;
+        }else{
+            return -1L;
+        }
+
     }
 
     public boolean projectDelete (Integer id){

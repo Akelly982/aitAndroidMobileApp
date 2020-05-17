@@ -24,12 +24,9 @@ public class HomeEditViewHolder extends RecyclerView.ViewHolder {
     private ImageView projectImageView;
     private TextView projectNameTextView;
 
-    private DataService dataService;
-
     public HomeEditViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        dataService = new DataService();
 
         // add ui connections
         changeImageButton = itemView.findViewById(R.id.homeEditChangeProjectImageButton);
@@ -53,6 +50,24 @@ public class HomeEditViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 onHomeEditRVListener.onProjectDeleteClick(project);
+            }
+        });
+        setTopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onHomeEditRVListener.onProjectSetToTopClick(project);
+            }
+        });
+        changeProjectNameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onHomeEditRVListener.onProjectNameChangeClick(project);
+            }
+        });
+        changeImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //onHomeEditRVListener.onProjectImageChangeClick(project);
             }
         });
     }

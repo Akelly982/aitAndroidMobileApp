@@ -6,5 +6,6 @@ public class Constants {
     public final static Integer NEW_PROJECT_ACTIVITY_CODE = 3;
     public final static Integer NEW_PROJECT_FETCH_IMAGE_CODE = 4;
     public final static Integer DELETE_CONFIRMATION_ACTIVITY_CODE = 5;
+    public final static Integer CHANGE_TEXT_ACTIVITY_CODE = 6;
 
 }

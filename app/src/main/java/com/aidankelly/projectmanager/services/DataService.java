@@ -39,12 +39,18 @@ public class DataService {
         return sqlite.projectUpdateImage(myProject.getId(),myProject.getProjectImage());
     }
 
+
+    public void setProjectToTop(UserProject project, ArrayList<Long> errorList){
+        errorList.add(sqlite.incrementAllProjectsListPosition());
+        errorList.add(sqlite.projectUpdateListPositionToFirst(project.getId()));
+    }
+
     public boolean updateProjectName(UserProject myProject){
         return sqlite.projectUpdateName(myProject.getId(),myProject.getProjectName());
     }
 
-    public boolean deleteProject(UserProject myProject){
-        return sqlite.projectDelete(myProject.getId());
+    public boolean deleteProject(Integer id){
+        return sqlite.projectDelete(id);
     }
 
     public List<UserProject> getProjects(){

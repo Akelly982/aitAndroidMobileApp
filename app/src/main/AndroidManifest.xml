@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.deleteConfirmation"></activity>
+        <activity android:name=".activities.changeImageActivity"></activity>
+        <activity android:name=".activities.changeTextActivity" />
+        <activity android:name=".activities.deleteConfirmationActivity" />
         <activity android:name=".activities.projectAddItem" />
         <activity android:name=".activities.ProjectActivity" />
         <activity android:name=".activities.HomeEditActivity" />
