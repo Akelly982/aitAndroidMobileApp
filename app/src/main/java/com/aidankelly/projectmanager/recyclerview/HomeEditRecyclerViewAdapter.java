@@ -52,4 +52,29 @@ public class HomeEditRecyclerViewAdapter extends RecyclerView.Adapter<HomeEditVi
     public int getItemCount() {
         return projects.size();
     }
+
+
+    // for recycler view update
+    public List<UserProject> getRvList() {
+        return projects;
+    }
+
+    public void replaceItem(int position, UserProject project) {
+        projects.set(position,project);
+        notifyItemChanged(position);
+    }
+
+    public void moveItemToFirst(int position, UserProject project){
+        projects.remove(position);
+        notifyItemRemoved(position);
+        projects.add(0,project);
+        notifyItemInserted(getItemCount());
+
+    }
+
+    public void deleteItemByIndex(int position){
+        projects.remove(position);
+        notifyItemRemoved(position);
+    }
+
 }

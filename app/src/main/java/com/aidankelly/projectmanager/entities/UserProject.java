@@ -10,8 +10,9 @@ import java.io.Serializable;
 public class UserProject implements Serializable {
 
     public static final String USER_PROJECT_KEY = "userProjectKey"  ; // part of the class
-    public static final String USER_PROJECT_ID_KEY = "userProjectKeyID"  ;
-    public static final String USER_PROJECT_PROJECT_NAME = "userProjectKEYName";
+    public static final String USER_PROJECT_KEY_ORIGINAL = "userProjectKeyOriginal"  ;
+    public static final String USER_PROJECT_ID_KEY = "userProjectKeyId"  ;
+    public static final String USER_PROJECT_PROJECT_NAME = "userProjectKeyName";
 
 
     private Integer id;

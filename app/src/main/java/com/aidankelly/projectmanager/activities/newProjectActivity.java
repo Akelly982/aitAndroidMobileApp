@@ -35,7 +35,6 @@ public class newProjectActivity extends AppCompatActivity {
     private EditText projectNameInputEditText;
     private ImageView imagePreviewImageView;
 
-    public Uri imageFilePath;
     public Bitmap imageToStore;
 
     private Context myContext;    // needed for an imageView but not used just their
@@ -157,19 +156,20 @@ public class newProjectActivity extends AppCompatActivity {
         if (requestCode == NEW_PROJECT_FETCH_IMAGE_CODE){
             if (resultCode == RESULT_OK){
                 setImageForStorage(data);
-                imagePreviewImageView.setImageBitmap(imageToStore); // set image to preview window
             }
         }
     }
 
     private void setImageForStorage(Intent data) {
         try {
+            Uri imageFilePath;
             imageFilePath = data.getData(); // URI
             imageToStore = MediaStore.Images.Media.getBitmap(getContentResolver(), imageFilePath); // get bitmap from image and stores it in imageToStore
         }
         catch (Exception e){
             Snackbar.make(rootView, e.toString() , Snackbar.LENGTH_LONG).show();   // send a small alert msg using the exception
         }
+        imagePreviewImageView.setImageBitmap(imageToStore); // set image to preview window
     }
 
 
@@ -177,9 +177,8 @@ public class newProjectActivity extends AppCompatActivity {
      // code for getting image from drawable not sure if i will use it or need it.....
     private Bitmap findADefaultImage() {
         ImageView myImageView = new ImageView(myContext);      //  myContext declared above but unused  (image View wants one)
-        myImageView.setImageResource(R.drawable.project_default_image);
+        myImageView.setImageResource(R.drawable.project_default_image);   // TODO default image will be this adjust to a base image
         BitmapDrawable drawable = (BitmapDrawable) myImageView.getDrawable();
-        //BitmapDrawable drawable = ((BitmapDrawable) myContext.getDrawable(R.drawable.project_default_image));   // works with sdk update to 21   // myContext declared above to access context
         Bitmap myNewBitmap = drawable.getBitmap();
         return myNewBitmap;
     }

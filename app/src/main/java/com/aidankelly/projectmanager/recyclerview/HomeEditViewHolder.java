@@ -67,7 +67,7 @@ public class HomeEditViewHolder extends RecyclerView.ViewHolder {
         changeImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //onHomeEditRVListener.onProjectImageChangeClick(project);
+                onHomeEditRVListener.onProjectImageChangeClick(project);
             }
         });
     }

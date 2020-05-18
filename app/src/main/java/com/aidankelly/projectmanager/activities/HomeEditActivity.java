@@ -21,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.aidankelly.projectmanager.entities.Constants.CHANGE_IMAGE_ACTIVITY_CODE;
 import static com.aidankelly.projectmanager.entities.Constants.CHANGE_TEXT_ACTIVITY_CODE;
 import static com.aidankelly.projectmanager.entities.Constants.DELETE_CONFIRMATION_ACTIVITY_CODE;
 
@@ -30,6 +31,8 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
     private List<UserProject> projects;
     private Button exitButton;
     private View rootView;
+    private HomeEditRecyclerViewAdapter adapter;
+    private UserProject editProjectOriginal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,7 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
         exitButton = findViewById(R.id.homeEditExitButton);
 
 
-        //Load Data from the database
+        //initiate Data from the database
         myDataService = new DataService();
         myDataService.init(this);
 
@@ -53,9 +56,9 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         HomeEditRecyclerView.setLayoutManager(linearLayoutManager);
 
-        // set up adapter
+        // load from database and set up adapter
         projects = myDataService.getProjects();
-        HomeEditRecyclerViewAdapter adapter = new HomeEditRecyclerViewAdapter(projects,this, this);
+        adapter = new HomeEditRecyclerViewAdapter(projects,this, this);
         HomeEditRecyclerView.setAdapter(adapter);
 
 
@@ -74,12 +77,11 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
 
 
 
-
-
-
-
-
     }
+
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -87,13 +89,45 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
         if (requestCode == DELETE_CONFIRMATION_ACTIVITY_CODE){
             if (resultCode == RESULT_OK){
                 deleteProject(data);
+            }else{
+                editProjectOriginal = null;
             }
         }
         if (requestCode == CHANGE_TEXT_ACTIVITY_CODE){
             if (resultCode == RESULT_OK){
                 changeProjectName(data);
+            }else{
+                editProjectOriginal = null;
             }
         }
+        if (requestCode == CHANGE_IMAGE_ACTIVITY_CODE){
+            if (resultCode == RESULT_OK){
+                changeProjectImage(data);
+            }else{
+                editProjectOriginal = null;
+            }
+        }
+    }
+
+    private void changeProjectImage(Intent data) {
+        UserProject project = (UserProject) data.getSerializableExtra(UserProject.USER_PROJECT_KEY);
+        // update database
+        boolean result = myDataService.updateProjectImg(project); // pass project with the updated image
+
+        if (result){
+            Snackbar.make(rootView, " project image updated ", Snackbar.LENGTH_SHORT).show();
+        }else{
+            Snackbar.make(rootView, " project image updated error ", Snackbar.LENGTH_SHORT).show();
+        }
+
+        //RV update                 // get position of the original project
+        int RVListPos = adapter.getRvList().indexOf(editProjectOriginal);    // -1 if not in list else // the position of the object
+        if (RVListPos != -1){
+            project = myDataService.getProject(project.getId());
+            adapter.replaceItem(RVListPos,project);
+        }
+
+
     }
 
     private void changeProjectName(Intent data) {
@@ -139,13 +173,15 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
         goToChangeName.putExtra(UserProject.USER_PROJECT_PROJECT_NAME ,project.getProjectName());
         goToChangeName.putExtra(UserProject.USER_PROJECT_ID_KEY, project.getId());
         startActivityForResult(goToChangeName,CHANGE_TEXT_ACTIVITY_CODE);
+        editProjectOriginal = project;
     }
 
     @Override
     public void onProjectImageChangeClick(UserProject project) {
-//          Intent goToChangeImage = new Intent(this, changeImageActivity.class);
-//          goToChangeImage.putExtra(UserProject.USER_PROJECT_ID_KEY,project.getId());
-//          goToChangeImage.putExtra()
+          Intent goToChangeImage = new Intent(this, changeImageActivity.class);
+          goToChangeImage.putExtra(UserProject.USER_PROJECT_KEY,project);   // I adjusted the UserProject class to not use bitmap but byte[]
+          startActivityForResult(goToChangeImage, CHANGE_IMAGE_ACTIVITY_CODE);
+          editProjectOriginal = project;
     }
 
 
@@ -160,6 +196,12 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
             Snackbar.make(rootView, " project set self top list pos error " + errorList.get(1).toString() , Snackbar.LENGTH_SHORT).show();
         }
         Snackbar.make(rootView, " Set top complete ", Snackbar.LENGTH_SHORT).show();
+
+        //RV update                 // get position of the original project
+        int RVListPos = adapter.getRvList().indexOf(project);    // -1 if not in list else // the position of the object
+        if (RVListPos != -1){
+            adapter.moveItemToFirst(RVListPos,project);
+        }
 
     }
 
