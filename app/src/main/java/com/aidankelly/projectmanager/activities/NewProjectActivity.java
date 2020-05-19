@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 import static com.aidankelly.projectmanager.entities.Constants.NEW_PROJECT_FETCH_IMAGE_CODE;
 
-public class newProjectActivity extends AppCompatActivity {
+public class NewProjectActivity extends AppCompatActivity {
 
     private View rootView;
     private DataService projectDataService;

@@ -18,7 +18,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import static com.aidankelly.projectmanager.entities.Constants.NEW_PROJECT_FETCH_IMAGE_CODE;
 
-public class changeImageActivity extends AppCompatActivity {
+public class ChangeImageActivity extends AppCompatActivity {
 
     private Button exitButton;
     private Button cancelButton;

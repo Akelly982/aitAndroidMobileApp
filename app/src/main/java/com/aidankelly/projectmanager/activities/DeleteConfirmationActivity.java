@@ -11,7 +11,7 @@ import com.aidankelly.projectmanager.R;
 import com.aidankelly.projectmanager.entities.UserProject;
 import com.google.android.material.snackbar.Snackbar;
 
-public class deleteConfirmationActivity extends AppCompatActivity {
+public class DeleteConfirmationActivity extends AppCompatActivity {
 
     private Button deleteButton;
     private Button cancelButton;

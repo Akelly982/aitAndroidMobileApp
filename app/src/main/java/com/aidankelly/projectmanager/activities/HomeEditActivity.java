@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.aidankelly.projectmanager.R;
-import com.aidankelly.projectmanager.entities.Constants;
 import com.aidankelly.projectmanager.entities.UserProject;
 import com.aidankelly.projectmanager.recyclerview.HomeEditRecyclerViewAdapter;
 import com.aidankelly.projectmanager.recyclerview.OnHomeEditRVListener;
@@ -68,7 +67,7 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_CANCELED);
+                setResult(RESULT_OK);
                 finish();
             }
         });
@@ -111,6 +110,7 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
 
     private void changeProjectImage(Intent data) {
         UserProject project = (UserProject) data.getSerializableExtra(UserProject.USER_PROJECT_KEY);
+
         // update database
         boolean result = myDataService.updateProjectImg(project); // pass project with the updated image
 
@@ -145,6 +145,13 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
             Snackbar.make(rootView, " project name not updated ", Snackbar.LENGTH_SHORT).show();
         }
 
+        //RV update                 // get position of the original project
+        int RVListPos = adapter.getRvList().indexOf(editProjectOriginal);    // -1 if not in list else // the position of the object
+        if (RVListPos != -1){
+            project = myDataService.getProject(project.getId());
+            adapter.replaceItem(RVListPos,project);
+        }
+
     }
 
     private void deleteProject(Intent data) {
@@ -169,7 +176,7 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
     // RV buttons
     @Override
     public void onProjectNameChangeClick(UserProject project) {
-        Intent goToChangeName = new Intent(this, changeTextActivity.class);
+        Intent goToChangeName = new Intent(this, ChangeTextActivity.class);
         goToChangeName.putExtra(UserProject.USER_PROJECT_PROJECT_NAME ,project.getProjectName());
         goToChangeName.putExtra(UserProject.USER_PROJECT_ID_KEY, project.getId());
         startActivityForResult(goToChangeName,CHANGE_TEXT_ACTIVITY_CODE);
@@ -178,7 +185,7 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
 
     @Override
     public void onProjectImageChangeClick(UserProject project) {
-          Intent goToChangeImage = new Intent(this, changeImageActivity.class);
+          Intent goToChangeImage = new Intent(this, ChangeImageActivity.class);
           goToChangeImage.putExtra(UserProject.USER_PROJECT_KEY,project);   // I adjusted the UserProject class to not use bitmap but byte[]
           startActivityForResult(goToChangeImage, CHANGE_IMAGE_ACTIVITY_CODE);
           editProjectOriginal = project;
@@ -209,9 +216,15 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
     public void onProjectDeleteClick(UserProject project) {
 
                     // note atm cant pass the class due to bitmap variable is not serializable
-        Intent goToDeleteConfirmation = new Intent(HomeEditActivity.this, deleteConfirmationActivity.class);
+        Intent goToDeleteConfirmation = new Intent(HomeEditActivity.this, DeleteConfirmationActivity.class);
         goToDeleteConfirmation.putExtra(UserProject.USER_PROJECT_ID_KEY,project.getId());
         startActivityForResult(goToDeleteConfirmation, DELETE_CONFIRMATION_ACTIVITY_CODE);
+
+        //RV update                 // get position of the original project
+        int RVListPos = adapter.getRvList().indexOf(project);    // -1 if not in list else // the position of the object
+        if (RVListPos != -1){
+            adapter.deleteItemByIndex(RVListPos);
+        }
 
     }
 

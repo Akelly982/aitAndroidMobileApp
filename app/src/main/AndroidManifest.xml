@@ -9,13 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.changeImageActivity"></activity>
-        <activity android:name=".activities.changeTextActivity" />
-        <activity android:name=".activities.deleteConfirmationActivity" />
-        <activity android:name=".activities.projectAddItem" />
+        <activity android:name=".activities.ChangeImageActivity"></activity>
+        <activity android:name=".activities.ChangeTextActivity" />
+        <activity android:name=".activities.DeleteConfirmationActivity" />
+        <activity android:name=".activities.ProjectAddItem" />
         <activity android:name=".activities.ProjectActivity" />
         <activity android:name=".activities.HomeEditActivity" />
-        <activity android:name=".activities.newProjectActivity" />
+        <activity android:name=".activities.NewProjectActivity" />
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>

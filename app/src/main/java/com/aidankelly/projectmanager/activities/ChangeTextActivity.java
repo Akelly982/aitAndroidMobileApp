@@ -13,7 +13,7 @@ import com.aidankelly.projectmanager.R;
 import com.aidankelly.projectmanager.entities.UserProject;
 import com.google.android.material.snackbar.Snackbar;
 
-public class changeTextActivity extends AppCompatActivity {
+public class ChangeTextActivity extends AppCompatActivity {
 
     private TextView dataName;
     private EditText userInputField;

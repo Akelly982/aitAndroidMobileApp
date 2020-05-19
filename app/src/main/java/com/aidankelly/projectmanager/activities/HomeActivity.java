@@ -12,21 +12,24 @@ import android.view.View;
 import android.widget.Button;
 
 import com.aidankelly.projectmanager.R;
+import com.aidankelly.projectmanager.entities.Constants;
 import com.aidankelly.projectmanager.entities.UserProject;
 import com.aidankelly.projectmanager.recyclerview.HomeRecyclerViewAdapter;
 import com.aidankelly.projectmanager.recyclerview.OnHomeRVListener;
 import com.aidankelly.projectmanager.services.DataService;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
+import static com.aidankelly.projectmanager.entities.Constants.HOME_EDIT_ACTIVITY_CODE;
 import static com.aidankelly.projectmanager.entities.Constants.NEW_PROJECT_ACTIVITY_CODE;
+import static com.aidankelly.projectmanager.entities.Constants.PROJECT_ACTIVITY_CODE;
 
 public class HomeActivity extends AppCompatActivity implements OnHomeRVListener {
 
     private DataService myDataService;
     private List<UserProject> projects;
     private HomeRecyclerViewAdapter adapter;
+    private UserProject editProjectOriginal = null;
 
     private Button newProjectButton;
     private Button optionsButton;
@@ -83,7 +86,7 @@ public class HomeActivity extends AppCompatActivity implements OnHomeRVListener 
         newProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goToNewProjectActivity = new Intent(HomeActivity.this, newProjectActivity.class);
+                Intent goToNewProjectActivity = new Intent(HomeActivity.this, NewProjectActivity.class);
                 startActivityForResult(goToNewProjectActivity,NEW_PROJECT_ACTIVITY_CODE);
             }
         });
@@ -123,7 +126,7 @@ public class HomeActivity extends AppCompatActivity implements OnHomeRVListener 
             @Override
             public void onClick(View v) {
                 Intent editProjectsActivity = new Intent(HomeActivity.this, HomeEditActivity.class);
-                startActivity(editProjectsActivity);
+                startActivityForResult(editProjectsActivity, HOME_EDIT_ACTIVITY_CODE);
             }
         });
 
@@ -160,6 +163,34 @@ public class HomeActivity extends AppCompatActivity implements OnHomeRVListener 
                 addNewProjectToRV(data);
             }
         }
+        if (requestCode == HOME_EDIT_ACTIVITY_CODE){
+            if (resultCode == RESULT_OK){
+                updateCurrentRV();
+            }
+        }
+        if (requestCode == PROJECT_ACTIVITY_CODE){
+            if (resultCode == RESULT_OK){
+                updateTotalProjectCost(data);
+            }
+            editProjectOriginal = null;
+        }
+    }
+
+    private void updateTotalProjectCost(Intent data) {
+        // find original project location in RV and update from db the totalCost
+        int RVListPos = adapter.getRvList().indexOf(editProjectOriginal);
+        if (RVListPos != -1){
+            // reload from db
+            UserProject project = myDataService.getProject(editProjectOriginal.getId());
+            adapter.replaceItem(RVListPos,project);
+        }
+
+
+    }
+
+    private void updateCurrentRV() {
+        List<UserProject> projects = myDataService.getProjects();
+        adapter.reloadRV(projects);
     }
 
     private void addNewProjectToRV(Intent data) {
@@ -171,7 +202,10 @@ public class HomeActivity extends AppCompatActivity implements OnHomeRVListener 
     // if click is pressed
     @Override
     public void onProjectEnterClick(UserProject project) { // home enter button on activity intent with carried project
-        Snackbar.make(rootView, " project id:  " + project.getProjectName() , Snackbar.LENGTH_SHORT).show();
-        // intent enter project data
+        // Snackbar.make(rootView, " project id:  " + project.getProjectName() , Snackbar.LENGTH_SHORT).show();
+         Intent enterProject = new Intent(this, ProjectActivity.class);
+         enterProject.putExtra(UserProject.USER_PROJECT_KEY, project);
+         startActivityForResult(enterProject,PROJECT_ACTIVITY_CODE);
+         editProjectOriginal = project;
     }
 }
