@@ -26,14 +26,13 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
 
     private static final String DATABASE_NAME = "myProjects.db";
-    private static final Integer DATABASE_VERSION = 3;   // change this if you change the database
+    private static final Integer DATABASE_VERSION = 7;   // change this if you change the database
     private static final String PROJECT_TABLE_NAME = "projects";
     private static final String PROJECT_ITEM_TABLE_NAME = "projectItems";
 
 
     private ByteArrayOutputStream objectByteArrayOutputStream;    // used to convert image
-    private Image defaultImage;
-    private Context myContext;    // needed for an image view but not used just passed
+
 
     //singleton
     private static ProjectDatabaseHelper mInstance = null;
@@ -66,8 +65,8 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     private static final String GET_PROJECT_ITEM_LIST = "SELECT * FROM " + PROJECT_ITEM_TABLE_NAME + " WHERE " + COL_ITEM_FOREIGN_KEY + " = ? " + " ORDER BY " + COL_ITEM_LIST_POS + " ASC;";
     private static final String GET_PROJECT_LIST_POSITION = "SELECT " + COL_PROJECT_ID + ", " + COL_PROJECT_LIST_POS +" FROM " + PROJECT_TABLE_NAME + ";";  //needs the id for the update
     private static final String GET_PROJECT_ITEM_LIST_POSITION_WITH_FK = "SELECT " + COL_ITEM_ID + ", " + COL_ITEM_LIST_POS +" FROM " + PROJECT_ITEM_TABLE_NAME + " WHERE " + COL_ITEM_FOREIGN_KEY + "= ?;";
-     private static final String GET_PROJECT = "SELECT * FROM " + PROJECT_TABLE_NAME +  " WHERE " + COL_PROJECT_ID + " = ?";
-    private static final String GET_PROJECT_ITEM = "SELECT * FROM " + PROJECT_ITEM_TABLE_NAME +  " WHERE " + COL_ITEM_ID + " = ?," + COL_ITEM_FOREIGN_KEY + " = ?";
+    private static final String GET_PROJECT = "SELECT * FROM " + PROJECT_TABLE_NAME +  " WHERE " + COL_PROJECT_ID + " = ?";
+    private static final String GET_PROJECT_ITEM = "SELECT * FROM " + PROJECT_ITEM_TABLE_NAME +  " WHERE " + COL_ITEM_ID + " = ?";
 
     // do not forget you spaces "CREATE TABLE "
     private static final String CREATE_TABLE_PROJECT_ST = "CREATE TABLE " +  PROJECT_TABLE_NAME + "(" +
@@ -77,14 +76,26 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
             COL_PROJECT_TOTAL_COST + " REAL DEFAULT 0.0, " +
             COL_PROJECT_IMAGE + " BLOB )";     // BLOB is for Binary large data
 
+//    private static final String CREATE_TABLE_PROJECT_ITEM_ST = "CREATE TABLE " +  PROJECT_ITEM_TABLE_NAME + "(" +
+//            COL_ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//            COL_ITEM_LIST_POS + " INTEGER DEFAULT 1," +
+//            COL_ITEM_DESCRIPTION + " TEXT, " +
+//            COL_ITEM_COST + " REAL DEFAULT 0.0, " +
+//            COL_ITEM_IMAGE + " BLOB, " +
+//            "FOREIGN KEY(" + COL_ITEM_FOREIGN_KEY + ") REFERENCES " + PROJECT_TABLE_NAME + " (" + COL_PROJECT_ID + ")" + ");";  // TODO should have a not null but gives dereferable error
+
     private static final String CREATE_TABLE_PROJECT_ITEM_ST = "CREATE TABLE " +  PROJECT_ITEM_TABLE_NAME + "(" +
             COL_ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COL_ITEM_LIST_POS + " INTEGER DEFAULT 1," +
+            COL_ITEM_LIST_POS + " INTEGER DEFAULT 1, " +
             COL_ITEM_DESCRIPTION + " TEXT, " +
             COL_ITEM_COST + " REAL DEFAULT 0.0, " +
             COL_ITEM_IMAGE + " BLOB, " +
-            "FOREIGN KEY(" + COL_ITEM_FOREIGN_KEY + ") REFERENCES " + PROJECT_TABLE_NAME + " (" + COL_PROJECT_ID + ")" + ");";  // TODO should have a not null but gives dereferable error
-
+            COL_PROJECT_ID + " INTEGER NOT NULL, " +
+            "CONSTRAINT " + COL_ITEM_FOREIGN_KEY + " " +
+            "FOREIGN KEY (" + COL_PROJECT_ID + ") " +
+            "REFERENCES " + PROJECT_TABLE_NAME + " (" + COL_PROJECT_ID + ") " +
+            "ON DELETE CASCADE " +
+            ")";
 
 
     //Drop Table
@@ -131,14 +142,15 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 
         //List pos will = 1 as Default putting it at top of list
         // update all rows listPos to make room for new listPos prior to running this method
-        foundErrors.add(incrementAllItemsListPosition(foreignKey));
+        foundErrors.add(incrementAllItemsListPosition(foreignKey));  // foreign key of parent project
 
         // add to database
         foundErrors.add(itemInsertDataBase(description,cost,image,foreignKey));
     }
 
 
-    public Long itemInsertDataBase(Integer description, Float cost, Bitmap image, Integer foreignKey ){
+     // used on create of new item
+    public Long itemInsertDataBase(Integer description, Float cost, Bitmap image, Integer foreignKey ){   //list pos and id auto set
         SQLiteDatabase db = this.getWritableDatabase();
 
         byte[] imageInByteArray = byteArrayImageConvert(image);  // converts here to byte array
@@ -158,7 +170,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    // increment list Order by +1 so that new project comes in first
+    // increment list Order by +1 so that new item within the project comes in first
     public long incrementAllItemsListPosition(Integer ForeignKey){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -180,7 +192,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
                 contentValues.put(COL_ITEM_LIST_POS,listPosition);
 
                 //set new value to db
-                int numOfRowsUpdated = db.update(PROJECT_ITEM_TABLE_NAME, contentValues, "ID = ?", new String[]{currentId.toString()});
+                int numOfRowsUpdated = db.update(PROJECT_ITEM_TABLE_NAME, contentValues, COL_ITEM_ID + " = ?", new String[]{currentId.toString()});
                 if (numOfRowsUpdated != 1){  // should only be 1
                     numOfErrors++;  // if not 1 their was an error.
                 }
@@ -198,7 +210,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 
     public boolean itemDelete (Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
-        int numOfRowsDeleted = db.delete(PROJECT_ITEM_TABLE_NAME, "ID = ?", new String[]{id.toString()});
+        int numOfRowsDeleted = db.delete(PROJECT_ITEM_TABLE_NAME, COL_ITEM_ID + " = ?", new String[]{id.toString()});
         return  (numOfRowsDeleted == 1);
     }
 
@@ -208,6 +220,8 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         List<UserProjectItem> items = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
+
+
 
         Cursor cursor = db.rawQuery(GET_PROJECT_ITEM_LIST,  new String[]{ForeignKeyID.toString()});
 
@@ -223,12 +237,13 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
                 String description = cursor.getString(2);
                 Float itemCost = cursor.getFloat(3);
                 byte[] imageBytes = cursor.getBlob(4);       // Grab blob with byte array
+                Integer foreignKey = cursor.getInt(5);
 
 
                 //convert bytes back to bitmap
-                Bitmap projectImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
+                Bitmap projectImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);     // TODO remove double converts of image data
 
-                item = new UserProjectItem(id,listPosition,description,itemCost,projectImage);   // TODO remove double converts of image data
+                item = new UserProjectItem(id,listPosition,description,itemCost,projectImage, foreignKey);
                 items.add(item);
 
             }
@@ -242,33 +257,38 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 
 
 
-//    public UserProjectItem getItem(Integer id){
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        UserProjectItem item = null;
-//
-//        Cursor cursor = db.rawQuery(GET_PROJECT, new String[]{id.toString()});
-//
-//        if (cursor.getCount() > 0){
-//            while(cursor.moveToNext()){
-//
-//                Integer listPosition = cursor.getInt(1) ;
-//                String projectName = cursor.getString(2);
-//                Float totalProjectCost = cursor.getFloat(3);
-//                byte[] imageBytes = cursor.getBlob(4);
-//
-//                //convert bytes back to bitmap
-//                Bitmap projectImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
-//
-//                item = new UserProjectItem(id,listPosition,projectName,totalProjectCost, projectImage);
-//
-//            }
-//        }
-//
-//        cursor.close();
-//        db.close();
-//        return item;
-//    }
+    public UserProjectItem getItem(Integer id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        UserProjectItem item = null;
+
+        // requires item.id followed by foreign key
+        Cursor cursor = db.rawQuery(GET_PROJECT_ITEM, new String[]{id.toString()});
+
+        if (cursor.getCount() > 0){
+            while(cursor.moveToNext()){
+
+
+                Integer itemId= cursor.getInt(0);
+                Integer listPosition = cursor.getInt(1);
+                String description = cursor.getString(2);
+                Float cost = cursor.getFloat(3);
+                byte[] imageBytes = cursor.getBlob(4);
+                Integer foreignKey = cursor.getInt(5);
+
+
+                //convert bytes back to bitmap
+                Bitmap projectImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);     // TODO remove double converts of image data
+
+                item = new UserProjectItem(itemId,listPosition,description,cost, projectImage,foreignKey);
+
+            }
+        }
+
+        cursor.close();
+        db.close();
+        return item;
+    }
 
 
 
@@ -344,7 +364,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
                 contentValues.put(COL_PROJECT_LIST_POS,listPosition);
 
                 //set new value to db
-                int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, "ID = ?", new String[]{currentId.toString()});
+                int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, COL_PROJECT_ID + " = ?", new String[]{currentId.toString()});
                 if (numOfRowsUpdated != 1){  // should only be 1
                     numOfErrors++;  // if not 1 their was an error.
                 }
@@ -370,7 +390,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_PROJECT_TOTAL_COST, totalProjectCost);
         contentValues.put(COL_PROJECT_IMAGE, byteArrayImageConvert(projectImage));
 
-        int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, "ID = ?", new String[]{id.toString()});
+        int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, COL_PROJECT_ID + " = ?", new String[]{id.toString()});
         db.close();
         return numOfRowsUpdated == 1;
     }
@@ -384,7 +404,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_PROJECT_NAME, projectName);
 
-        int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, "ID = ?", new String[]{id.toString()});
+        int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, COL_PROJECT_ID + " = ?", new String[]{id.toString()});
         db.close();
         return (numOfRowsUpdated == 1);
     }
@@ -398,7 +418,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_PROJECT_IMAGE, imageInByteArray);
 
-        int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, "ID = ?", new String[]{id.toString()});
+        int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, COL_PROJECT_ID + " = ?", new String[]{id.toString()});
         db.close();
         return (numOfRowsUpdated == 1);
     }
@@ -411,7 +431,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_PROJECT_LIST_POS, 1); // set new list position to first
 
-        int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, "ID = ?", new String[]{id.toString()});
+        int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, COL_PROJECT_ID + " = ?", new String[]{id.toString()});
         db.close();
         if (numOfRowsUpdated == 1){
             return 1L;

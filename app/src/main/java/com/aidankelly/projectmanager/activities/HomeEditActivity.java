@@ -176,7 +176,7 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
     // RV buttons
     @Override
     public void onProjectNameChangeClick(UserProject project) {
-        Intent goToChangeName = new Intent(this, ChangeTextActivity.class);
+        Intent goToChangeName = new Intent(this,ChangeTextActivity.class);
         goToChangeName.putExtra(UserProject.USER_PROJECT_PROJECT_NAME ,project.getProjectName());
         goToChangeName.putExtra(UserProject.USER_PROJECT_ID_KEY, project.getId());
         startActivityForResult(goToChangeName,CHANGE_TEXT_ACTIVITY_CODE);

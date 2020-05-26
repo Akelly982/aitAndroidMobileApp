@@ -40,7 +40,7 @@
 
 
             <Button
-                android:id="@+id/projectNewItemButton2"
+                android:id="@+id/projectNewItemButton"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="#00FFFFFF"
@@ -61,7 +61,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/projectOptionsButton2"
+                android:id="@+id/projectOpenOptionsButton"
                 android:layout_width="80dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="8dp"
@@ -135,7 +135,7 @@
         app:layout_constraintGuide_percent="0.14" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/optionsCardView2"
+        android:id="@+id/projectOptionsCardView"
         android:layout_width="225dp"
         android:layout_height="300dp"
         android:layout_marginStart="8dp"
@@ -170,7 +170,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
                 android:backgroundTint="@color/lightTextColor"
-                android:text="Edit Projects"
+                android:text="Edit Project Items"
                 android:textColor="@color/accentColor"
                 app:layout_constraintBottom_toTopOf="@+id/projectCloseOptionsWindowButton"
                 app:layout_constraintEnd_toEndOf="parent"

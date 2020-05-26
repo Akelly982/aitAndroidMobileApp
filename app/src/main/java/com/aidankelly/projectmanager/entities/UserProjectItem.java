@@ -12,15 +12,17 @@ public class UserProjectItem {
     private String description;
     private Float cost;
     private byte[] ImageBytes;
+    private Integer foreignKey;
 
 
 
-    public UserProjectItem(Integer id, Integer listPos, String description, Float cost, Bitmap imageBitmap) {
+    public UserProjectItem(Integer id, Integer listPos, String description, Float cost, Bitmap imageBitmap, Integer foreignKey) {
         this.id = id;
         this.listPos = listPos;
         this.description = description;
         this.cost = cost;
         this.ImageBytes = byteArrayImageConvert(imageBitmap);
+        this.foreignKey = foreignKey;
     }
 
 
@@ -91,5 +93,21 @@ public class UserProjectItem {
 
     public void setCost(Float cost) {
         this.cost = cost;
+    }
+
+    public Integer getForeignKey() {
+        return foreignKey;
+    }
+
+    public void setForeignKey(Integer foreignKey) {
+        this.foreignKey = foreignKey;
+    }
+
+    public Integer getListPos() {
+        return listPos;
+    }
+
+    public void setListPos(Integer listPos) {
+        this.listPos = listPos;
     }
 }

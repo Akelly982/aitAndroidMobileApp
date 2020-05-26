@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.aidankelly.projectmanager.R;
-import com.aidankelly.projectmanager.entities.Constants;
 import com.aidankelly.projectmanager.entities.UserProject;
 import com.aidankelly.projectmanager.recyclerview.HomeRecyclerViewAdapter;
 import com.aidankelly.projectmanager.recyclerview.OnHomeRVListener;
@@ -53,7 +52,7 @@ public class HomeActivity extends AppCompatActivity implements OnHomeRVListener 
         newProjectButton = findViewById(R.id.homeNewProjectButton);
         optionsButton = findViewById(R.id.homeOptionsButton);
         closeOptionsWindowButton = findViewById(R.id.homeCloseOptionsWindowButton);
-        optionsCardView = findViewById(R.id.optionsCardView);
+        optionsCardView = findViewById(R.id.homeOptionsCardView);
         searchProjectButton = findViewById(R.id.homeSearchProjectsButton);
         editProjectButton = findViewById(R.id.homeEditOveralProjectsButton);
 
@@ -202,7 +201,6 @@ public class HomeActivity extends AppCompatActivity implements OnHomeRVListener 
     // if click is pressed
     @Override
     public void onProjectEnterClick(UserProject project) { // home enter button on activity intent with carried project
-        // Snackbar.make(rootView, " project id:  " + project.getProjectName() , Snackbar.LENGTH_SHORT).show();
          Intent enterProject = new Intent(this, ProjectActivity.class);
          enterProject.putExtra(UserProject.USER_PROJECT_KEY, project);
          startActivityForResult(enterProject,PROJECT_ACTIVITY_CODE);

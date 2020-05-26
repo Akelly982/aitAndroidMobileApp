@@ -10,9 +10,9 @@
         android:id="@+id/projectRVCardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="8dp"
         app:cardBackgroundColor="@color/darkMain"
         app:cardCornerRadius="20dp"
@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_end="321dp" />
+                app:layout_constraintGuide_percent="0.04" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline6"
@@ -102,6 +102,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="@color/accentColor"
+                android:elevation="2dp"
                 app:layout_constraintBottom_toTopOf="@+id/projectRVItemImageView2"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -120,15 +121,9 @@
         android:textColor="@color/lightTextColor"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/projectRVCardView"
-        app:layout_constraintEnd_toStartOf="@+id/guideline14"
-        app:layout_constraintStart_toStartOf="@+id/guideline14"
-        app:layout_constraintTop_toTopOf="@+id/projectRVCardView" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="25dp" />
+        app:layout_constraintEnd_toStartOf="@+id/projectRVCardView"
+        app:layout_constraintStart_toStartOf="@+id/projectRVCardView"
+        app:layout_constraintTop_toTopOf="@+id/projectRVCardView"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

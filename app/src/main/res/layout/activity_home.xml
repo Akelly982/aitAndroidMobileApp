@@ -120,7 +120,7 @@
         app:layout_constraintGuide_percent="0.12" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/optionsCardView"
+        android:id="@+id/homeOptionsCardView"
         android:layout_width="225dp"
         android:layout_height="300dp"
         android:layout_marginStart="8dp"
