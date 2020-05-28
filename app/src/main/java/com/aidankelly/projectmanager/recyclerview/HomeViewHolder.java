@@ -46,7 +46,7 @@ public class HomeViewHolder extends RecyclerView.ViewHolder {
      * Bind evey project with a listener, to be used when the user clicks a particular project in the recyclerView
      */
 
-    public void BindUpdateProjectButtons(final UserProject project, final OnHomeRVListener onHomeRVListener){
+    public void bindUpdateProjectButtons(final UserProject project, final OnHomeRVListener onHomeRVListener){
         enterProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

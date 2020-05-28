@@ -45,7 +45,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeViewHolder
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
         UserProject project = projects.get(position);
         holder.updateProject(project);  // uses updateProject from ViewHolder class
-        holder.BindUpdateProjectButtons(project, onHomeRVListener);
+        holder.bindUpdateProjectButtons(project, onHomeRVListener);
 
     }
 

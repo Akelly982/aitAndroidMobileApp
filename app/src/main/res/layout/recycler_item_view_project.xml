@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/projectRVCardView"
@@ -75,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.04" />
+                app:layout_constraintGuide_end="349dp" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline6"
@@ -112,7 +111,7 @@
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:id="@+id/projectDeleteItemButton"
+        android:id="@+id/projectRVDeleteItemButton"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/accentColor"

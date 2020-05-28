@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.aidankelly.projectmanager.database.ProjectDatabaseHelper;
 import com.aidankelly.projectmanager.entities.UserProject;
+import com.aidankelly.projectmanager.entities.UserProjectItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,9 @@ public class DataService {
     }
 
 
+
+
+    // project   ( home activty etc)  ----------------------
         // sql insert returns long
     public void addProject(UserProject myProject, ArrayList<Long> errorList){
         // returns list holding error info  --  index 0 = list increment method    index 1 = database add method
@@ -61,6 +65,47 @@ public class DataService {
     public UserProject getProject(Integer id){
         return sqlite.getProject(id);
     }
+
+
+
+
+
+
+    // project Items   (project activity etc) ------------------------------------
+
+    public void addItem(UserProjectItem myItem, UserProject parentProject ,ArrayList<Long> errorList){
+        // returns list holding error info  --  index 0 = list increment method    index 1 = database add method
+        sqlite.itemInsert(myItem.getDescription(), myItem.getCost(), myItem.getImage(), parentProject.getId(), errorList);
+
+    }
+
+    public boolean deleteItem(Integer id){
+        return sqlite.itemDelete(id);
+    }
+
+    public List<UserProjectItem> getAllItemsOfProject(UserProject parentProject){
+        List<UserProjectItem> myProjectItems = sqlite.getItems(parentProject.getId());
+        return myProjectItems;
+    }
+
+    public UserProjectItem getItem(Integer id){
+        return sqlite.getItem(id);
+    }
+
+
+
+//    public boolean updateItemImg(UserProject myProject){
+//        return false;
+//    }
+//
+//
+//    public void setItemToTop(UserProject project, ArrayList<Long> errorList){
+//
+//    }
+//
+//    public boolean updateItemDesc(UserProject myProject){
+//        return false;
+//    }
 
 
 }

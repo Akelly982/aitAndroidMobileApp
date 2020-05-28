@@ -28,6 +28,7 @@ public class HomeActivity extends AppCompatActivity implements OnHomeRVListener 
     private DataService myDataService;
     private List<UserProject> projects;
     private HomeRecyclerViewAdapter adapter;
+
     private UserProject editProjectOriginal = null;
 
     private Button newProjectButton;
@@ -98,19 +99,19 @@ public class HomeActivity extends AppCompatActivity implements OnHomeRVListener 
 
 
         //implementing the recycler view
-        RecyclerView HomeRecyclerView = findViewById(R.id.homeRecyclerView);   // pass it its recycler view from content_myActivity
+        RecyclerView homeRecyclerView = findViewById(R.id.homeRecyclerView);   // pass it its recycler view from content_myActivity
         // setting the layout linear
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);   // can change between horizontal and vertical
         // set the layout manager
-        HomeRecyclerView.setLayoutManager(linearLayoutManager);
+        homeRecyclerView.setLayoutManager(linearLayoutManager);
 
         // get a list of all projects
         projects = myDataService.getProjects();
         //create a RecyclerViewAdapter and pass the data
         adapter = new HomeRecyclerViewAdapter(projects , this, this);
         //set the adapter to the RecyclerView
-        HomeRecyclerView.setAdapter(adapter);
+        homeRecyclerView.setAdapter(adapter);
 
 
 

@@ -4,8 +4,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 
-public class UserProjectItem {
+public class UserProjectItem implements Serializable {
+
+    public static final String USER_PROJECT_ITEM_KEY = "ProjectItemKEY";
 
     private Integer id;
     private Integer listPos;

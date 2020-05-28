@@ -26,7 +26,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
 
     private static final String DATABASE_NAME = "myProjects.db";
-    private static final Integer DATABASE_VERSION = 7;   // change this if you change the database
+    private static final Integer DATABASE_VERSION = 8;   // change this if you change the database
     private static final String PROJECT_TABLE_NAME = "projects";
     private static final String PROJECT_ITEM_TABLE_NAME = "projectItems";
 
@@ -53,6 +53,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     private static final String COL_ITEM_COST = "ITEM_COST";
     private static final String COL_ITEM_IMAGE = "ITEM_IMAGE";
     private static final String COL_ITEM_FOREIGN_KEY = "ITEM_FK";
+    private static final String FOREIGN_KEY_CONSTRAINT = "FK_CONSTRAINT";
 
 
 
@@ -84,15 +85,28 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 //            COL_ITEM_IMAGE + " BLOB, " +
 //            "FOREIGN KEY(" + COL_ITEM_FOREIGN_KEY + ") REFERENCES " + PROJECT_TABLE_NAME + " (" + COL_PROJECT_ID + ")" + ");";  // TODO should have a not null but gives dereferable error
 
+//    private static final String CREATE_TABLE_PROJECT_ITEM_ST = "CREATE TABLE " +  PROJECT_ITEM_TABLE_NAME + "(" +
+//            COL_ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+//            COL_ITEM_LIST_POS + " INTEGER DEFAULT 1, " +
+//            COL_ITEM_DESCRIPTION + " TEXT, " +
+//            COL_ITEM_COST + " REAL DEFAULT 0.0, " +
+//            COL_ITEM_IMAGE + " BLOB, " +
+//            COL_PROJECT_ID + " INTEGER NOT NULL, " +
+//            "CONSTRAINT " + COL_ITEM_FOREIGN_KEY + " " +
+//            "FOREIGN KEY (" + COL_PROJECT_ID + ") " +
+//            "REFERENCES " + PROJECT_TABLE_NAME + " (" + COL_PROJECT_ID + ") " +
+//            "ON DELETE CASCADE " +
+//            ")";
+
     private static final String CREATE_TABLE_PROJECT_ITEM_ST = "CREATE TABLE " +  PROJECT_ITEM_TABLE_NAME + "(" +
             COL_ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COL_ITEM_LIST_POS + " INTEGER DEFAULT 1, " +
             COL_ITEM_DESCRIPTION + " TEXT, " +
             COL_ITEM_COST + " REAL DEFAULT 0.0, " +
             COL_ITEM_IMAGE + " BLOB, " +
-            COL_PROJECT_ID + " INTEGER NOT NULL, " +
-            "CONSTRAINT " + COL_ITEM_FOREIGN_KEY + " " +
-            "FOREIGN KEY (" + COL_PROJECT_ID + ") " +
+            COL_ITEM_FOREIGN_KEY + " INTEGER NOT NULL, " +
+            "CONSTRAINT " + FOREIGN_KEY_CONSTRAINT + " " +
+            "FOREIGN KEY (" + COL_ITEM_FOREIGN_KEY + ") " +
             "REFERENCES " + PROJECT_TABLE_NAME + " (" + COL_PROJECT_ID + ") " +
             "ON DELETE CASCADE " +
             ")";
@@ -137,7 +151,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 
     // PROJECT ITEM TABLE METHODS ---------------------------------
 
-    public void itemInsert(Integer description, Float cost, Bitmap image, Integer foreignKey, ArrayList<Long> foundErrors){
+    public void itemInsert(String description, Float cost, Bitmap image, Integer foreignKey, ArrayList<Long> foundErrors){
 //        ArrayList<Long> foundErrors = new ArrayList<Long>();
 
         //List pos will = 1 as Default putting it at top of list
@@ -150,7 +164,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 
 
      // used on create of new item
-    public Long itemInsertDataBase(Integer description, Float cost, Bitmap image, Integer foreignKey ){   //list pos and id auto set
+    public Long itemInsertDataBase(String description, Float cost, Bitmap image, Integer foreignKey ){   //list pos and id auto set
         SQLiteDatabase db = this.getWritableDatabase();
 
         byte[] imageInByteArray = byteArrayImageConvert(image);  // converts here to byte array
