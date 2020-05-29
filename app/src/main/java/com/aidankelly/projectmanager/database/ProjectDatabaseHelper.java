@@ -26,7 +26,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
 
     private static final String DATABASE_NAME = "myProjects.db";
-    private static final Integer DATABASE_VERSION = 8;   // change this if you change the database
+    private static final Integer DATABASE_VERSION = 9;   // change this if you change the database
     private static final String PROJECT_TABLE_NAME = "projects";
     private static final String PROJECT_ITEM_TABLE_NAME = "projectItems";
 
@@ -77,26 +77,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
             COL_PROJECT_TOTAL_COST + " REAL DEFAULT 0.0, " +
             COL_PROJECT_IMAGE + " BLOB )";     // BLOB is for Binary large data
 
-//    private static final String CREATE_TABLE_PROJECT_ITEM_ST = "CREATE TABLE " +  PROJECT_ITEM_TABLE_NAME + "(" +
-//            COL_ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//            COL_ITEM_LIST_POS + " INTEGER DEFAULT 1," +
-//            COL_ITEM_DESCRIPTION + " TEXT, " +
-//            COL_ITEM_COST + " REAL DEFAULT 0.0, " +
-//            COL_ITEM_IMAGE + " BLOB, " +
-//            "FOREIGN KEY(" + COL_ITEM_FOREIGN_KEY + ") REFERENCES " + PROJECT_TABLE_NAME + " (" + COL_PROJECT_ID + ")" + ");";  // TODO should have a not null but gives dereferable error
 
-//    private static final String CREATE_TABLE_PROJECT_ITEM_ST = "CREATE TABLE " +  PROJECT_ITEM_TABLE_NAME + "(" +
-//            COL_ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//            COL_ITEM_LIST_POS + " INTEGER DEFAULT 1, " +
-//            COL_ITEM_DESCRIPTION + " TEXT, " +
-//            COL_ITEM_COST + " REAL DEFAULT 0.0, " +
-//            COL_ITEM_IMAGE + " BLOB, " +
-//            COL_PROJECT_ID + " INTEGER NOT NULL, " +
-//            "CONSTRAINT " + COL_ITEM_FOREIGN_KEY + " " +
-//            "FOREIGN KEY (" + COL_PROJECT_ID + ") " +
-//            "REFERENCES " + PROJECT_TABLE_NAME + " (" + COL_PROJECT_ID + ") " +
-//            "ON DELETE CASCADE " +
-//            ")";
 
     private static final String CREATE_TABLE_PROJECT_ITEM_ST = "CREATE TABLE " +  PROJECT_ITEM_TABLE_NAME + "(" +
             COL_ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
