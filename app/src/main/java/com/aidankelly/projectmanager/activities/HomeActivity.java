@@ -81,6 +81,12 @@ public class HomeActivity extends AppCompatActivity implements OnHomeRVListener 
 
         });
 
+        searchProjectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent goToSearch = new Intent(HomeActivity.this, ) //TODO implement search connection
+            }
+        });
 
 
         newProjectButton.setOnClickListener(new View.OnClickListener() {

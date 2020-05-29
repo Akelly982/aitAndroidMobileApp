@@ -18,6 +18,9 @@ public class UserProjectItem implements Serializable {
     private Integer foreignKey;
 
 
+    public UserProjectItem() {
+
+    }
 
     public UserProjectItem(Integer id, Integer listPos, String description, Float cost, Bitmap imageBitmap, Integer foreignKey) {
         this.id = id;

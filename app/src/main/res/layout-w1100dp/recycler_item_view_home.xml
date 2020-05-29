@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/itemCardView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="800dp"
+        android:layout_height="300dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         app:cardBackgroundColor="@color/darkMain"
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,7 +25,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/homeEditProjectImageImageView"
+                android:id="@+id/homeProjectImageImageView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:adjustViewBounds="true"
@@ -37,76 +37,46 @@
                 app:srcCompat="@drawable/bkg_default" />
 
             <TextView
-                android:id="@+id/homeEditProjectNameTextView"
+                android:id="@+id/homeProjectNameTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="Project Name"
+                android:layout_marginStart="16dp"
+                android:text="ProjectName"
                 android:textColor="@color/lightTextColor"
                 android:textSize="26sp"
-                app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline6"
+                app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline2"
                 app:layout_constraintEnd_toStartOf="@+id/verticleGuideline4"
                 app:layout_constraintStart_toStartOf="@+id/verticleGuideline2"
                 app:layout_constraintTop_toTopOf="@+id/HorizontalGuideline1" />
 
-            <Button
-                android:id="@+id/homeEditDeleteProjectButton"
+            <TextView
+                android:id="@+id/homeProjectCostTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="DELETE"
-                android:textColor="@color/lightTextColor"
-                android:textSize="12sp"
-                app:backgroundTint="@color/DeleteRed"
-                app:cornerRadius="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="$1,220,000,000.00"
+                android:textAlignment="viewStart"
+                android:textColor="@color/accentColor"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline3"
-                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline4"
-                app:layout_constraintStart_toStartOf="@+id/verticleGuideline3"
+                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline3"
+                app:layout_constraintStart_toStartOf="@+id/verticleGuideline2"
                 app:layout_constraintTop_toTopOf="@+id/horizontalGuideline2" />
 
             <Button
-                android:id="@+id/homeEditSetProjectTopButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Set top"
+                android:id="@+id/homeEnterProjectButton"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:text="enter"
                 android:textColor="@color/lightTextColor"
-                android:textSize="12sp"
-                app:backgroundTint="@color/accentColor"
-                app:cornerRadius="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline2"
-                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline4"
-                app:layout_constraintStart_toStartOf="@+id/verticleGuideline3"
-                app:layout_constraintTop_toTopOf="@+id/horizontalGuideline6" />
-
-            <Button
-                android:id="@+id/homeEditChangeProjectNameButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="Change name"
-                android:textColor="@color/lightTextColor"
-                android:textSize="12sp"
-                app:backgroundTint="@color/accentColor"
-                app:cornerRadius="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline2"
-                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline3"
-                app:layout_constraintStart_toStartOf="@+id/verticleGuideline2"
-                app:layout_constraintTop_toTopOf="@+id/horizontalGuideline6" />
-
-            <Button
-                android:id="@+id/homeEditChangeProjectImageButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="Change image"
-                android:textColor="@color/lightTextColor"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 app:backgroundTint="@color/accentColor"
                 app:cornerRadius="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline3"
-                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline3"
-                app:layout_constraintStart_toStartOf="@+id/verticleGuideline2"
+                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline4"
+                app:layout_constraintStart_toStartOf="@+id/verticleGuideline3"
                 app:layout_constraintTop_toTopOf="@+id/horizontalGuideline2" />
 
             <androidx.constraintlayout.widget.Guideline
@@ -121,14 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent=".65" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/horizontalGuideline6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent=".35" />
+                app:layout_constraintGuide_percent="0.50" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/horizontalGuideline3"
@@ -149,14 +112,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.4" />
+                app:layout_constraintGuide_percent="0.45" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/verticleGuideline3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.76" />
+                app:layout_constraintGuide_percent="0.8" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/verticleGuideline4"

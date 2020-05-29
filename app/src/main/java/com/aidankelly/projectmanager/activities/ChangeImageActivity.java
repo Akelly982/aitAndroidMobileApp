@@ -16,7 +16,7 @@ import com.aidankelly.projectmanager.R;
 import com.aidankelly.projectmanager.entities.UserProject;
 import com.google.android.material.snackbar.Snackbar;
 
-import static com.aidankelly.projectmanager.entities.Constants.NEW_PROJECT_FETCH_IMAGE_CODE;
+import static com.aidankelly.projectmanager.entities.Constants.FETCH_IMAGE_CODE;
 
 public class ChangeImageActivity extends AppCompatActivity {
 
@@ -76,7 +76,7 @@ public class ChangeImageActivity extends AppCompatActivity {
                 getImageObject.setType("image/*");
 
                 getImageObject.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(getImageObject,NEW_PROJECT_FETCH_IMAGE_CODE);
+                startActivityForResult(getImageObject, FETCH_IMAGE_CODE);
             }
         });
 
@@ -132,7 +132,7 @@ public class ChangeImageActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == NEW_PROJECT_FETCH_IMAGE_CODE){
+        if (requestCode == FETCH_IMAGE_CODE){
             if (resultCode == RESULT_OK){
                 setImageForStorage(data);
             }

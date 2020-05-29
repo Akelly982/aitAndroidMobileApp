@@ -109,7 +109,7 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline" />
 
             <TextView
-                android:id="@+id/projectTitleTextView2"
+                android:id="@+id/projectTitleTextView"
                 android:layout_width="0dp"
                 android:layout_height="27dp"
                 android:layout_marginStart="16dp"

@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.ChangeImageActivity"></activity>
+        <activity android:name=".activities.SearchHomeActivity"></activity>
+        <activity android:name=".activities.ChangeImageActivity" />
         <activity android:name=".activities.ChangeTextActivity" />
         <activity android:name=".activities.DeleteConfirmationActivity" />
         <activity android:name=".activities.ProjectAddItem" />

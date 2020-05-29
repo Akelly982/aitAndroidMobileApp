@@ -22,7 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-import static com.aidankelly.projectmanager.entities.Constants.NEW_PROJECT_FETCH_IMAGE_CODE;
+import static com.aidankelly.projectmanager.entities.Constants.FETCH_IMAGE_CODE;
 
 public class NewProjectActivity extends AppCompatActivity {
 
@@ -67,7 +67,7 @@ public class NewProjectActivity extends AppCompatActivity {
                 getImageObject.setType("image/*");
 
                 getImageObject.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(getImageObject,NEW_PROJECT_FETCH_IMAGE_CODE);
+                startActivityForResult(getImageObject, FETCH_IMAGE_CODE);
             }
         });
 
@@ -153,7 +153,7 @@ public class NewProjectActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == NEW_PROJECT_FETCH_IMAGE_CODE){
+        if (requestCode == FETCH_IMAGE_CODE){
             if (resultCode == RESULT_OK){
                 setImageForStorage(data);
             }
