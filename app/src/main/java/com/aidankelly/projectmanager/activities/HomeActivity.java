@@ -188,7 +188,7 @@ public class HomeActivity extends AppCompatActivity implements OnHomeRVListener 
 
     private void addNewProjectToRV(Intent data) {
         // do not fake this one cause you need the database id
-        //UserProject addProject = myDataService.getProject()   // todo fix get added project cant access newly added project
+        //UserProject addProject = myDataService.getProject()   // todo fix get added project cant access newly added project, new projects show up as index zero project, adds to RV but dose not show up top untill you scroll down and back up (maybe has to do with memory reload)
 
         // faking the input of the project causes issues
         UserProject project = (UserProject) data.getSerializableExtra(UserProject.USER_PROJECT_KEY);
