@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity implements OnHomeRVListener 
     private View rootView;
     private View optionsCardView;
     private float animHideHeight = -570f;   // not sure why these are so different
-    private float animShowHeight = 40f;     // may be due to it loses track once off screen (very weird)
+    private float animShowHeight = 30f;     // may be due to it loses track once off screen (very weird)
 
 
 
@@ -54,7 +54,6 @@ public class HomeActivity extends AppCompatActivity implements OnHomeRVListener 
         optionsButton = findViewById(R.id.homeOptionsButton);
         closeOptionsWindowButton = findViewById(R.id.homeCloseOptionsWindowButton);
         optionsCardView = findViewById(R.id.homeOptionsCardView);
-        searchProjectButton = findViewById(R.id.homeSearchProjectsButton);
         editProjectButton = findViewById(R.id.homeEditOveralProjectsButton);
 
 
@@ -81,12 +80,6 @@ public class HomeActivity extends AppCompatActivity implements OnHomeRVListener 
 
         });
 
-        searchProjectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent goToSearch = new Intent(HomeActivity.this, ) //TODO implement search connection
-            }
-        });
 
 
         newProjectButton.setOnClickListener(new View.OnClickListener() {
@@ -121,12 +114,6 @@ public class HomeActivity extends AppCompatActivity implements OnHomeRVListener 
 
 
 
-        searchProjectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO add search ability;
-            }
-        });
 
         editProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +187,12 @@ public class HomeActivity extends AppCompatActivity implements OnHomeRVListener 
     }
 
     private void addNewProjectToRV(Intent data) {
+        // do not fake this one cause you need the database id
+        //UserProject addProject = myDataService.getProject()   // todo fix get added project cant access newly added project
+
+        // faking the input of the project causes issues
         UserProject project = (UserProject) data.getSerializableExtra(UserProject.USER_PROJECT_KEY);
+        project.setTotalProjectCost(0.0f); // float of 0.0 this is normally set by db on insert
         adapter.addItem(project);
     }
 

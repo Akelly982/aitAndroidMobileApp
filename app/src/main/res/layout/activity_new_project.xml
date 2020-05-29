@@ -7,6 +7,27 @@
     tools:context=".activities.NewProjectActivity">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/bkgNewProjectCardView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:cardBackgroundColor="@color/bkgColor"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/headerBottomGuideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="75dp" />
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -74,176 +95,187 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/headerBottomGuideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.12" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/newProjectCardView"
-        android:layout_width="wrap_content"
-        android:layout_height="450dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        app:cardBackgroundColor="@color/darkMain"
-        app:cardCornerRadius="20dp"
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/headerBottomGuideline2">
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline"
-                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline8"
-                app:layout_constraintStart_toStartOf="@+id/verticleGuideline7"
-                app:layout_constraintTop_toBottomOf="@+id/newProjectNameTitleTextView">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/newProjectCardView"
+                android:layout_width="379dp"
+                android:layout_height="496dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/darkMain"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/newProjectNameInputEditText"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Type name here" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/newProjectNameTitleTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Project name:"
-                android:textColor="@color/lightTextColor"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline10"
-                app:layout_constraintStart_toStartOf="@+id/verticleGuideline9"
-                app:layout_constraintTop_toTopOf="@+id/horizontalGuideline5" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:boxStrokeColor="@color/accentColor"
+                        app:hintTextColor="@color/accentColor"
+                        app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline"
+                        app:layout_constraintEnd_toStartOf="@+id/verticleGuideline8"
+                        app:layout_constraintStart_toStartOf="@+id/verticleGuideline7"
+                        app:layout_constraintTop_toBottomOf="@+id/newProjectNameTitleTextView">
 
-            <TextView
-                android:id="@+id/newProjectAddImageTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="70dp"
-                android:layout_marginEnd="8dp"
-                android:text="Add image:"
-                android:textAlignment="center"
-                android:textColor="@color/lightTextColor"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/newProjectImportImgButton"
-                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline"
-                app:layout_constraintStart_toStartOf="@+id/verticleGuideline7"
-                app:layout_constraintTop_toTopOf="@+id/horizontalGuideline" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/newProjectNameInputEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Type name here" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/newProjectImportImgButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="Import image"
-                android:textColor="@color/lightTextColor"
-                app:backgroundTint="@color/accentColor"
-                app:cornerRadius="10dp"
-                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline"
-                app:layout_constraintStart_toStartOf="@+id/verticleGuideline7"
-                app:layout_constraintTop_toBottomOf="@+id/newProjectAddImageTextView" />
+                    <TextView
+                        android:id="@+id/newProjectNameTitleTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Project name:"
+                        android:textColor="@color/lightTextColor"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toStartOf="@+id/verticleGuideline10"
+                        app:layout_constraintStart_toStartOf="@+id/verticleGuideline9"
+                        app:layout_constraintTop_toTopOf="@+id/horizontalGuideline5" />
 
-            <ImageView
-                android:id="@+id/newProjectImagePreviewImageView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline1"
-                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline8"
-                app:layout_constraintStart_toStartOf="@+id/verticleGuideline"
-                app:layout_constraintTop_toTopOf="@+id/horizontalGuideline"
-                app:srcCompat="@drawable/bkg_default" />
+                    <TextView
+                        android:id="@+id/newProjectAddImageTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="Add image:"
+                        android:textAlignment="center"
+                        android:textColor="@color/lightTextColor"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toTopOf="@+id/newProjectImportImgButton"
+                        app:layout_constraintEnd_toStartOf="@+id/verticleGuideline"
+                        app:layout_constraintStart_toStartOf="@+id/verticleGuideline7"
+                        app:layout_constraintTop_toTopOf="@+id/horizontalGuideline" />
 
-            <Button
-                android:id="@+id/newProjectCreateProjectButton"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="8dp"
-                android:text="Create"
-                android:textColor="@color/lightTextColor"
-                app:backgroundTint="@color/accentColor"
-                app:cornerRadius="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline4"
-                app:layout_constraintEnd_toStartOf="@+id/verticleGuideline10"
-                app:layout_constraintHorizontal_bias="0.6"
-                app:layout_constraintStart_toStartOf="@+id/verticleGuideline9"
-                app:layout_constraintTop_toTopOf="@+id/horizontalGuideline1" />
+                    <Button
+                        android:id="@+id/newProjectImportImgButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Import image"
+                        android:textColor="@color/lightTextColor"
+                        app:backgroundTint="@color/accentColor"
+                        app:cornerRadius="10dp"
+                        app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline1"
+                        app:layout_constraintEnd_toStartOf="@+id/verticleGuideline"
+                        app:layout_constraintStart_toStartOf="@+id/verticleGuideline7"
+                        app:layout_constraintTop_toBottomOf="@+id/newProjectAddImageTextView" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/verticleGuideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.45" />
+                    <ImageView
+                        android:id="@+id/newProjectImagePreviewImageView"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline1"
+                        app:layout_constraintEnd_toStartOf="@+id/verticleGuideline8"
+                        app:layout_constraintStart_toStartOf="@+id/verticleGuideline"
+                        app:layout_constraintTop_toTopOf="@+id/horizontalGuideline"
+                        app:srcCompat="@drawable/bkg_default" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/verticleGuideline9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.3" />
+                    <Button
+                        android:id="@+id/newProjectCreateProjectButton"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Create"
+                        android:textColor="@color/lightTextColor"
+                        app:backgroundTint="@color/accentColor"
+                        app:cornerRadius="10dp"
+                        app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline4"
+                        app:layout_constraintEnd_toStartOf="@+id/verticleGuideline10"
+                        app:layout_constraintHorizontal_bias="0.6"
+                        app:layout_constraintStart_toStartOf="@+id/verticleGuideline9"
+                        app:layout_constraintTop_toTopOf="@+id/horizontalGuideline1" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/verticleGuideline10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.7" />
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/verticleGuideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.45" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/verticleGuideline7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.03" />
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/verticleGuideline9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.3" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/verticleGuideline8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.97" />
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/verticleGuideline10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.7" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/horizontalGuideline1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent=".75" />
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/verticleGuideline7"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.03" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/horizontalGuideline4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.97" />
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/verticleGuideline8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.97" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/horizontalGuideline5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.03" />
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/horizontalGuideline1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent=".75" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/horizontalGuideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.25" />
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/horizontalGuideline4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.97" />
 
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/horizontalGuideline5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.03" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/horizontalGuideline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.25" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

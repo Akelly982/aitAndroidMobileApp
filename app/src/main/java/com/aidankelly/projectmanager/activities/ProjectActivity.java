@@ -36,7 +36,6 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectRVLis
     private Button closeOptionsButton;
     private Button openOptionsButton;
     private Button returnHomeButton;
-    private Button editProjectItemsButton;
     private Button addItemButton;
     private TextView projectTitleTextView;
     private TextView projectCostTextView;
@@ -46,7 +45,7 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectRVLis
 
     // for notes on anim refer to home activity
     private float animHideHeight = -570f;
-    private float animShowHeight = 40f;
+    private float animShowHeight = 30f;
     private View optionsCardView;
 
 
@@ -59,7 +58,6 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectRVLis
         closeOptionsButton = findViewById(R.id.projectCloseOptionsWindowButton);
         openOptionsButton = findViewById(R.id.projectOpenOptionsButton);
         returnHomeButton = findViewById(R.id.projectOptionsReturnHomeButton);
-        editProjectItemsButton = findViewById(R.id.projectOptionsReturnHomeButton);
         addItemButton = findViewById(R.id.projectNewItemButton);
         optionsCardView = findViewById(R.id.projectOptionsCardView);
 

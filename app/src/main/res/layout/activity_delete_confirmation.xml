@@ -22,14 +22,12 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/deleteConfirmAlertCardView"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="300dp"
+        android:layout_height="220dp"
         app:cardBackgroundColor="@color/darkMain"
         app:cardCornerRadius="4dp"
         app:cardElevation="1dp"
+        app:layout_constraintBottom_toBottomOf="@+id/deleteConfirmBkgCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
