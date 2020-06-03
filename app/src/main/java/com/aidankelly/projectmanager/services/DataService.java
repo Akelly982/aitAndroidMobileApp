@@ -31,7 +31,7 @@ public class DataService {
 
 
 
-    // project   ( home activty etc)  ----------------------
+    // project   ( home activity etc)  ----------------------
         // sql insert returns long
     public void addProject(UserProject myProject, ArrayList<Long> errorList){
         // returns list holding error info  --  index 0 = list increment method    index 1 = database add method
@@ -53,6 +53,10 @@ public class DataService {
         return sqlite.projectUpdateName(myProject.getId(),myProject.getProjectName());
     }
 
+    public boolean updateProjectCost(UserProject myProject){
+        return sqlite.projectUpdateCost(myProject.getId(),myProject.getTotalProjectCost());
+    }
+
     public boolean deleteProject(Integer id){
         return sqlite.projectDelete(id);
     }
@@ -66,12 +70,19 @@ public class DataService {
         return sqlite.getProject(id);
     }
 
+    public UserProject getProjectByListPos1(){
+        return sqlite.getProjectByListPos1();
+    }
 
 
 
 
 
     // project Items   (project activity etc) ------------------------------------
+
+    public UserProjectItem getItemByListPos1(){
+        return sqlite.getItemByListPos1();
+    }
 
     public void addItem(UserProjectItem myItem, UserProject parentProject ,ArrayList<Long> errorList){
         // returns list holding error info  --  index 0 = list increment method    index 1 = database add method

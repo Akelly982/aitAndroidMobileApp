@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aidankelly.projectmanager.R;
+import com.aidankelly.projectmanager.entities.UserProject;
 import com.aidankelly.projectmanager.entities.UserProjectItem;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class ProjectRecyclerViewAdapter extends RecyclerView.Adapter<ProjectView
     public void onBindViewHolder(@NonNull ProjectViewHolder holder, int position) {
         UserProjectItem item = projectItems.get(position);
         holder.updateProjectItem(item);
-        holder.bindUpdateButtons(item, onProjectRVListener);
+        holder.bindUpdateButtons(item, onProjectRVListener, position);
     }
 
     @Override
@@ -53,6 +54,15 @@ public class ProjectRecyclerViewAdapter extends RecyclerView.Adapter<ProjectView
     public void deleteItemByIndex(int position){
         projectItems.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void addItem(UserProjectItem item) {
+        int position = 0;
+        projectItems.add(position,item);
+        notifyItemInserted(position);
+    }
+    public List<UserProjectItem> getRvList() {
+        return projectItems;
     }
 
 }

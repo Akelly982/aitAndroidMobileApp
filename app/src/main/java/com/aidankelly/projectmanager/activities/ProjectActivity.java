@@ -31,6 +31,7 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectRVLis
     private DataService myDataService;
     private List<UserProjectItem> projectItems;
     private ProjectRecyclerViewAdapter adapter;
+    private Integer deletePositionRV = null;
 
 
     private Button closeOptionsButton;
@@ -73,6 +74,7 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectRVLis
         // set parentProject details
         projectTitleTextView.setText(projectParent.getProjectName());
         projectCostTextView.setText(projectParent.getTotalProjectCost().toString());
+
 
         // close options window Animation
         optionsMenuHide(0);
@@ -134,12 +136,14 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectRVLis
         returnHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_CANCELED);
+                // total cost gets updated from db on return
+                setResult(RESULT_OK);
                 finish();
             }
         });
 
-
+        // update project cost (make sure it is correct)
+        updateProjectCost();
 
     }
 
@@ -149,12 +153,44 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectRVLis
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.PROJECT_ADD_ITEM_CODE){
             if (resultCode == RESULT_OK){
-                updateDbNewItem(data);
+                updateNewItem(data);
+            }
+        }
+        if (requestCode == Constants.DELETE_CONFIRMATION_ACTIVITY_CODE){
+            if (resultCode == RESULT_OK){
+                deleteItem(data);
             }
         }
     }
 
-    private void updateDbNewItem(Intent data) {
+    private void deleteItem(Intent data) {
+        UserProjectItem myItem = (UserProjectItem) data.getSerializableExtra(UserProjectItem.USER_PROJECT_ITEM_KEY);
+
+        // delete from DB
+        boolean result = myDataService.deleteItem(myItem.getId());
+        // display result
+        if (result){
+            Snackbar.make(rootView, " item deleted: "  , Snackbar.LENGTH_SHORT).show();
+        }else{
+            Snackbar.make(rootView, " item not deleted: " , Snackbar.LENGTH_SHORT).show();
+        }
+
+        // RemoveFromRV
+        if (deletePositionRV != null){   // if exists
+            adapter.deleteItemByIndex(deletePositionRV);
+        }
+        // reset deletePos to null
+        deletePositionRV = null;
+
+        // update parent project cost
+        updateProjectCost();
+
+
+    }
+
+    private void updateNewItem(Intent data) {
+
+        // update db
         UserProjectItem myNewItem = new UserProjectItem();
         myNewItem = (UserProjectItem) data.getSerializableExtra(UserProjectItem.USER_PROJECT_ITEM_KEY);
 
@@ -172,6 +208,19 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectRVLis
             Snackbar.make(rootView, "Error found in db insertion" , Snackbar.LENGTH_LONG).show();
         }
 
+
+        // get from database to get the id attached to item instance
+        myNewItem = myDataService.getItemByListPos1();
+        if (myNewItem.getId() == null){
+            Snackbar.make(rootView, "Error in obtaining new item id" , Snackbar.LENGTH_LONG).show();
+        }
+
+        // update rv
+        adapter.addItem(myNewItem);
+
+        //update the parentProject cost
+        updateProjectCost();  // works based on all items being used by the RV with its list.
+
     }
 
     private void optionsMenuHide(int duration) {  // adjustable so the first one can be instant on load
@@ -188,12 +237,38 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectRVLis
 
 
     @Override
-    public void onDeleteItemClick(UserProjectItem item) {
+    public void onDeleteItemClick(UserProjectItem item, Integer position) {
         Intent deleteItemIntent = new Intent(this, DeleteConfirmationActivity.class);
+        deletePositionRV = position; // hold the position of this item
         deleteItemIntent.putExtra(UserProjectItem.USER_PROJECT_ITEM_KEY,item);
         startActivityForResult(deleteItemIntent, Constants.DELETE_CONFIRMATION_ACTIVITY_CODE);
 
     }
+
+
+
+    public void updateProjectCost(){
+        Float totalCost = 0f;
+        // for each get cost and add to total
+        List<UserProjectItem> currentList = adapter.getRvList();
+
+        for (int i = 0; i < currentList.size(); i++){
+            totalCost += currentList.get(i).getCost();
+        }
+
+        // set to projectParent
+        projectParent.setTotalProjectCost(totalCost);
+
+        // update current page
+        projectCostTextView.setText(projectParent.getTotalProjectCost().toString());
+
+        // set it to the db
+        myDataService.updateProjectCost(projectParent);
+
+    }
+
+
+
 
 
 }

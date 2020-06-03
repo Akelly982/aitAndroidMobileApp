@@ -59,13 +59,14 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeViewHolder
     // for recycler view update
 
     public void addItem(UserProject project) {
-        projects.add(0,project);
-        notifyItemInserted(getItemCount());
+        int position = 0;
+        projects.add(position,project);
+        notifyItemInserted(position);
     }
 
     public void reloadRV(List<UserProject> myNewList) {
         projects = myNewList;
-        notifyDataSetChanged();  // reloads entire RV very heavy to use
+        notifyDataSetChanged();  // reloads entire RV very heavy to use very bad
     }
 
     public List<UserProject> getRvList() {
@@ -77,21 +78,6 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeViewHolder
         notifyItemChanged(position);
     }
 
-    public void moveItemToFirst(int position, UserProject project){
-        // delete project at old position
-        projects.remove(position);
-        notifyItemRemoved(position);
-
-        // add project at new position (top of list)
-        projects.add(0,project);
-        notifyItemInserted(getItemCount());
-
-    }
-
-    public void deleteItemByIndex(int position){
-        projects.remove(position);
-        notifyItemRemoved(position);
-    }
 
 
 }

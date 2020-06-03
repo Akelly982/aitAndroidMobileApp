@@ -68,6 +68,8 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     private static final String GET_PROJECT_ITEM_LIST_POSITION_WITH_FK = "SELECT " + COL_ITEM_ID + ", " + COL_ITEM_LIST_POS +" FROM " + PROJECT_ITEM_TABLE_NAME + " WHERE " + COL_ITEM_FOREIGN_KEY + "= ?;";
     private static final String GET_PROJECT = "SELECT * FROM " + PROJECT_TABLE_NAME +  " WHERE " + COL_PROJECT_ID + " = ?";
     private static final String GET_PROJECT_ITEM = "SELECT * FROM " + PROJECT_ITEM_TABLE_NAME +  " WHERE " + COL_ITEM_ID + " = ?";
+    private static final String GET_PROJECT_BY_LISTPOS_1 = "Select * FROM " + PROJECT_TABLE_NAME + " WHERE " + COL_PROJECT_LIST_POS + " = 1";
+    private static final String GET_PROJECT_ITEM_BY_LISTPOS_1 = "Select * FROM " + PROJECT_ITEM_TABLE_NAME + " WHERE " + COL_ITEM_LIST_POS + " = 1";
 
     // do not forget you spaces "CREATE TABLE "
     private static final String CREATE_TABLE_PROJECT_ST = "CREATE TABLE " +  PROJECT_TABLE_NAME + "(" +
@@ -285,6 +287,39 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         return item;
     }
 
+    public UserProjectItem getItemByListPos1(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        UserProjectItem item = null;
+
+        // requires item.id followed by foreign key
+        Cursor cursor = db.rawQuery(GET_PROJECT_ITEM_BY_LISTPOS_1, null);
+
+        if (cursor.getCount() > 0){
+            while(cursor.moveToNext()){
+
+
+                Integer itemId= cursor.getInt(0);
+                Integer listPosition = cursor.getInt(1);
+                String description = cursor.getString(2);
+                Float cost = cursor.getFloat(3);
+                byte[] imageBytes = cursor.getBlob(4);
+                Integer foreignKey = cursor.getInt(5);
+
+
+                //convert bytes back to bitmap
+                Bitmap projectImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
+
+                item = new UserProjectItem(itemId,listPosition,description,cost, projectImage,foreignKey);
+
+            }
+        }
+
+        cursor.close();
+        db.close();
+        return item;
+    }
+
 
 
 
@@ -294,6 +329,39 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 
 
     // PROJECT TABLE METHODS ----------------------------
+
+    public UserProject getProjectByListPos1(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        UserProject project = null;
+
+        // requires item.id followed by foreign key
+        Cursor cursor = db.rawQuery(GET_PROJECT_BY_LISTPOS_1,null);
+
+        if (cursor.getCount() > 0){
+            while(cursor.moveToNext()){
+
+
+                Integer id = cursor.getInt(0);
+                Integer listPosition = cursor.getInt(1) ;
+                String projectName = cursor.getString(2);
+                Float totalProjectCost = cursor.getFloat(3);
+                byte[] imageBytes = cursor.getBlob(4);       // Grab blob with byte array
+
+                //convert bytes back to bitmap
+                Bitmap projectImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
+
+                project = new UserProject(id,listPosition,projectName,totalProjectCost, projectImage);
+
+
+            }
+        }
+
+        cursor.close();
+        db.close();
+        return project;
+    }
+
 
     public void projectInsert(String projectName,Bitmap projectImage, ArrayList<Long> foundErrors){
 //        ArrayList<Long> foundErrors = new ArrayList<Long>();
@@ -391,6 +459,18 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    // only update project cost
+    public boolean projectUpdateCost(Integer id, Float newProjectCost){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_PROJECT_TOTAL_COST, newProjectCost);
+
+        int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, COL_PROJECT_ID + " = ?", new String[]{id.toString()});
+        db.close();
+        return  (numOfRowsUpdated == 1);
+    }
+
         // only update projectName
     public boolean projectUpdateName (Integer id, String projectName){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -438,7 +518,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 
     public boolean projectDelete (Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
-        int numOfRowsDeleted = db.delete(PROJECT_TABLE_NAME, "ID = ?", new String[]{id.toString()});
+        int numOfRowsDeleted = db.delete(PROJECT_TABLE_NAME, COL_PROJECT_ID+ " = ?", new String[]{id.toString()});
         return  (numOfRowsDeleted == 1);
     }
 

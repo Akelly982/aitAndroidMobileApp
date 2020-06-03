@@ -76,8 +76,8 @@ public class NewProjectActivity extends AppCompatActivity {
         exitNewProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goingHome = new Intent();
-                exit(v);
+                setResult(RESULT_CANCELED);
+                finish();
             }
         });
 

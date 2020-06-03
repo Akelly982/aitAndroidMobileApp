@@ -49,11 +49,11 @@ public class ProjectViewHolder extends RecyclerView.ViewHolder {
 
 
 
-    public void bindUpdateButtons(final UserProjectItem item, final OnProjectRVListener onProjectRVListener){
+    public void bindUpdateButtons(final UserProjectItem item, final OnProjectRVListener onProjectRVListener, final Integer position){
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onProjectRVListener.onDeleteItemClick(item);
+                onProjectRVListener.onDeleteItemClick(item, position);
             }
         });
     }

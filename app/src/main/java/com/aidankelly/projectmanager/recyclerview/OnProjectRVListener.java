@@ -5,5 +5,5 @@ import com.aidankelly.projectmanager.entities.UserProjectItem;
 
 public interface OnProjectRVListener {
 
-    void onDeleteItemClick(UserProjectItem item);
+    void onDeleteItemClick(UserProjectItem item,Integer position);
 }

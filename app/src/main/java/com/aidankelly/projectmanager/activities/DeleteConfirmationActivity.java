@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.aidankelly.projectmanager.R;
 import com.aidankelly.projectmanager.entities.UserProject;
+import com.aidankelly.projectmanager.entities.UserProjectItem;
 import com.google.android.material.snackbar.Snackbar;
 
 public class DeleteConfirmationActivity extends AppCompatActivity {
@@ -19,6 +20,7 @@ public class DeleteConfirmationActivity extends AppCompatActivity {
     private View rootView;
 
     Integer projectId = null;
+    UserProjectItem myItem;
 
     Integer dataType;
     private static final Integer PROJECT_FOR_DELETE = 1;
@@ -37,17 +39,19 @@ public class DeleteConfirmationActivity extends AppCompatActivity {
 
         Intent intentThatCalled = getIntent();
 
-        if (getIntent().hasExtra(UserProject.USER_PROJECT_ID_KEY)){
+        if (getIntent().hasExtra(UserProject.USER_PROJECT_ID_KEY)){   // passed just the id
             projectId = intentThatCalled.getIntExtra(UserProject.USER_PROJECT_ID_KEY, -1);
             dataType = PROJECT_FOR_DELETE;
 
-            // if id gotten is the default -1
+            // if id gotten is the default -1 not what we want
             if(projectId == -1){
                 Snackbar.make(rootView, " project id not correctly passed == -1 " , Snackbar.LENGTH_SHORT).show();
             }
 
-
-
+        }
+        else if (getIntent().hasExtra((UserProjectItem.USER_PROJECT_ITEM_KEY))){ //passed the whole class
+            myItem = (UserProjectItem) intentThatCalled.getSerializableExtra(UserProjectItem.USER_PROJECT_ITEM_KEY);
+            dataType = ITEM_OF_PROJECT_FOR_DELETE;
         }
 
 
@@ -62,6 +66,15 @@ public class DeleteConfirmationActivity extends AppCompatActivity {
                     goingBackDelete.putExtra(UserProject.USER_PROJECT_ID_KEY, projectId);
                     setResult(RESULT_OK,goingBackDelete);
                     finish();
+                }
+                else if (dataType == ITEM_OF_PROJECT_FOR_DELETE){
+                    Intent goingBackDeleteItem = new Intent();
+                    goingBackDeleteItem.putExtra(UserProjectItem.USER_PROJECT_ITEM_KEY, myItem);
+                    setResult(RESULT_OK,goingBackDeleteItem);
+                    finish();
+                }
+                else {
+                    Snackbar.make(rootView, " Error unsure of data to be returned " , Snackbar.LENGTH_SHORT).show();
                 }
 
             }

@@ -60,18 +60,20 @@ public class HomeEditRecyclerViewAdapter extends RecyclerView.Adapter<HomeEditVi
     }
 
     public void replaceItem(int position, UserProject project) {
-        projects.set(position,project);
-        notifyItemChanged(position);
+        projects.set(position,project);   // use the new update project
+        notifyItemChanged(position,null);
     }
 
-    public void moveItemToFirst(int position, UserProject project){
+    public void moveItemToFirst(int position, UserProject project){  // works
         // delete project at old position
         projects.remove(position);
         notifyItemRemoved(position);
 
         // add project at new position (top of list)
-        projects.add(0,project);
-        notifyItemInserted(getItemCount());
+        int newPosition = 0;
+        projects.add(newPosition,project);
+        notifyItemInserted(newPosition);
+
 
     }
 
@@ -79,5 +81,7 @@ public class HomeEditRecyclerViewAdapter extends RecyclerView.Adapter<HomeEditVi
         projects.remove(position);
         notifyItemRemoved(position);
     }
+
+
 
 }
