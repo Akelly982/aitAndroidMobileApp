@@ -137,12 +137,14 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     public void itemInsert(String description, Float cost, Bitmap image, Integer foreignKey, ArrayList<Long> foundErrors){
 //        ArrayList<Long> foundErrors = new ArrayList<Long>();
 
-        //List pos will = 1 as Default putting it at top of list
-        // update all rows listPos to make room for new listPos prior to running this method
+        //List pos will = 1 as Default putting it at top of list when added to database
+
+        // update all rows listPos to make room for new listPos prior to running the database method
         foundErrors.add(incrementAllItemsListPosition(foreignKey));  // foreign key of parent project
 
         // add to database
         foundErrors.add(itemInsertDataBase(description,cost,image,foreignKey));
+
     }
 
 
@@ -187,6 +189,41 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
                 listPosition++;
 
                 contentValues.put(COL_ITEM_LIST_POS,listPosition);
+
+                //set new value to db
+                int numOfRowsUpdated = db.update(PROJECT_ITEM_TABLE_NAME, contentValues, COL_ITEM_ID + " = ?", new String[]{currentId.toString()});
+                if (numOfRowsUpdated != 1){  // should only be 1
+                    numOfErrors++;  // if not 1 their was an error.
+                }
+
+            }
+        }
+
+        cursor.close();
+        db.close();
+        return numOfErrors;
+    };
+
+    public long allItemsListPositionClean(Integer ForeignKey){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(GET_PROJECT_ITEM_LIST_POSITION_WITH_FK,  new String[]{ForeignKey.toString()});
+
+        long numOfErrors = 0L;
+        Integer counterListPos = 1; // the start pos for list pos
+
+        if (cursor.getCount() > 0){     // no data found
+            UserProjectItem item;
+            while(cursor.moveToNext()){      // if their is no next row it returns false
+
+
+                ContentValues contentValues = new ContentValues();
+
+                Integer currentId = cursor.getInt(0);
+
+
+                contentValues.put(COL_ITEM_LIST_POS,counterListPos);
+                counterListPos++;
 
                 //set new value to db
                 int numOfRowsUpdated = db.update(PROJECT_ITEM_TABLE_NAME, contentValues, COL_ITEM_ID + " = ?", new String[]{currentId.toString()});
@@ -440,6 +477,35 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         return numOfErrors;
     };
 
+    public int allProjectsListPosClean(){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(GET_PROJECT_LIST_POSITION, null);
+
+        Integer numOfErrors = 0;
+        Integer counterListPos = 1;
+
+        if (cursor.getCount() > 0){
+            while(cursor.moveToNext()){
+                ContentValues contentValues = new ContentValues();
+                Integer currentId = cursor.getInt(0);  // get my current pos for update
+
+                contentValues.put(COL_PROJECT_LIST_POS,counterListPos); // get for set
+                counterListPos++;  // increment
+
+                //set new value to db
+                int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, COL_PROJECT_ID + " = ?", new String[]{currentId.toString()});
+                if (numOfRowsUpdated != 1){  // should only be 1
+                    numOfErrors++;  // if not 1 their was an error.
+                }
+
+            }
+        }
+
+        cursor.close();
+        db.close();
+        return numOfErrors;
+    };
 
 
          // update whole project

@@ -211,22 +211,11 @@
                         app:layout_constraintStart_toStartOf="@+id/guideline12"
                         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
-                    <ImageView
-                        android:id="@+id/projectAddItemPreviewImageView"
-                        android:layout_width="0dp"
-                        android:layout_height="270dp"
-                        android:layout_marginTop="32dp"
-                        android:scaleType="centerCrop"
-                        app:layout_constraintEnd_toStartOf="@+id/guideline10"
-                        app:layout_constraintStart_toStartOf="@+id/guideline9"
-                        app:layout_constraintTop_toBottomOf="@+id/projectAddItemImportImageButton"
-                        app:srcCompat="@drawable/bkg_default" />
 
                     <Button
                         android:id="@+id/projectAddItemAddToProjectButton"
                         android:layout_width="176dp"
                         android:layout_height="80dp"
-                        android:layout_marginTop="32dp"
                         android:layout_marginBottom="8dp"
                         android:backgroundTint="@color/accentColor"
                         android:text="Add to project"
@@ -235,7 +224,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/guideline13"
                         app:layout_constraintEnd_toStartOf="@+id/guideline10"
                         app:layout_constraintStart_toStartOf="@+id/guideline9"
-                        app:layout_constraintTop_toBottomOf="@+id/projectAddItemPreviewImageView" />
+                        app:layout_constraintTop_toBottomOf="@+id/cardView6" />
 
                     <Button
                         android:id="@+id/projectAddItemImportImageButton"
@@ -284,6 +273,27 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         app:layout_constraintGuide_percent="0.97" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardView6"
+                        android:layout_width="0dp"
+                        android:layout_height="270dp"
+                        android:layout_marginTop="32dp"
+                        app:cardBackgroundColor="@color/darkMain"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline10"
+                        app:layout_constraintStart_toStartOf="@+id/guideline9"
+                        app:layout_constraintTop_toBottomOf="@+id/projectAddItemImportImageButton" >
+
+                        <ImageView
+                            android:id="@+id/projectAddItemPreviewImageView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/bkg_default"
+                            tools:ignore="ContentDescription" />
+                    </androidx.cardview.widget.CardView>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

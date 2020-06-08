@@ -194,6 +194,9 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
 
     @Override
     public void onProjectSetToTopClick(UserProject project) {
+
+
+        //set to top db
         ArrayList<Long> errorList = new ArrayList<Long>();
         myDataService.setProjectToTop(project,errorList);
         if (errorList.get(0) > 0L){  // increment errors
@@ -209,6 +212,15 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
         if (RVListPos != -1){
             adapter.moveItemToFirst(RVListPos,project);
         }
+
+        // TODO fix this removing gaps in list
+//        // clean list so their is no gaps
+//        Integer numErrors = myDataService.cleanProjectList();
+//        if (numErrors != 0){ // set top errors
+//            Snackbar.make(rootView, " project list pos clean error " + errorList.get(1).toString() , Snackbar.LENGTH_SHORT).show();
+//        }
+
+
 
     }
 

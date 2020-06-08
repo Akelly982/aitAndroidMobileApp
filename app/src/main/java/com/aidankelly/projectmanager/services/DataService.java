@@ -103,6 +103,9 @@ public class DataService {
         return sqlite.getItem(id);
     }
 
+    public int cleanProjectList() {
+        return sqlite.allProjectsListPosClean();
+    }
 
 
 //    public boolean updateItemImg(UserProject myProject){

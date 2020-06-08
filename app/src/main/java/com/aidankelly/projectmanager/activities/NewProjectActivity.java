@@ -117,6 +117,7 @@ public class NewProjectActivity extends AppCompatActivity {
 
         // create a list to store potential errors
         ArrayList<Long> foundErrors = new ArrayList<Long>();
+
         // insert to db
         projectDataService.addProject(project, foundErrors);
 

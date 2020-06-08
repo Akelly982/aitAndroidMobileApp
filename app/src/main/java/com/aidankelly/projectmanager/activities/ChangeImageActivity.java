@@ -2,6 +2,8 @@ package com.aidankelly.projectmanager.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -148,6 +150,7 @@ public class ChangeImageActivity extends AppCompatActivity {
         catch (Exception e){
             Snackbar.make(rootView, e.toString() , Snackbar.LENGTH_LONG).show();   // send a small alert msg using the exception
         }
+
         imagePreviewImageView.setImageBitmap(imageToStore); // set the new image to preview window and set to global variable
         notGotAnImage = false;
     }

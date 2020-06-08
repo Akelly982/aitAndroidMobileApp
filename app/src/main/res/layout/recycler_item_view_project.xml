@@ -30,13 +30,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:text="project Descriptive text"
                 android:textAlignment="textStart"
                 android:textColor="@color/lightTextColor"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/projectRVItemImageView2"
+                app:layout_constraintBottom_toTopOf="@+id/cardView4"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintStart_toStartOf="@+id/guideline5"
                 app:layout_constraintTop_toTopOf="@+id/guideline6" />
@@ -83,16 +84,6 @@
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.05" />
 
-            <ImageView
-                android:id="@+id/projectRVItemImageView2"
-                android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_marginBottom="16dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                app:layout_constraintStart_toStartOf="@+id/guideline5"
-                app:srcCompat="@drawable/bkg_default" />
 
             <View
                 android:id="@+id/divider2"
@@ -102,10 +93,31 @@
                 android:layout_marginBottom="8dp"
                 android:background="@color/accentColor"
                 android:elevation="2dp"
-                app:layout_constraintBottom_toTopOf="@+id/projectRVItemImageView2"
+                app:layout_constraintBottom_toTopOf="@+id/cardView4"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView4"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/darkMain"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintStart_toStartOf="@+id/guideline5">
+
+                <ImageView
+                    android:id="@+id/projectRVItemImageView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bkg_default"
+                    tools:ignore="ContentDescription" />
+            </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ProjectManager</string>
+    <string name="imageRadius">20dp</string>
 </resources>
