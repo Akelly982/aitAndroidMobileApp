@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ProjectManager</string>
+    <string name="imageRadius">20dp</string>
+    <string name="button_import_image">import</string>
+    <string name="button_cancel">cancel</string>
+    <string name="button_return_x">X</string>
+    <string name="button_delete">Delete</string>
+    <string name="button_options">options</string>
+    <string name="button_add">+</string>
+    <string name="button_import">import</string>
+    <string name="button_close">close</string>
+    <string name="activity_change_image_header">change image</string>
+    <string name="activity_change_image_new_image">new image</string>
+    <string name="activity_change_image_set_image">set image</string>
+    <string name="activity_change_text_edit">edit:</string>
+    <string name="activity_change_text_fillerText">somthing</string>
+    <string name="activity_change_text_set_new_text">Set new text</string>
+    <string name="activity_change_text_change_text">Change text</string>
+    <string name="activity_change_text_type_here">Type Here</string>
+    <string name="activity_delete_confirmation_delete_this_content">Delete this content?</string>
+    <string name="activity_delete_confirmation_you_will_lose_the_selected_data">You will lose the selected data.</string>
+    <string name="activity_delete_confirmation_are_you_sure">Are you sure?</string>
+    <string name="activity_home_projects">Projects</string>
+    <string name="activity_home_edit_projects">Edit Projects</string>
+    <string name="activity_home_edit_projects_edit">Projects Edit</string>
+    <string name="activity_new_project_create_new_project">Create new project</string>
+    <string name="activity_new_project_project_name">Project name:</string>
+    <string name="activity_new_project_type_name_here">Type name here</string>
+    <string name="activity_new_project_create">Create</string>
+    <string name="activity_new_project_add_image">Add image:</string>
+    <string name="activity_project_return_home">Return home</string>
+    <string name="activity_project_filler_project_cost">$ 12,000,000.00</string>
+</resources>
