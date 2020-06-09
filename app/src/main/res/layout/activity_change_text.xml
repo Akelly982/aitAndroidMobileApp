@@ -55,7 +55,7 @@
                 android:insetTop="0dp"
                 android:insetRight="2dp"
                 android:insetBottom="2dp"
-                android:text="X"
+                android:text="@string/button_return_x"
                 android:textColor="@color/lightTextColor"
                 android:textSize="24sp"
                 app:backgroundTint="@color/accentColor"
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="Change Text"
+                android:text="@string/activity_change_text_change_text"
                 android:textAlignment="viewStart"
                 android:textColor="@color/lightTextColor"
                 android:textSize="24sp"
@@ -113,7 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
-                android:text="Edit:"
+                android:text="@string/activity_change_text_edit"
                 android:textColor="@color/accentColor"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toTopOf="@+id/guideline17"
@@ -125,7 +125,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Somthing"
+                android:text="@string/activity_change_text_fillerText"
                 android:textColor="@color/lightTextColor"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toTopOf="@+id/guideline17"
@@ -152,7 +152,7 @@
                     android:id="@+id/changeTextUserInputFieldEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Type Here..." />
+                    android:hint="@string/activity_change_text_type_here" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -161,7 +161,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/accentColor"
-                android:text="@android:string/cancel"
+                android:text="@string/button_cancel"
                 android:textColor="@color/lightTextColor"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/changeTextSetTextButton"
@@ -175,7 +175,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/accentColor"
-                android:text="Set new text  "
+                android:text="@string/activity_change_text_set_new_text"
                 android:textColor="@color/lightTextColor"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
