@@ -218,7 +218,6 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 
 
                 ContentValues contentValues = new ContentValues();
-
                 Integer currentId = cursor.getInt(0);
 
 
@@ -451,7 +450,6 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         long numOfErrors = 0L;
 
         if (cursor.getCount() > 0){     // no data found
-            UserProject project;
             while(cursor.moveToNext()){      // if their is no next row it returns false
 
 
