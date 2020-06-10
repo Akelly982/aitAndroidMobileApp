@@ -32,8 +32,9 @@
     <string name="activity_delete_confirmation_are_you_sure">Are you sure?</string>
 
     <string name="activity_home_projects">Projects</string>
-    <string name="activity_home_edit_projects">Edit Projects</string>
-    <string name="activity_home_edit_projects_edit">Projects Edit</string>
+    <string name="activity_home_edit_projects">Edit projects</string>
+    <string name="activity_home_edit_projects_edit">Edit projects</string>
+
     <string name="activity_new_project_create_new_project">Create new project</string>
     <string name="activity_new_project_project_name">Project name:</string>
     <string name="activity_new_project_type_name_here">Type name here</string>
