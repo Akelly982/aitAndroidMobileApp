@@ -110,7 +110,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/newProjectCardView"
-                android:layout_width="379dp"
+                android:layout_width="0dp"
                 android:layout_height="496dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
@@ -171,7 +171,7 @@
 
                     <Button
                         android:id="@+id/newProjectImportImgButton"
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="8dp"
@@ -271,7 +271,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/horizontalGuideline1"
                         app:layout_constraintEnd_toStartOf="@+id/verticleGuideline8"
                         app:layout_constraintStart_toStartOf="@+id/verticleGuideline"
-                        app:layout_constraintTop_toTopOf="@+id/horizontalGuideline" >
+                        app:layout_constraintTop_toTopOf="@+id/horizontalGuideline">
 
                         <ImageView
                             android:id="@+id/newProjectImagePreviewImageView"
