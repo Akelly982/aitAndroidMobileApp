@@ -14,7 +14,7 @@ public class UserProjectItem implements Serializable {
     private Integer listPos;
     private String description;
     private Float cost;
-    private byte[] ImageBytes;
+    private String imagePath;     // for example myImage.png    << do not forget the .png
     private Integer foreignKey;
 
 
@@ -22,60 +22,23 @@ public class UserProjectItem implements Serializable {
 
     }
 
-    public UserProjectItem(Integer id, Integer listPos, String description, Float cost, Bitmap imageBitmap, Integer foreignKey) {
+    public UserProjectItem(Integer id, Integer listPos, String description, Float cost, String imagePath, Integer foreignKey) {
         this.id = id;
         this.listPos = listPos;
         this.description = description;
         this.cost = cost;
-        this.ImageBytes = byteArrayImageConvert(imageBitmap);
+        this.imagePath = imagePath;
         this.foreignKey = foreignKey;
     }
 
 
-
-
-
-    // convert bitmap to byte array
-    private byte[] byteArrayImageConvert(Bitmap currentBitmap) {
-        // convert bitmap image
-
-        // holder for return
-        byte[] imageInByteArray;
-
-        // take current bitmap and compress
-        ByteArrayOutputStream objectByteArrayOutputStream = new ByteArrayOutputStream();
-        currentBitmap.compress(Bitmap.CompressFormat.JPEG, 100, objectByteArrayOutputStream);
-
-        imageInByteArray = objectByteArrayOutputStream.toByteArray();
-
-        return imageInByteArray; // return byte[]
+    public String getImagePath() {
+        return imagePath;
     }
 
-    //convert bytes back to bitmap
-    public Bitmap imageConverterFromArray(byte[] myImageByteArray){
-        Bitmap bitmapImage = BitmapFactory.decodeByteArray(myImageByteArray,0,myImageByteArray.length);
-        return bitmapImage;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
-
-
-    //byte[] getter and setters
-
-    // acts like working with bitmap but changing between Bitmap and byte array on get and set
-    // working with byte[] getters and setters for image
-    public Bitmap getImage() {
-        return imageConverterFromArray(ImageBytes);
-    }
-
-    public void setImage(Bitmap bitImage) {
-        this.ImageBytes = byteArrayImageConvert(bitImage);
-    }
-
-
-
-
-
-
-
 
     public Integer getId() {
         return id;

@@ -1,5 +1,6 @@
 package com.aidankelly.projectmanager.recyclerview;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -9,9 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aidankelly.projectmanager.R;
+import com.aidankelly.projectmanager.entities.ImageManager;
 import com.aidankelly.projectmanager.entities.UserProject;
 
 public class HomeViewHolder extends RecyclerView.ViewHolder {
+
+    private ImageManager imgManager;
+    private Context context;
 
     private ImageView projectImageView;
     private TextView projectNameTextView;
@@ -20,8 +25,10 @@ public class HomeViewHolder extends RecyclerView.ViewHolder {
 
 
     // maps UI components to the XML Layout.
-    public HomeViewHolder(@NonNull View itemView) {
+    public HomeViewHolder(@NonNull View itemView, Context context) {
         super(itemView);
+
+        this.context = context;  // get the context of the location of the
 
         // link ui components
         projectImageView = itemView.findViewById(R.id.homeProjectImageImageView);
@@ -33,7 +40,10 @@ public class HomeViewHolder extends RecyclerView.ViewHolder {
 
     // puts data into my ViewHolder
     public void updateProject(UserProject project){
-        projectImageView.setImageBitmap(project.getProjectImage());
+        imgManager = new ImageManager(context);
+        imgManager.setDirNameAndFileName(project.getProjectDirectory(),project.getHomeImagePathName());
+
+        projectImageView.setImageBitmap(imgManager.load());
         projectNameTextView.setText(project.getProjectName());
         projectCostTextView.setText("$ " + project.getTotalProjectCost().toString());
 

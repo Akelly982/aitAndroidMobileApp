@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.aidankelly.projectmanager.R;
 import com.aidankelly.projectmanager.entities.Constants;
+import com.aidankelly.projectmanager.entities.ImageManager;
 import com.aidankelly.projectmanager.entities.UserProject;
 import com.aidankelly.projectmanager.entities.UserProjectItem;
 import com.aidankelly.projectmanager.recyclerview.OnProjectRVListener;
@@ -116,7 +117,7 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectRVLis
         // get list of all items
         projectItems = myDataService.getAllItemsOfProject(projectParent);
         //create a RecyclerViewAdapter and pass the data
-        adapter = new ProjectRecyclerViewAdapter(projectItems, this,this);
+        adapter = new ProjectRecyclerViewAdapter(projectItems, this,this, projectParent);
         //set the adapter to the RecyclerView
         projectRecyclerView.setAdapter(adapter);
 
@@ -166,6 +167,16 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectRVLis
     private void deleteItem(Intent data) {
         UserProjectItem myItem = (UserProjectItem) data.getSerializableExtra(UserProjectItem.USER_PROJECT_ITEM_KEY);
 
+        //delete local image
+        ImageManager imgManager = new ImageManager(this);
+        boolean resultLocal = imgManager.deleteImageFileProjectItem(projectParent,myItem);
+        if (resultLocal){
+            Snackbar.make(rootView, " item deleted local "  , Snackbar.LENGTH_SHORT).show();
+        }else{
+            Snackbar.make(rootView, " item not deleted local " , Snackbar.LENGTH_SHORT).show();
+        }
+
+
         // delete from DB
         boolean result = myDataService.deleteItem(myItem.getId());
         // display result
@@ -190,30 +201,10 @@ public class ProjectActivity extends AppCompatActivity implements OnProjectRVLis
 
     private void updateNewItem(Intent data) {
 
-        // update db
-        UserProjectItem myNewItem = new UserProjectItem();
+        // get data from intent
+        UserProjectItem myNewItem;
         myNewItem = (UserProjectItem) data.getSerializableExtra(UserProjectItem.USER_PROJECT_ITEM_KEY);
 
-
-        // add to db
-        ArrayList<Long> errorList = new ArrayList<Long>();
-        myDataService.addItem(myNewItem, projectParent,errorList);
-
-        // where their errors
-        if (errorList.get(0) > 0){ // counts num of errors
-            Snackbar.make(rootView, "Error found in list pos update" , Snackbar.LENGTH_LONG).show();
-        }
-
-        if(errorList.get(1) == -1){ // should be the id error if -1
-            Snackbar.make(rootView, "Error found in db insertion" , Snackbar.LENGTH_LONG).show();
-        }
-
-
-        // get from database to get the id attached to item instance
-        myNewItem = myDataService.getItemByListPos1();
-        if (myNewItem.getId() == null){
-            Snackbar.make(rootView, "Error in obtaining new item id" , Snackbar.LENGTH_LONG).show();
-        }
 
         // update rv
         adapter.addItem(myNewItem);

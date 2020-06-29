@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.aidankelly.projectmanager.R;
+import com.aidankelly.projectmanager.entities.Constants;
+import com.aidankelly.projectmanager.entities.ImageManager;
 import com.aidankelly.projectmanager.entities.UserProject;
 import com.aidankelly.projectmanager.services.DataService;
 import com.google.android.material.snackbar.Snackbar;
@@ -27,7 +29,8 @@ import static com.aidankelly.projectmanager.entities.Constants.FETCH_IMAGE_CODE;
 public class NewProjectActivity extends AppCompatActivity {
 
     private View rootView;
-    private DataService projectDataService;
+    private DataService dataService;
+    private ImageManager imgManager;
 
     private Button exitNewProjectButton;
     private Button importImageButton;
@@ -37,7 +40,7 @@ public class NewProjectActivity extends AppCompatActivity {
 
     public Bitmap imageToStore;
 
-    private Context myContext;    // needed for an imageView but not used just their
+    private Context myContext;    // needed for an imageView and imgManager but not used just their
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +58,8 @@ public class NewProjectActivity extends AppCompatActivity {
 
 
         //Load Data from the database
-        projectDataService = new DataService();
-        projectDataService.init(this);
+        dataService = new DataService();
+        dataService.init(this);
 
 
         // get the image from the phone
@@ -109,18 +112,11 @@ public class NewProjectActivity extends AppCompatActivity {
         // get the projectName
         project.setProjectName(projectNameInputEditText.getText().toString());
 
-        //get the projectImage    // check if user enter one or not
-        if (imageToStore == null){
-            imageToStore = findADefaultImage();
-        }
-        project.setProjectImage(imageToStore);
-
         // create a list to store potential errors
         ArrayList<Long> foundErrors = new ArrayList<Long>();
 
         // insert to db
-        projectDataService.addProject(project, foundErrors);
-
+        dataService.addProject(project, foundErrors);
 
         // check for errors
         if (foundErrors.get(0) > 0){
@@ -129,19 +125,48 @@ public class NewProjectActivity extends AppCompatActivity {
         else if (foundErrors.get(1) == -1){
             Snackbar.make(v, "Error in database insert " + foundErrors.get(0) , Snackbar.LENGTH_SHORT).show();
         }
-        else{
-            Intent goingBackHome = new Intent();
-            goingBackHome.putExtra(UserProject.USER_PROJECT_KEY, project);
-            setResult(RESULT_OK,goingBackHome);
-            finish();
-        }
 
+        addImageToDBUsingUniqueID(v);
 
+        // return home passing new UserProject
+        Intent goingBackHome = new Intent();
+        goingBackHome.putExtra(UserProject.USER_PROJECT_KEY, project);
+        setResult(RESULT_OK,goingBackHome);
+        finish();
 
 
     }
 
+    private void addImageToDBUsingUniqueID(View v) {
+        UserProject newProject = new UserProject();
+        newProject = dataService.getProjectByListPos1();  // this should be the current project being added
 
+        String dirName = newProject.getId().toString();
+
+        // identify location
+        imgManager = new ImageManager(myContext);
+        imgManager.setDirectoryName(dirName);
+        imgManager.setFileName(Constants.HOME_IMG_PATH); // hard set filename for projectHomeImage
+
+        //get the projectImage    // check if user enter one or not
+        if (imageToStore == null){
+            imageToStore = findADefaultImage(); // use default image
+        }
+
+        imgManager.save(imageToStore); // save image to local
+
+
+        // add ImagePath String and project unique id as directory name
+        newProject.setHomeImagePathName(Constants.HOME_IMG_PATH);
+        newProject.setProjectDirectory(dirName);
+
+        // save to db and check
+        boolean result;
+        result = dataService.updateProject(newProject);
+        if (result == false){ // error
+            Snackbar.make(v, "Error new projectUpdate "  , Snackbar.LENGTH_SHORT).show();
+        }
+    }
 
 
     private void exit(View v) {
@@ -178,7 +203,7 @@ public class NewProjectActivity extends AppCompatActivity {
      // code for getting image from drawable not sure if i will use it or need it.....
     private Bitmap findADefaultImage() {
         ImageView myImageView = new ImageView(myContext);      //  myContext declared above but unused  (image View wants one)
-        myImageView.setImageResource(R.drawable.project_default_image);   // TODO default image will be this adjust to a base image
+        myImageView.setImageResource(R.drawable.project_default_image);
         BitmapDrawable drawable = (BitmapDrawable) myImageView.getDrawable();
         Bitmap myNewBitmap = drawable.getBitmap();
         return myNewBitmap;

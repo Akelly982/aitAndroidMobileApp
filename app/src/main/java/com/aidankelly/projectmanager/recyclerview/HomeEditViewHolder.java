@@ -11,11 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aidankelly.projectmanager.R;
+import com.aidankelly.projectmanager.entities.ImageManager;
 import com.aidankelly.projectmanager.entities.UserProject;
 import com.aidankelly.projectmanager.services.DataService;
 import com.google.android.material.snackbar.Snackbar;
 
 public class HomeEditViewHolder extends RecyclerView.ViewHolder {
+
+    private ImageManager imgManager;
+    private Context myContext;
 
     private Button changeImageButton;
     private Button deleteButton;
@@ -24,9 +28,9 @@ public class HomeEditViewHolder extends RecyclerView.ViewHolder {
     private ImageView projectImageView;
     private TextView projectNameTextView;
 
-    public HomeEditViewHolder(@NonNull View itemView) {
+    public HomeEditViewHolder(@NonNull View itemView, Context myContext) {
         super(itemView);
-
+        this.myContext = myContext;
 
         // add ui connections
         changeImageButton = itemView.findViewById(R.id.homeEditChangeProjectImageButton);
@@ -40,7 +44,10 @@ public class HomeEditViewHolder extends RecyclerView.ViewHolder {
 
     // puts data into my ViewHolder
     public void updateEditProject(UserProject project){
-        projectImageView.setImageBitmap(project.getProjectImage());
+        imgManager = new ImageManager(myContext);
+        imgManager.setDirNameAndFileName(project.getProjectDirectory(),project.getHomeImagePathName());
+
+        projectImageView.setImageBitmap(imgManager.load());
         projectNameTextView.setText(project.getProjectName());
 
     }

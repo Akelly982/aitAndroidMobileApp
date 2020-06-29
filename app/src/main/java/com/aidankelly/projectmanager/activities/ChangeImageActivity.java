@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.aidankelly.projectmanager.R;
+import com.aidankelly.projectmanager.entities.ImageManager;
 import com.aidankelly.projectmanager.entities.UserProject;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -37,12 +39,14 @@ public class ChangeImageActivity extends AppCompatActivity {
 
     private View rootView;
 
-
+    private Context context;
+    private ImageManager imgManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.activity_change_image);
 
         rootView = findViewById(android.R.id.content).getRootView();
@@ -62,7 +66,9 @@ public class ChangeImageActivity extends AppCompatActivity {
             setDataChangeType = USER_PROJECT_IMAGE;
 
             // set original image into the preview
-            imagePreviewImageView.setImageBitmap(project.getProjectImage());
+            imgManager = new ImageManager(context);
+            imgManager.setDirNameAndFileName(project.getProjectDirectory(),project.getHomeImagePathName());
+            imagePreviewImageView.setImageBitmap(imgManager.load());
 
         }else{
             Snackbar.make(rootView, "error intent dose not hold recognisable data" , Snackbar.LENGTH_LONG).show();
@@ -91,16 +97,25 @@ public class ChangeImageActivity extends AppCompatActivity {
                 if (setDataChangeType == USER_PROJECT_IMAGE){
                     if (notGotAnImage){
                         // if new image == old image
-                        Snackbar.make(rootView, "Import an img first." , Snackbar.LENGTH_SHORT).show();
-
+                        Snackbar.make(rootView, "Import an new img first." , Snackbar.LENGTH_SHORT).show();
+                        return;
                     }else{
-                        //set image to the project
-                        project.setProjectImage(imageToStore);
+                        //delete old image
+                        boolean resultDelete = imgManager.deleteImageFileUserProject(project);
+                        if (!resultDelete){
+                            Snackbar.make(rootView, "old local img delete error." , Snackbar.LENGTH_SHORT).show();
+                        }
+
+                        //new image to local    (should maintain the same local location / directory) applied earlier in onCreate to load original img
+                        imgManager.save(imageToStore);
+
+                        // set image to the project
+                        //project path / directory should remain the same
 
                         // return new project
-                        Intent goingBackWithNewImage = new Intent();
-                        goingBackWithNewImage.putExtra(UserProject.USER_PROJECT_KEY, project);
-                        setResult(RESULT_OK, goingBackWithNewImage);
+                        Intent goingBackPostUpdate = new Intent();
+                        goingBackPostUpdate.putExtra(UserProject.USER_PROJECT_KEY, project);
+                        setResult(RESULT_OK, goingBackPostUpdate);
                         finish();
                     }
                 }else {

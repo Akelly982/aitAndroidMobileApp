@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.aidankelly.projectmanager.R;
+import com.aidankelly.projectmanager.entities.ImageManager;
 import com.aidankelly.projectmanager.entities.UserProject;
 import com.aidankelly.projectmanager.recyclerview.HomeEditRecyclerViewAdapter;
 import com.aidankelly.projectmanager.recyclerview.OnHomeEditRVListener;
@@ -111,20 +112,11 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
     private void changeProjectImage(Intent data) {
         UserProject project = (UserProject) data.getSerializableExtra(UserProject.USER_PROJECT_KEY);
 
-        // update database
-        boolean result = myDataService.updateProjectImg(project); // pass project with the updated image
-
-        if (result){
-            Snackbar.make(rootView, " project image updated ", Snackbar.LENGTH_SHORT).show();
-        }else{
-            Snackbar.make(rootView, " project image updated error ", Snackbar.LENGTH_SHORT).show();
-        }
-
         //RV update                 // get position of the original project
         int RVListPos = adapter.getRvList().indexOf(editProjectOriginal);    // -1 if not in list else // the position of the object
         if (RVListPos != -1){
             project = myDataService.getProject(project.getId());
-            adapter.replaceItem(RVListPos,project);
+            adapter.replaceItem(RVListPos,project);  // this should still reload the project with the new image
         }
 
 
@@ -156,17 +148,34 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
 
     private void deleteProject(Intent data) {
         // do not forget to cast data type when getting data from intent
-        Integer projectId = data.getIntExtra(UserProject.USER_PROJECT_ID_KEY, -1);
+        UserProject project = (UserProject) data.getSerializableExtra(UserProject.USER_PROJECT_KEY);
 
-        //update db
-        Boolean result = myDataService.deleteProject(projectId);
+        // remove from RV
+        //RV update                 // get position of the original project
+        int RVListPos = adapter.getRvList().indexOf(editProjectOriginal);    // -1 if not in list else // the position of the object
+        if (RVListPos != -1){
+            adapter.deleteItemByIndex(RVListPos);
+        }
 
+        // Remove from local
+        ImageManager imgManagerDelete = new ImageManager(this);
+        boolean result1 = imgManagerDelete.deleteProjectDirectory(project);
+        if (result1){
+            Snackbar.make(rootView, " project deleted from local: "  , Snackbar.LENGTH_SHORT).show();
+        }else{
+            Snackbar.make(rootView, " project not deleted from local: " , Snackbar.LENGTH_SHORT).show();
+        }
+
+
+        // remove from db
+        boolean result = myDataService.deleteProject(project.getId());
         // display result
         if (result){
-            Snackbar.make(rootView, " project deleted: "  , Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(rootView, " project deleted from db "  , Snackbar.LENGTH_SHORT).show();
         }else{
-            Snackbar.make(rootView, " project not deleted: " , Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(rootView, " project not deleted from db: " , Snackbar.LENGTH_SHORT).show();
         }
+
 
 
     }
@@ -187,14 +196,14 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
     public void onProjectImageChangeClick(UserProject project) {
           Intent goToChangeImage = new Intent(this, ChangeImageActivity.class);
           goToChangeImage.putExtra(UserProject.USER_PROJECT_KEY,project);   // I adjusted the UserProject class to not use bitmap but byte[]
-          startActivityForResult(goToChangeImage, CHANGE_IMAGE_ACTIVITY_CODE);
           editProjectOriginal = project;
+          startActivityForResult(goToChangeImage, CHANGE_IMAGE_ACTIVITY_CODE);
+
     }
 
 
     @Override
     public void onProjectSetToTopClick(UserProject project) {
-
 
         //set to top db
         ArrayList<Long> errorList = new ArrayList<Long>();
@@ -213,13 +222,6 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
             adapter.moveItemToFirst(RVListPos,project);
         }
 
-        // TODO fix this removing gaps in list
-//        // clean list so their is no gaps
-//        Integer numErrors = myDataService.cleanProjectList();
-//        if (numErrors != 0){ // set top errors
-//            Snackbar.make(rootView, " project list pos clean error " + errorList.get(1).toString() , Snackbar.LENGTH_SHORT).show();
-//        }
-
 
 
     }
@@ -227,16 +229,11 @@ public class HomeEditActivity extends AppCompatActivity implements OnHomeEditRVL
     @Override
     public void onProjectDeleteClick(UserProject project) {
 
-                    // note atm cant pass the class due to bitmap variable is not serializable
         Intent goToDeleteConfirmation = new Intent(HomeEditActivity.this, DeleteConfirmationActivity.class);
-        goToDeleteConfirmation.putExtra(UserProject.USER_PROJECT_ID_KEY,project.getId());
+        goToDeleteConfirmation.putExtra(UserProject.USER_PROJECT_KEY,project);
         startActivityForResult(goToDeleteConfirmation, DELETE_CONFIRMATION_ACTIVITY_CODE);
+        editProjectOriginal = project;
 
-        //RV update                 // get position of the original project
-        int RVListPos = adapter.getRvList().indexOf(project);    // -1 if not in list else // the position of the object
-        if (RVListPos != -1){
-            adapter.deleteItemByIndex(RVListPos);
-        }
 
     }
 

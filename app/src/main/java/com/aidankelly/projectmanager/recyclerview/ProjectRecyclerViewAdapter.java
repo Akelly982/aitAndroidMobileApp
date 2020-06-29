@@ -16,14 +16,18 @@ import java.util.List;
 
 public class ProjectRecyclerViewAdapter extends RecyclerView.Adapter<ProjectViewHolder> {
 
+    // needs to know the parent project for its directory name
+    private UserProject parentProject;
+
     private List<UserProjectItem> projectItems;
     private Context context;
     private OnProjectRVListener onProjectRVListener;
 
-    public ProjectRecyclerViewAdapter(List<UserProjectItem> projectItems, Context context, OnProjectRVListener onProjectRVListener) {
+    public ProjectRecyclerViewAdapter(List<UserProjectItem> projectItems, Context context, OnProjectRVListener onProjectRVListener, UserProject parentProject) {
         this.projectItems = projectItems;
         this.context = context;
         this.onProjectRVListener = onProjectRVListener;
+        this.parentProject = parentProject;
     }
 
     @NonNull
@@ -31,7 +35,7 @@ public class ProjectRecyclerViewAdapter extends RecyclerView.Adapter<ProjectView
     public ProjectViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View projectItemViewItem = inflater.inflate(R.layout.recycler_item_view_project,parent,false);
-        ProjectViewHolder projectItemViewHolder = new ProjectViewHolder(projectItemViewItem);
+        ProjectViewHolder projectItemViewHolder = new ProjectViewHolder(projectItemViewItem, context);
 
         return projectItemViewHolder;
     }
@@ -39,7 +43,7 @@ public class ProjectRecyclerViewAdapter extends RecyclerView.Adapter<ProjectView
     @Override
     public void onBindViewHolder(@NonNull ProjectViewHolder holder, int position) {
         UserProjectItem item = projectItems.get(position);
-        holder.updateProjectItem(item);
+        holder.updateProjectItem(item, parentProject);
         holder.bindUpdateButtons(item, onProjectRVListener, position);
     }
 

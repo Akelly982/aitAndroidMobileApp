@@ -36,7 +36,7 @@ public class HomeEditRecyclerViewAdapter extends RecyclerView.Adapter<HomeEditVi
         // for this you may need to import the class R
         View homeEditViewItem = inflater.inflate(R.layout.recycler_item_view_home_edit, parent, false);
 
-        HomeEditViewHolder homeEditViewHolder = new HomeEditViewHolder(homeEditViewItem);
+        HomeEditViewHolder homeEditViewHolder = new HomeEditViewHolder(homeEditViewItem, context);
         return homeEditViewHolder;
     }
 

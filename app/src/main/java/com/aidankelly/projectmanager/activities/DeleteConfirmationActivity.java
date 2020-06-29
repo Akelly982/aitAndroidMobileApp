@@ -19,7 +19,7 @@ public class DeleteConfirmationActivity extends AppCompatActivity {
 
     private View rootView;
 
-    Integer projectId = null;
+    UserProject project;
     UserProjectItem myItem;
 
     Integer dataType;
@@ -39,14 +39,10 @@ public class DeleteConfirmationActivity extends AppCompatActivity {
 
         Intent intentThatCalled = getIntent();
 
-        if (getIntent().hasExtra(UserProject.USER_PROJECT_ID_KEY)){   // passed just the id
-            projectId = intentThatCalled.getIntExtra(UserProject.USER_PROJECT_ID_KEY, -1);
+        if (getIntent().hasExtra(UserProject.USER_PROJECT_KEY)){
+            project = (UserProject) intentThatCalled.getSerializableExtra(UserProject.USER_PROJECT_KEY);
             dataType = PROJECT_FOR_DELETE;
 
-            // if id gotten is the default -1 not what we want
-            if(projectId == -1){
-                Snackbar.make(rootView, " project id not correctly passed == -1 " , Snackbar.LENGTH_SHORT).show();
-            }
 
         }
         else if (getIntent().hasExtra((UserProjectItem.USER_PROJECT_ITEM_KEY))){ //passed the whole class
@@ -63,7 +59,7 @@ public class DeleteConfirmationActivity extends AppCompatActivity {
 
                 if (dataType == PROJECT_FOR_DELETE){
                     Intent goingBackDelete = new Intent();
-                    goingBackDelete.putExtra(UserProject.USER_PROJECT_ID_KEY, projectId);
+                    goingBackDelete.putExtra(UserProject.USER_PROJECT_KEY, project);
                     setResult(RESULT_OK,goingBackDelete);
                     finish();
                 }

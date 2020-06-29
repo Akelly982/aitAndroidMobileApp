@@ -15,14 +15,6 @@ public class DataService {
 
     private  ProjectDatabaseHelper sqlite;
 
-    public void connect(){
-
-    }
-
-    public void disconnect(){
-
-    }
-
 
     public void init(Context context){
         sqlite = sqlite.getInstance(context);
@@ -35,12 +27,16 @@ public class DataService {
         // sql insert returns long
     public void addProject(UserProject myProject, ArrayList<Long> errorList){
         // returns list holding error info  --  index 0 = list increment method    index 1 = database add method
-        sqlite.projectInsert(myProject.getProjectName(),myProject.getProjectImage(), errorList);
+        sqlite.projectInsert(myProject.getProjectName(), errorList);
 
     }
 
+    public boolean updateProject(UserProject myProject){
+        return sqlite.projectUpdate(myProject.getId(),myProject.getListPosition(),myProject.getProjectName(),myProject.getTotalProjectCost(),myProject.getProjectDirectory(),myProject.getHomeImagePathName());
+    }
+
     public boolean updateProjectImg(UserProject myProject){
-        return sqlite.projectUpdateImage(myProject.getId(),myProject.getProjectImage());
+        return sqlite.projectUpdateImage(myProject.getId(),myProject.getHomeImagePathName());
     }
 
 
@@ -86,7 +82,7 @@ public class DataService {
 
     public void addItem(UserProjectItem myItem, UserProject parentProject ,ArrayList<Long> errorList){
         // returns list holding error info  --  index 0 = list increment method    index 1 = database add method
-        sqlite.itemInsert(myItem.getDescription(), myItem.getCost(), myItem.getImage(), parentProject.getId(), errorList);
+        sqlite.itemInsert(myItem.getDescription(), myItem.getCost(), myItem.getImagePath(), parentProject.getId(), errorList);
 
     }
 
@@ -108,9 +104,9 @@ public class DataService {
     }
 
 
-//    public boolean updateItemImg(UserProject myProject){
-//        return false;
-//    }
+    public boolean itemUpdateImgPath(UserProjectItem myItem){
+        return sqlite.itemUpdateImgPath(myItem.getId(),myItem.getImagePath());
+    }
 //
 //
 //    public void setItemToTop(UserProject project, ArrayList<Long> errorList){

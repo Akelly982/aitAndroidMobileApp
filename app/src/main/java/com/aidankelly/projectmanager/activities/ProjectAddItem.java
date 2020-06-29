@@ -3,6 +3,7 @@ package com.aidankelly.projectmanager.activities;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -15,31 +16,39 @@ import android.widget.ImageView;
 
 import com.aidankelly.projectmanager.R;
 import com.aidankelly.projectmanager.entities.Constants;
+import com.aidankelly.projectmanager.entities.ImageManager;
 import com.aidankelly.projectmanager.entities.UserProject;
 import com.aidankelly.projectmanager.entities.UserProjectItem;
+import com.aidankelly.projectmanager.services.DataService;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
 
 import static com.aidankelly.projectmanager.entities.Constants.FETCH_IMAGE_CODE;
 
 public class ProjectAddItem extends AppCompatActivity {
 
-    Button exitButton;
-    Button createProjectItemButton;
-    EditText itemCost;
-    EditText itemDesc;
-    ImageView imageImageView;
-    Button importImageButton;
-    View rootView;
+    private Context context;
+    private DataService myDataService;
 
-    Bitmap myImageToStore;
+    private Button exitButton;
+    private Button createProjectItemButton;
+    private EditText itemCost;
+    private EditText itemDesc;
+    private ImageView imageImageView;
+    private Button importImageButton;
+    private View rootView;
 
-    UserProject parentProject;  // holds the FK
+    private Bitmap myImageToStore;
+
+    private UserProject parentProject;  // holds the FK
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_add_item);
+        this.context = this;
 
         rootView = findViewById(android.R.id.content).getRootView();
 
@@ -51,6 +60,10 @@ public class ProjectAddItem extends AppCompatActivity {
         importImageButton = findViewById(R.id.projectAddItemImportImageButton);
         imageImageView = findViewById(R.id.projectAddItemPreviewImageView);
 
+
+        //Load Data from the database
+        myDataService = new DataService();
+        myDataService.init(this);
 
         // get the parentProject
         Intent intentThatCalled = getIntent();
@@ -92,14 +105,45 @@ public class ProjectAddItem extends AppCompatActivity {
                 item.setCost(Float.parseFloat(cost));
 
 
-                //set image if not null
+                //tell user to set an image if null
                 if (myImageToStore == null){   // TODO make it so that it can work with no image
                     Snackbar.make(rootView, "add an image", Snackbar.LENGTH_SHORT).show();
                     return;
-                }else{
-                    item.setImage(myImageToStore);
                 }
 
+
+                //add to db
+                ArrayList<Long> errorList = new ArrayList<Long>();
+                myDataService.addItem(item, parentProject,errorList);
+                // where their errors
+                if (errorList.get(0) > 0){ // counts num of errors
+                    Snackbar.make(rootView, "Error found in list pos update" , Snackbar.LENGTH_LONG).show();
+                }
+                if(errorList.get(1) == -1){ // should be the id error if -1
+                    Snackbar.make(rootView, "Error found in db insertion" , Snackbar.LENGTH_LONG).show();
+                }
+
+
+                // get from database to get the id attached to item in db
+                item = myDataService.getItemByListPos1();
+                if (item.getId() == null){
+                    Snackbar.make(rootView, "Error in obtaining new item id" , Snackbar.LENGTH_LONG).show();
+                }
+
+
+                //add image to local using id as path name
+                ImageManager imgManager = new ImageManager(context);
+                item.setImagePath(item.getId().toString() + Constants.PNG_DATA_TYPE);  //do not forget to add file type to
+                imgManager.setDirNameAndFileName(parentProject.getProjectDirectory(),item.getImagePath());
+                imgManager.save(myImageToStore); // save the image
+
+                // update imagePath in db
+                boolean resultImgPathUpdate = myDataService.itemUpdateImgPath(item);
+                if(resultImgPathUpdate){
+                    Snackbar.make(rootView, "Updated image path" , Snackbar.LENGTH_LONG).show();
+                }else{
+                    Snackbar.make(rootView, "Error in updating image path" , Snackbar.LENGTH_LONG).show();
+                }
 
                 //return
                 Intent returnNewItem = new Intent();

@@ -36,7 +36,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeViewHolder
         // for this you may need to import the class R
         View projectViewItem = inflater.inflate(R.layout.recycler_item_view_home, parent, false);
 
-        HomeViewHolder homeViewHolder = new HomeViewHolder(projectViewItem);
+        HomeViewHolder homeViewHolder = new HomeViewHolder(projectViewItem, context);
 
         return homeViewHolder;
     }

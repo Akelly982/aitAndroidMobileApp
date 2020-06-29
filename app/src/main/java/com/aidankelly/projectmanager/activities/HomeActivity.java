@@ -106,6 +106,7 @@ public class HomeActivity extends AppCompatActivity implements OnHomeRVListener 
         // set the layout manager
         homeRecyclerView.setLayoutManager(linearLayoutManager);
 
+
         // get a list of all projects
         projects = myDataService.getProjects();
         //create a RecyclerViewAdapter and pass the data

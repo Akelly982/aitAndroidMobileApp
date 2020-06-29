@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 
 import androidx.annotation.Nullable;
 
@@ -26,7 +25,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
 
     private static final String DATABASE_NAME = "myProjects.db";
-    private static final Integer DATABASE_VERSION = 9;   // change this if you change the database
+    private static final Integer DATABASE_VERSION = 15;   // change this if you change the database
     private static final String PROJECT_TABLE_NAME = "projects";
     private static final String PROJECT_ITEM_TABLE_NAME = "projectItems";
 
@@ -44,14 +43,15 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     private static final String COL_PROJECT_LIST_POS = "PROJECT_LIST_POSITION";
     private static final String COL_PROJECT_NAME = "PROJECT_NAME";
     private static final String COL_PROJECT_TOTAL_COST = "PROJECT_TOTAL_COST";
-    private static final String COL_PROJECT_IMAGE = "PROJECT_IMG";
+    private static final String COL_PROJECT_IMAGES_DIRECTORY = "PROJECT_IMAGES_DIRECTORY";
+    private static final String COL_PROJECT_IMAGE_PATH = "PROJECT_HOME_IMG_PATH";
 
     // Create Table ProjectItems CONST
     private static final String COL_ITEM_ID = "ITEM_ID";
     private static final String COL_ITEM_LIST_POS = "ITEM_LIST_POSITION";
     private static final String COL_ITEM_DESCRIPTION = "ITEM_DESCRIPTION";
     private static final String COL_ITEM_COST = "ITEM_COST";
-    private static final String COL_ITEM_IMAGE = "ITEM_IMAGE";
+    private static final String COL_ITEM_IMAGE_PATH = "ITEM_IMAGE_PATH";
     private static final String COL_ITEM_FOREIGN_KEY = "ITEM_FK";
     private static final String FOREIGN_KEY_CONSTRAINT = "FK_CONSTRAINT";
 
@@ -77,7 +77,8 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
             COL_PROJECT_LIST_POS + " INTEGER DEFAULT 1, " +
             COL_PROJECT_NAME + " TEXT, " +
             COL_PROJECT_TOTAL_COST + " REAL DEFAULT 0.0, " +
-            COL_PROJECT_IMAGE + " BLOB )";     // BLOB is for Binary large data
+            COL_PROJECT_IMAGES_DIRECTORY + " TEXT, " +
+            COL_PROJECT_IMAGE_PATH + " TEXT ) ";
 
 
 
@@ -86,7 +87,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
             COL_ITEM_LIST_POS + " INTEGER DEFAULT 1, " +
             COL_ITEM_DESCRIPTION + " TEXT, " +
             COL_ITEM_COST + " REAL DEFAULT 0.0, " +
-            COL_ITEM_IMAGE + " BLOB, " +
+            COL_ITEM_IMAGE_PATH + " TEXT, " +
             COL_ITEM_FOREIGN_KEY + " INTEGER NOT NULL, " +
             "CONSTRAINT " + FOREIGN_KEY_CONSTRAINT + " " +
             "FOREIGN KEY (" + COL_ITEM_FOREIGN_KEY + ") " +
@@ -133,8 +134,19 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 
 
     // PROJECT ITEM TABLE METHODS ---------------------------------
+    public boolean itemUpdateImgPath(Integer id, String imgPath){
+        SQLiteDatabase db = this.getWritableDatabase();
 
-    public void itemInsert(String description, Float cost, Bitmap image, Integer foreignKey, ArrayList<Long> foundErrors){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_ITEM_IMAGE_PATH, imgPath);
+
+        int numOfRowsUpdated = db.update(PROJECT_ITEM_TABLE_NAME, contentValues, COL_ITEM_ID + " = ?", new String[]{id.toString()});
+        db.close();
+        return  (numOfRowsUpdated == 1);
+    }
+
+
+    public void itemInsert(String description, Float cost,  String imagePath, Integer foreignKey, ArrayList<Long> foundErrors){
 //        ArrayList<Long> foundErrors = new ArrayList<Long>();
 
         //List pos will = 1 as Default putting it at top of list when added to database
@@ -143,23 +155,22 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         foundErrors.add(incrementAllItemsListPosition(foreignKey));  // foreign key of parent project
 
         // add to database
-        foundErrors.add(itemInsertDataBase(description,cost,image,foreignKey));
+        foundErrors.add(itemInsertDataBase(description,cost,imagePath,foreignKey));
 
     }
 
 
      // used on create of new item
-    public Long itemInsertDataBase(String description, Float cost, Bitmap image, Integer foreignKey ){   //list pos and id auto set
+    public Long itemInsertDataBase(String description, Float cost, String imagePath, Integer foreignKey ){   //list pos and id auto set
         SQLiteDatabase db = this.getWritableDatabase();
 
-        byte[] imageInByteArray = byteArrayImageConvert(image);  // converts here to byte array
 
         // Like and intent setting up for content transfer
         //(databaseColumn , data)
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_ITEM_DESCRIPTION, description);
         contentValues.put(COL_ITEM_COST, cost);
-        contentValues.put(COL_ITEM_IMAGE, imageInByteArray);
+        contentValues.put(COL_ITEM_IMAGE_PATH, imagePath);
         contentValues.put(COL_ITEM_FOREIGN_KEY, foreignKey);  // should be referring project
 
         // if -1 error else should be a positive num
@@ -269,14 +280,11 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
                 Integer listPosition = cursor.getInt(1);
                 String description = cursor.getString(2);
                 Float itemCost = cursor.getFloat(3);
-                byte[] imageBytes = cursor.getBlob(4);       // Grab blob with byte array
+                String imagePath = cursor.getString(4);       // Grab blob with byte array
                 Integer foreignKey = cursor.getInt(5);
 
 
-                //convert bytes back to bitmap
-                Bitmap projectImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);     // TODO remove double converts of image data
-
-                item = new UserProjectItem(id,listPosition,description,itemCost,projectImage, foreignKey);
+                item = new UserProjectItem(id,listPosition,description,itemCost,imagePath, foreignKey);
                 items.add(item);
 
             }
@@ -306,14 +314,11 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
                 Integer listPosition = cursor.getInt(1);
                 String description = cursor.getString(2);
                 Float cost = cursor.getFloat(3);
-                byte[] imageBytes = cursor.getBlob(4);
+                String imagePath = cursor.getString(4);
                 Integer foreignKey = cursor.getInt(5);
 
 
-                //convert bytes back to bitmap
-                Bitmap projectImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);     // TODO remove double converts of image data
-
-                item = new UserProjectItem(itemId,listPosition,description,cost, projectImage,foreignKey);
+                item = new UserProjectItem(itemId,listPosition,description,cost, imagePath,foreignKey);
 
             }
         }
@@ -339,14 +344,11 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
                 Integer listPosition = cursor.getInt(1);
                 String description = cursor.getString(2);
                 Float cost = cursor.getFloat(3);
-                byte[] imageBytes = cursor.getBlob(4);
+                String imagePath = cursor.getString(4);
                 Integer foreignKey = cursor.getInt(5);
 
 
-                //convert bytes back to bitmap
-                Bitmap projectImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
-
-                item = new UserProjectItem(itemId,listPosition,description,cost, projectImage,foreignKey);
+                item = new UserProjectItem(itemId,listPosition,description,cost, imagePath,foreignKey);
 
             }
         }
@@ -382,12 +384,11 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
                 Integer listPosition = cursor.getInt(1) ;
                 String projectName = cursor.getString(2);
                 Float totalProjectCost = cursor.getFloat(3);
-                byte[] imageBytes = cursor.getBlob(4);       // Grab blob with byte array
+                String imagesDir = cursor.getString(4);
+                String imagePath = cursor.getString(5);
 
-                //convert bytes back to bitmap
-                Bitmap projectImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
 
-                project = new UserProject(id,listPosition,projectName,totalProjectCost, projectImage);
+                project = new UserProject(id,listPosition,projectName,totalProjectCost, imagesDir,imagePath);
 
 
             }
@@ -399,7 +400,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public void projectInsert(String projectName,Bitmap projectImage, ArrayList<Long> foundErrors){
+    public void projectInsert(String projectName , ArrayList<Long> foundErrors){
 //        ArrayList<Long> foundErrors = new ArrayList<Long>();
 
         //List pos will = 1 as Default putting it at top of list
@@ -407,7 +408,8 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         foundErrors.add(incrementAllProjectsListPosition());
 
         // add to database
-        foundErrors.add(projectInsertDataBase(projectName,projectImage));
+        // adds only project name so that unique id can be used for directory for images
+        foundErrors.add(projectInsertDataBase(projectName));
     }
 
 
@@ -416,20 +418,18 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 
         //List pos will = 1 as Default putting it at top of list
         // update all rows listPos to make room for new listPos prior to running this method
-    public long projectInsertDataBase( String projectName, Bitmap projectImage){
+    public long projectInsertDataBase( String projectName){
 
         // add to database
         //create an instance of SQLite database
                                 // this. because referring to this class
         SQLiteDatabase db = this.getWritableDatabase();
 
-        byte[] imageInByteArray = byteArrayImageConvert(projectImage);  // converts here to byte array
 
         // Like and intent setting up for content transfer
                         //(databaseColumn , data)
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_PROJECT_NAME, projectName);
-        contentValues.put(COL_PROJECT_IMAGE, imageInByteArray);
 
         // if -1 error else should be a positive num
         Long result = db.insert(PROJECT_TABLE_NAME,null,contentValues);
@@ -507,7 +507,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 
 
          // update whole project
-    public boolean projectUpdate (Integer id, Integer listPosition, String projectName, Float totalProjectCost, Bitmap projectImage){
+    public boolean projectUpdate (Integer id, Integer listPosition, String projectName, Float totalProjectCost, String imagesDir, String homeImgPath){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -515,11 +515,12 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_PROJECT_LIST_POS, listPosition);
         contentValues.put(COL_PROJECT_NAME, projectName);
         contentValues.put(COL_PROJECT_TOTAL_COST, totalProjectCost);
-        contentValues.put(COL_PROJECT_IMAGE, byteArrayImageConvert(projectImage));
+        contentValues.put(COL_PROJECT_IMAGES_DIRECTORY, imagesDir);
+        contentValues.put(COL_PROJECT_IMAGE_PATH, homeImgPath);
 
         int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, COL_PROJECT_ID + " = ?", new String[]{id.toString()});
         db.close();
-        return numOfRowsUpdated == 1;
+        return (numOfRowsUpdated == 1);
     }
 
 
@@ -549,13 +550,12 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     }
 
          // only update project image
-    public boolean projectUpdateImage (Integer id, Bitmap projectImage){
+    public boolean projectUpdateImage (Integer id, String imagePath){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        byte[] imageInByteArray = byteArrayImageConvert(projectImage);  // converts here to byte array
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_PROJECT_IMAGE, imageInByteArray);
+        contentValues.put(COL_PROJECT_IMAGE_PATH, imagePath);
 
         int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, COL_PROJECT_ID + " = ?", new String[]{id.toString()});
         db.close();
@@ -606,12 +606,11 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
                 Integer listPosition = cursor.getInt(1) ;
                 String projectName = cursor.getString(2);
                 Float totalProjectCost = cursor.getFloat(3);
-                byte[] imageBytes = cursor.getBlob(4);       // Grab blob with byte array
+                String imagesDir = cursor.getString(4);
+                String imagePath = cursor.getString(5);
 
-                //convert bytes back to bitmap
-                Bitmap projectImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
 
-                project = new UserProject(id,listPosition,projectName,totalProjectCost, projectImage);
+                project = new UserProject(id,listPosition,projectName,totalProjectCost, imagesDir, imagePath);
                 projects.add(project);
 
             }
@@ -638,12 +637,12 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
                 Integer listPosition = cursor.getInt(1) ;
                 String projectName = cursor.getString(2);
                 Float totalProjectCost = cursor.getFloat(3);
-                byte[] imageBytes = cursor.getBlob(4);
+                String imagesDir = cursor.getString(4);
+                String imagePath = cursor.getString(5);
 
-                //convert bytes back to bitmap
-                Bitmap projectImage = BitmapFactory.decodeByteArray(imageBytes,0,imageBytes.length);
 
-                project = new UserProject(id,listPosition,projectName,totalProjectCost, projectImage);
+
+                project = new UserProject(id,listPosition,projectName,totalProjectCost, imagesDir, imagePath);
 
             }
         }
