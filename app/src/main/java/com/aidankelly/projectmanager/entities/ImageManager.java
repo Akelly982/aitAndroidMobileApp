@@ -27,6 +27,7 @@ public class ImageManager {
     private String directoryName = "testImages";
     private String fileName = "testImage.png";
     private Context context;
+    private Integer bitmapQuality = 20;
 
 
 
@@ -62,7 +63,7 @@ public class ImageManager {
         try{
                                                // createFile() fills in the File directory and file name
             fileOutputStream = new FileOutputStream(createFile());
-            bitmapImage.compress(Bitmap.CompressFormat.PNG,100,fileOutputStream);   // image for save under directory and name
+            bitmapImage.compress(Bitmap.CompressFormat.PNG,bitmapQuality,fileOutputStream);   // image for save under directory and name
         } catch (Exception e){               // the rest is check results and close
             e.printStackTrace();
         } finally{
