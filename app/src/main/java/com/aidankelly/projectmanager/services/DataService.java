@@ -32,11 +32,11 @@ public class DataService {
     }
 
     public boolean updateProject(UserProject myProject){
-        return sqlite.projectUpdate(myProject.getId(),myProject.getListPosition(),myProject.getProjectName(),myProject.getTotalProjectCost(),myProject.getProjectDirectory(),myProject.getHomeImagePathName());
+        return sqlite.projectUpdate(myProject.getId(),myProject.getListPosition(),myProject.getProjectName(),myProject.getTotalProjectCost(),myProject.getProjectDirectory(),myProject.getHomeImageFileName());
     }
 
     public boolean updateProjectImg(UserProject myProject){
-        return sqlite.projectUpdateImage(myProject.getId(),myProject.getHomeImagePathName());
+        return sqlite.projectUpdateImage(myProject.getId(),myProject.getHomeImageFileName());
     }
 
 
@@ -82,7 +82,7 @@ public class DataService {
 
     public void addItem(UserProjectItem myItem, UserProject parentProject ,ArrayList<Long> errorList){
         // returns list holding error info  --  index 0 = list increment method    index 1 = database add method
-        sqlite.itemInsert(myItem.getDescription(), myItem.getCost(), myItem.getImagePath(), parentProject.getId(), errorList);
+        sqlite.itemInsert(myItem.getDescription(), myItem.getCost(), myItem.getImageFileName(), parentProject.getId(), errorList);
 
     }
 
@@ -105,7 +105,7 @@ public class DataService {
 
 
     public boolean itemUpdateImgPath(UserProjectItem myItem){
-        return sqlite.itemUpdateImgPath(myItem.getId(),myItem.getImagePath());
+        return sqlite.itemUpdateImgPath(myItem.getId(),myItem.getImageFileName());
     }
 //
 //

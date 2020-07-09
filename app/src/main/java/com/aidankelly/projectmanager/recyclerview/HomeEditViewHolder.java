@@ -1,7 +1,6 @@
 package com.aidankelly.projectmanager.recyclerview;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aidankelly.projectmanager.R;
 import com.aidankelly.projectmanager.entities.ImageManager;
 import com.aidankelly.projectmanager.entities.UserProject;
-import com.aidankelly.projectmanager.services.DataService;
-import com.google.android.material.snackbar.Snackbar;
 
 public class HomeEditViewHolder extends RecyclerView.ViewHolder {
 
@@ -45,7 +42,7 @@ public class HomeEditViewHolder extends RecyclerView.ViewHolder {
     // puts data into my ViewHolder
     public void updateEditProject(UserProject project){
         imgManager = new ImageManager(myContext);
-        imgManager.setDirNameAndFileName(project.getProjectDirectory(),project.getHomeImagePathName());
+        imgManager.setDirNameAndFileName(project.getProjectDirectory(),project.getHomeImageFileName());
 
         projectImageView.setImageBitmap(imgManager.load());
         projectNameTextView.setText(project.getProjectName());

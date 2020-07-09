@@ -1,7 +1,6 @@
 package com.aidankelly.projectmanager.recyclerview;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -43,7 +42,7 @@ public class ProjectViewHolder extends RecyclerView.ViewHolder {
     // puts data into my ViewHolder
     public void updateProjectItem(UserProjectItem item, UserProject parentProject){
         imgManager = new ImageManager(myContext);
-        imgManager.setDirNameAndFileName(parentProject.getProjectDirectory(),item.getImagePath());
+        imgManager.setDirNameAndFileName(parentProject.getProjectDirectory(),item.getImageFileName());
 
         image.setImageBitmap(imgManager.load());
         itemDescTextView.setText(item.getDescription());

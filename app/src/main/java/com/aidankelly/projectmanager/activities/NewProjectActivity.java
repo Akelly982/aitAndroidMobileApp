@@ -146,7 +146,7 @@ public class NewProjectActivity extends AppCompatActivity {
         // identify location
         imgManager = new ImageManager(myContext);
         imgManager.setDirectoryName(dirName);
-        imgManager.setFileName(Constants.HOME_IMG_PATH); // hard set filename for projectHomeImage
+        imgManager.setFileName(Constants.HOME_IMG_FILE_NAME); // hard set filename for projectHomeImage
 
         //get the projectImage    // check if user enter one or not
         if (imageToStore == null){
@@ -157,7 +157,7 @@ public class NewProjectActivity extends AppCompatActivity {
 
 
         // add ImagePath String and project unique id as directory name
-        newProject.setHomeImagePathName(Constants.HOME_IMG_PATH);
+        newProject.setHomeImageFileName(Constants.HOME_IMG_FILE_NAME);
         newProject.setProjectDirectory(dirName);
 
         // save to db and check

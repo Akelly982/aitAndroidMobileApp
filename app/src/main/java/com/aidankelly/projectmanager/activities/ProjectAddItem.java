@@ -133,8 +133,8 @@ public class ProjectAddItem extends AppCompatActivity {
 
                 //add image to local using id as path name
                 ImageManager imgManager = new ImageManager(context);
-                item.setImagePath(item.getId().toString() + Constants.PNG_DATA_TYPE);  //do not forget to add file type to
-                imgManager.setDirNameAndFileName(parentProject.getProjectDirectory(),item.getImagePath());
+                item.setImageFileName(item.getId().toString() + Constants.PNG_DATA_TYPE);  //do not forget to add file type to
+                imgManager.setDirNameAndFileName(parentProject.getProjectDirectory(),item.getImageFileName());
                 imgManager.save(myImageToStore); // save the image
 
                 // update imagePath in db

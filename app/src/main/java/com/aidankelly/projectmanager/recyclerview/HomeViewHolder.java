@@ -1,10 +1,14 @@
 package com.aidankelly.projectmanager.recyclerview;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aidankelly.projectmanager.R;
 import com.aidankelly.projectmanager.entities.ImageManager;
 import com.aidankelly.projectmanager.entities.UserProject;
+
+import java.io.File;
 
 public class HomeViewHolder extends RecyclerView.ViewHolder {
 
@@ -22,6 +28,7 @@ public class HomeViewHolder extends RecyclerView.ViewHolder {
     private TextView projectNameTextView;
     private TextView projectCostTextView;
     private Button enterProjectButton;
+
 
 
     // maps UI components to the XML Layout.
@@ -40,10 +47,15 @@ public class HomeViewHolder extends RecyclerView.ViewHolder {
 
     // puts data into my ViewHolder
     public void updateProject(UserProject project){
-        imgManager = new ImageManager(context);
-        imgManager.setDirNameAndFileName(project.getProjectDirectory(),project.getHomeImagePathName());
+        //imgManager = new ImageManager(context);
+        //imgManager.setDirNameAndFileName(project.getProjectDirectory(),project.getHomeImageFileName());
 
-        projectImageView.setImageBitmap(imgManager.load());
+        //projectImageView.setImageBitmap(imgManager.load());
+
+        File directory;
+        directory = context.getDir(project.getProjectDirectory(), Context.MODE_PRIVATE);
+        File imageLocation = new File(directory, project.getHomeImageFileName());
+        projectImageView.setImageURI(Uri.fromFile(imageLocation));
         projectNameTextView.setText(project.getProjectName());
         projectCostTextView.setText("$ " + project.getTotalProjectCost().toString());
 

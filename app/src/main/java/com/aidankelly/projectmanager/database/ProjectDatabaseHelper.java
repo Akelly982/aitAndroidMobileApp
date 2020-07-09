@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import androidx.annotation.Nullable;
 
@@ -25,7 +24,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
 
     private static final String DATABASE_NAME = "myProjects.db";
-    private static final Integer DATABASE_VERSION = 15;   // change this if you change the database
+    private static final Integer DATABASE_VERSION = 16;   // change this if you change the database
     private static final String PROJECT_TABLE_NAME = "projects";
     private static final String PROJECT_ITEM_TABLE_NAME = "projectItems";
 
@@ -44,14 +43,14 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
     private static final String COL_PROJECT_NAME = "PROJECT_NAME";
     private static final String COL_PROJECT_TOTAL_COST = "PROJECT_TOTAL_COST";
     private static final String COL_PROJECT_IMAGES_DIRECTORY = "PROJECT_IMAGES_DIRECTORY";
-    private static final String COL_PROJECT_IMAGE_PATH = "PROJECT_HOME_IMG_PATH";
+    private static final String COL_PROJECT_IMAGE_FILE_NAME = "PROJECT_HOME_IMG_PATH";
 
     // Create Table ProjectItems CONST
     private static final String COL_ITEM_ID = "ITEM_ID";
     private static final String COL_ITEM_LIST_POS = "ITEM_LIST_POSITION";
     private static final String COL_ITEM_DESCRIPTION = "ITEM_DESCRIPTION";
     private static final String COL_ITEM_COST = "ITEM_COST";
-    private static final String COL_ITEM_IMAGE_PATH = "ITEM_IMAGE_PATH";
+    private static final String COL_ITEM_IMAGE_FILE_NAME = "ITEM_IMAGE_PATH";
     private static final String COL_ITEM_FOREIGN_KEY = "ITEM_FK";
     private static final String FOREIGN_KEY_CONSTRAINT = "FK_CONSTRAINT";
 
@@ -78,7 +77,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
             COL_PROJECT_NAME + " TEXT, " +
             COL_PROJECT_TOTAL_COST + " REAL DEFAULT 0.0, " +
             COL_PROJECT_IMAGES_DIRECTORY + " TEXT, " +
-            COL_PROJECT_IMAGE_PATH + " TEXT ) ";
+            COL_PROJECT_IMAGE_FILE_NAME + " TEXT ) ";
 
 
 
@@ -87,7 +86,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
             COL_ITEM_LIST_POS + " INTEGER DEFAULT 1, " +
             COL_ITEM_DESCRIPTION + " TEXT, " +
             COL_ITEM_COST + " REAL DEFAULT 0.0, " +
-            COL_ITEM_IMAGE_PATH + " TEXT, " +
+            COL_ITEM_IMAGE_FILE_NAME + " TEXT, " +
             COL_ITEM_FOREIGN_KEY + " INTEGER NOT NULL, " +
             "CONSTRAINT " + FOREIGN_KEY_CONSTRAINT + " " +
             "FOREIGN KEY (" + COL_ITEM_FOREIGN_KEY + ") " +
@@ -138,7 +137,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_ITEM_IMAGE_PATH, imgPath);
+        contentValues.put(COL_ITEM_IMAGE_FILE_NAME, imgPath);
 
         int numOfRowsUpdated = db.update(PROJECT_ITEM_TABLE_NAME, contentValues, COL_ITEM_ID + " = ?", new String[]{id.toString()});
         db.close();
@@ -170,7 +169,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_ITEM_DESCRIPTION, description);
         contentValues.put(COL_ITEM_COST, cost);
-        contentValues.put(COL_ITEM_IMAGE_PATH, imagePath);
+        contentValues.put(COL_ITEM_IMAGE_FILE_NAME, imagePath);
         contentValues.put(COL_ITEM_FOREIGN_KEY, foreignKey);  // should be referring project
 
         // if -1 error else should be a positive num
@@ -213,7 +212,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return numOfErrors;
-    };
+    }
 
     public long allItemsListPositionClean(Integer ForeignKey){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -516,7 +515,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_PROJECT_NAME, projectName);
         contentValues.put(COL_PROJECT_TOTAL_COST, totalProjectCost);
         contentValues.put(COL_PROJECT_IMAGES_DIRECTORY, imagesDir);
-        contentValues.put(COL_PROJECT_IMAGE_PATH, homeImgPath);
+        contentValues.put(COL_PROJECT_IMAGE_FILE_NAME, homeImgPath);
 
         int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, COL_PROJECT_ID + " = ?", new String[]{id.toString()});
         db.close();
@@ -555,7 +554,7 @@ public class ProjectDatabaseHelper extends SQLiteOpenHelper {
 
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_PROJECT_IMAGE_PATH, imagePath);
+        contentValues.put(COL_PROJECT_IMAGE_FILE_NAME, imagePath);
 
         int numOfRowsUpdated = db.update(PROJECT_TABLE_NAME, contentValues, COL_PROJECT_ID + " = ?", new String[]{id.toString()});
         db.close();

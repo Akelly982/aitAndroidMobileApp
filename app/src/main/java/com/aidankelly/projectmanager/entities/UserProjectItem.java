@@ -1,9 +1,5 @@
 package com.aidankelly.projectmanager.entities;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
 public class UserProjectItem implements Serializable {
@@ -14,7 +10,7 @@ public class UserProjectItem implements Serializable {
     private Integer listPos;
     private String description;
     private Float cost;
-    private String imagePath;     // for example myImage.png    << do not forget the .png
+    private String imageFileName;     // for example myImage.png    << do not forget the .png
     private Integer foreignKey;
 
 
@@ -22,22 +18,22 @@ public class UserProjectItem implements Serializable {
 
     }
 
-    public UserProjectItem(Integer id, Integer listPos, String description, Float cost, String imagePath, Integer foreignKey) {
+    public UserProjectItem(Integer id, Integer listPos, String description, Float cost, String imageFileName, Integer foreignKey) {
         this.id = id;
         this.listPos = listPos;
         this.description = description;
         this.cost = cost;
-        this.imagePath = imagePath;
+        this.imageFileName = imageFileName;
         this.foreignKey = foreignKey;
     }
 
 
-    public String getImagePath() {
-        return imagePath;
+    public String getImageFileName() {
+        return imageFileName;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
     }
 
     public Integer getId() {

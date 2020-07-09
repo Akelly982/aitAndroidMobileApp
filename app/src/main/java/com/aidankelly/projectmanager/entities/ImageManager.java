@@ -3,14 +3,12 @@ package com.aidankelly.projectmanager.entities;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileLock;
 
 
 
@@ -27,7 +25,7 @@ public class ImageManager {
     private String directoryName = "testImages";
     private String fileName = "testImage.png";
     private Context context;
-    private Integer bitmapQuality = 20;
+    private Integer bitmapQuality = 100; // this is irrelevent for saving as a png for it is lossless.
 
 
 
@@ -63,7 +61,13 @@ public class ImageManager {
         try{
                                                // createFile() fills in the File directory and file name
             fileOutputStream = new FileOutputStream(createFile());
-            bitmapImage.compress(Bitmap.CompressFormat.PNG,bitmapQuality,fileOutputStream);   // image for save under directory and name
+
+            //test
+            Bitmap scaledImage;
+            scaledImage =  Bitmap.createScaledBitmap(bitmapImage, 512, 256, true);
+            scaledImage.compress(Bitmap.CompressFormat.PNG,bitmapQuality,fileOutputStream);   // image for save under directory and name
+
+            //bitmapImage.compress(Bitmap.CompressFormat.PNG,bitmapQuality,fileOutputStream);   // image for save under directory and name
         } catch (Exception e){               // the rest is check results and close
             e.printStackTrace();
         } finally{
@@ -88,7 +92,7 @@ public class ImageManager {
         return new File(directory, fileName);
     }
 
-
+    // this is quite slow i suggest using URI and just using the path (works i think because pbg is lossless compression)
     public Bitmap load() {
         FileInputStream fileInputStream = null;
         Bitmap loadedBitmap = null;
@@ -118,7 +122,7 @@ public class ImageManager {
         File fileDirectory;
         fileDirectory = context.getDir(myProject.getProjectDirectory(), Context.MODE_PRIVATE);
 
-        File fileForDelete = new File(fileDirectory, myProject.getHomeImagePathName());
+        File fileForDelete = new File(fileDirectory, myProject.getHomeImageFileName());
         boolean result = fileForDelete.delete();
         return result;
     }
@@ -127,7 +131,7 @@ public class ImageManager {
         File fileDirectory;
         fileDirectory = context.getDir(parentProject.getProjectDirectory(), Context.MODE_PRIVATE);
 
-        File fileForDelete = new File(fileDirectory, projectItem.getImagePath());
+        File fileForDelete = new File(fileDirectory, projectItem.getImageFileName());
         boolean result = fileForDelete.delete();
         return result;
     }

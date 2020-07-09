@@ -15,7 +15,7 @@ public class UserProject implements Serializable {
     private String projectName;
     private Float  totalProjectCost;
     private String projectDirectory;      // myImages
-    private String homeImagePathName;     // image.png String
+    private String homeImageFileName;     // image.png String
 
 
 
@@ -23,13 +23,13 @@ public class UserProject implements Serializable {
 
     }
 
-    public UserProject(Integer id, Integer listPosition, String projectName, Float totalProjectCost, String projectDirectory, String homeImagePathName) {
+    public UserProject(Integer id, Integer listPosition, String projectName, Float totalProjectCost, String projectDirectory, String homeImageFileName) {
         this.id = id;
         this.listPosition = listPosition;
         this.projectName = projectName;
         this.totalProjectCost = totalProjectCost;
         this.projectDirectory = projectDirectory;
-        this.homeImagePathName = homeImagePathName;
+        this.homeImageFileName = homeImageFileName;
     }
 
 
@@ -78,16 +78,16 @@ public class UserProject implements Serializable {
         return projectDirectory;
     }
 
-    public String getHomeImagePathName() {
-        return homeImagePathName;
+    public String getHomeImageFileName() {
+        return homeImageFileName;
     }
 
     public void setProjectDirectory(String projectDirectory) {
         this.projectDirectory = projectDirectory;
     }
 
-    public void setHomeImagePathName(String homeImagePathName) {
-        this.homeImagePathName = homeImagePathName;
+    public void setHomeImageFileName(String homeImageFileName) {
+        this.homeImageFileName = homeImageFileName;
     }
 
 

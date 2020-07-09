@@ -2,8 +2,6 @@ package com.aidankelly.projectmanager.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import android.content.Context;
 import android.content.Intent;
@@ -67,7 +65,7 @@ public class ChangeImageActivity extends AppCompatActivity {
 
             // set original image into the preview
             imgManager = new ImageManager(context);
-            imgManager.setDirNameAndFileName(project.getProjectDirectory(),project.getHomeImagePathName());
+            imgManager.setDirNameAndFileName(project.getProjectDirectory(),project.getHomeImageFileName());
             imagePreviewImageView.setImageBitmap(imgManager.load());
 
         }else{
