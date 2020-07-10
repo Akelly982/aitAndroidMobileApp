@@ -47,10 +47,6 @@ public class HomeViewHolder extends RecyclerView.ViewHolder {
 
     // puts data into my ViewHolder
     public void updateProject(UserProject project){
-        //imgManager = new ImageManager(context);
-        //imgManager.setDirNameAndFileName(project.getProjectDirectory(),project.getHomeImageFileName());
-
-        //projectImageView.setImageBitmap(imgManager.load());
 
         File directory;
         directory = context.getDir(project.getProjectDirectory(), Context.MODE_PRIVATE);

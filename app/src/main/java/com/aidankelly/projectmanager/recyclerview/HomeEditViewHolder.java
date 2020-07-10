@@ -1,6 +1,7 @@
 package com.aidankelly.projectmanager.recyclerview;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aidankelly.projectmanager.R;
 import com.aidankelly.projectmanager.entities.ImageManager;
 import com.aidankelly.projectmanager.entities.UserProject;
+
+import java.io.File;
 
 public class HomeEditViewHolder extends RecyclerView.ViewHolder {
 
@@ -41,10 +44,11 @@ public class HomeEditViewHolder extends RecyclerView.ViewHolder {
 
     // puts data into my ViewHolder
     public void updateEditProject(UserProject project){
-        imgManager = new ImageManager(myContext);
-        imgManager.setDirNameAndFileName(project.getProjectDirectory(),project.getHomeImageFileName());
+        File directory;
+        directory = myContext.getDir(project.getProjectDirectory(), Context.MODE_PRIVATE);
+        File imageLocation = new File(directory, project.getHomeImageFileName());
+        projectImageView.setImageURI(Uri.fromFile(imageLocation));
 
-        projectImageView.setImageBitmap(imgManager.load());
         projectNameTextView.setText(project.getProjectName());
 
     }
