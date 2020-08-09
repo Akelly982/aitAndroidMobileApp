@@ -33,7 +33,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="project Descriptive text"
+                android:text="project Descriptive text fdskjhsdjkafhdsfhkjsadfhasdjkfhkdasfhkjad"
                 android:textAlignment="textStart"
                 android:textColor="@color/lightTextColor"
                 android:textSize="18sp"
@@ -101,8 +101,10 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView4"
                 android:layout_width="0dp"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:addStatesFromChildren="false"
+                android:visibility="visible"
                 app:cardBackgroundColor="@color/darkMain"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
@@ -114,9 +116,12 @@
                     android:id="@+id/projectRVItemImageView2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     android:src="@drawable/bkg_default"
+                    app:srcCompat="@drawable/project_default_image"
                     tools:ignore="ContentDescription" />
+
             </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,7 +3,11 @@ package com.aidankelly.projectmanager.entities;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
+import android.widget.ImageView;
+
+import com.aidankelly.projectmanager.R;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -62,10 +66,34 @@ public class ImageManager {
                                                // createFile() fills in the File directory and file name
             fileOutputStream = new FileOutputStream(createFile());
 
-            //test
+
             Bitmap scaledImage;
-            scaledImage =  Bitmap.createScaledBitmap(bitmapImage, 512, 256, true);
-            scaledImage.compress(Bitmap.CompressFormat.PNG,bitmapQuality,fileOutputStream);   // image for save under directory and name
+
+            Bitmap myProjectDefaultBitmap = getDrawableProjectBkgForComparison();
+            Bitmap myProjectItemDefaultAlphaBitmap = getDrawableAddItemAlphaForComparison();
+
+            // if's to manage how the image is handled
+            if(bitmapImage.equals(myProjectDefaultBitmap)){    // is it the new project default image
+                scaledImage = bitmapImage;  // no adjustment just set img
+                scaledImage.compress(Bitmap.CompressFormat.PNG,bitmapQuality,fileOutputStream);
+
+            }
+            else if (bitmapImage.equals(myProjectItemDefaultAlphaBitmap)){     // is the image the new item alpha img
+                scaledImage = bitmapImage;  // no adjustment just set img    (the pixed ration of this one is 64x1 with 100% alpha)
+                scaledImage.compress(Bitmap.CompressFormat.PNG,bitmapQuality,fileOutputStream);
+            }
+            else if (bitmapImage.getWidth() > bitmapImage.getHeight()){     // check which way to scale img
+                scaledImage =  Bitmap.createScaledBitmap(bitmapImage, 512, 256, true);
+                scaledImage.compress(Bitmap.CompressFormat.PNG,bitmapQuality,fileOutputStream);   // image for save under directory and name
+            }else{
+                scaledImage = Bitmap.createScaledBitmap(bitmapImage, 256, 512, true);
+                scaledImage.compress(Bitmap.CompressFormat.PNG, bitmapQuality, fileOutputStream);   // image for save under directory and name
+            }
+
+
+
+
+
 
             //bitmapImage.compress(Bitmap.CompressFormat.PNG,bitmapQuality,fileOutputStream);   // image for save under directory and name
         } catch (Exception e){               // the rest is check results and close
@@ -166,6 +194,20 @@ public class ImageManager {
 
     }
 
+    public Bitmap getDrawableProjectBkgForComparison(){
+        ImageView myImageView = new ImageView(context);      //  myContext declared above but unused  (image View wants one)
+        myImageView.setImageResource(R.drawable.project_default_image);
+        BitmapDrawable drawable = (BitmapDrawable) myImageView.getDrawable();
+        Bitmap myDefaultBitmap = drawable.getBitmap();
+        return myDefaultBitmap;
+    }
 
+    public Bitmap getDrawableAddItemAlphaForComparison(){
+        ImageView myImageView = new ImageView(context);      //  myContext declared above but unused  (image View wants one)
+        myImageView.setImageResource(R.drawable.alpha64x1);
+        BitmapDrawable drawable = (BitmapDrawable) myImageView.getDrawable();
+        Bitmap myDefaultBitmap = drawable.getBitmap();
+        return myDefaultBitmap;
+    }
 
 }

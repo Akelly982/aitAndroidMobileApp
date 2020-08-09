@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -105,10 +106,11 @@ public class ProjectAddItem extends AppCompatActivity {
                 item.setCost(Float.parseFloat(cost));
 
 
-                //tell user to set an image if null
-                if (myImageToStore == null){   // TODO make it so that it can work with no image
-                    Snackbar.make(rootView, "add an image", Snackbar.LENGTH_SHORT).show();
-                    return;
+                //set alpha img if no img so that it looks as if their is no img
+                if (myImageToStore == null){
+                    //Snackbar.make(rootView, "add an image", Snackbar.LENGTH_SHORT).show();
+                    //return
+                    myImageToStore = findAlphaDefaultImage();
                 }
 
 
@@ -219,5 +221,15 @@ public class ProjectAddItem extends AppCompatActivity {
         imageImageView.setImageBitmap(myImageToStore); // set image to preview window
     }
 
+
+
+    // code for getting image from drawable not sure if i will use it or need it.....
+    private Bitmap findAlphaDefaultImage() {
+        ImageView myImageView = new ImageView(context);      //  myContext declared above but unused  (image View wants one)
+        myImageView.setImageResource(R.drawable.alpha64x1);
+        BitmapDrawable drawable = (BitmapDrawable) myImageView.getDrawable();
+        Bitmap myNewBitmap = drawable.getBitmap();
+        return myNewBitmap;
+    }
 
 }
